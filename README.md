@@ -19,6 +19,19 @@ To set up these dotfiles on a new machine:
 
 1. Clone the repository:
 
-```bash
 git clone https://github.com/bluesboynix/dotfiles.git ~/dotfiles
 
+## Requirements
+
+- Neovim
+  - ripgrep
+  - fd
+  - bat
+  - tree
+  - xdotool
+  - xprop
+  - wmctrl
+  - gcc
+  - clang
+  - lazygit
+  - delve

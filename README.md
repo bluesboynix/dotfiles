@@ -10,7 +10,7 @@ This repository contains my personal dotfiles for configuring my Linux environme
 - Wlogout
 - Yazi
 - Zsh with Oh My Zsh
-
+- Emacs
 ---
 
 ## Installation

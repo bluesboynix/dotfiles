@@ -66,8 +66,12 @@ source $ZSH/oh-my-zsh.sh
 # Always alias pacman to use sudo
 alias pacman='sudo pacman'
 
-#Force TERM to xterm-256color
+# Force TERM to xterm-256color
 alias ssh='TERM=xterm-256color ssh'
+
+# Alias neovim/nvim to vi
+alias vi="nvim"
+alias vim="nvim"
 
 # Conditionally alias 'ls' based on available tools
 if command -v lsd >/dev/null 2>&1; then

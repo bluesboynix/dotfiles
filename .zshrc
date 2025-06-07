@@ -1,109 +1,86 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
-
-# Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-export PATH="$HOME/.local/bin:$PATH"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time Oh My Zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+typeset -U path
+path=(
+  $HOME/.local/bin
+  /bin
+  /usr/bin
+  /usr/local/bin
+  /sbin
+  /usr/sbin
+)
+export PATH="${(j/:/)path}"
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+export EDITOR=nvim
 
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
 
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+### Smart TERM setup for SSH/local/tmux/modern terminals ###
+# Priority: kitty > foot > wezterm > tmux > 256color > xterm > fallback
 
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
+# Function to safely set TERM if it's supported
+set_term_if_supported() {
+  local term=$1
+  if infocmp "$term" >/dev/null 2>&1; then
+    export TERM="$term"
+    return 0
+  fi
+  return 1
+}
 
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
+# 1. Detect Kitty
+if [[ "$TERM_PROGRAM" == "Kitty" ]] || [[ "$TERM" == *"kitty"* ]]; then
+  set_term_if_supported "xterm-kitty"
+# 2. Detect foot (based on env var)
+elif [[ -n "$FOOT" ]] || [[ "$TERM" == "foot" ]]; then
+  set_term_if_supported "foot"
+# 3. Detect wezterm (based on env var)
+elif [[ "$TERM_PROGRAM" == "WezTerm" ]] || [[ "$TERM" == "wezterm" ]]; then
+  set_term_if_supported "wezterm"
+# 4. Inside tmux
+elif [[ -n "$TMUX" ]]; then
+  set_term_if_supported "screen-256color"
+# 5. Normal 256color xterm
+elif set_term_if_supported "xterm-256color"; then
+  :
+# 6. Fallback to basic xterm
+elif set_term_if_supported "xterm"; then
+  :
+# 7. Very last resort fallback
+else
+  export TERM="dumb"
+fi
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
 
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git
+### PLUGINS ###
+plugins=(
+  git
   colored-man-pages
-  colorize)
+  colorize
+)
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
 
-# export MANPATH="/usr/local/man:$MANPATH"
+### ALIASES ###
+# Always alias pacman to use sudo
+alias pacman='sudo pacman'
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+#Force TERM to xterm-256color
+alias ssh='TERM=xterm-256color ssh'
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
+# Conditionally alias 'ls' based on available tools
+if command -v lsd >/dev/null 2>&1; then
+  # If lsd is installed, use it with preferred options
+  alias ls='lsd --group-dirs=first --icon=always'
+  export LS_MODE="lsd"
+else
+  # Fallback to regular ls with color and -h for sizes
+  alias ls='ls --color=auto -h'
+  export LS_MODE="gnu-ls"
+fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch $(uname -m)"
-
-# Set personal aliases, overriding those provided by Oh My Zsh libs,
-# plugins, and themes. Aliases can be placed here, though Oh My Zsh
-# users are encouraged to define aliases within a top-level file in
-# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
-# - $ZSH_CUSTOM/aliases.zsh
-# - $ZSH_CUSTOM/macos.zsh
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias pacman="sudo pacman"
-alias ls='lsd --group-dirs=first --icon=always'
+# Neat Colorized Grep, Diff, etc.
+alias grep='grep --color=auto'
+alias diff='diff --color=auto'
+alias ip='ip --color=auto'

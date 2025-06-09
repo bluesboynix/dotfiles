@@ -1,7 +1,8 @@
 # Dotfiles
 
-This repository contains my personal dotfiles for configuring my Linux environment, including:
+This repository contains my personal dotfiles for configuring my Linux environment mainly Arch linux, including Neovim, Foot terminal, Hyprland, etc.
 
+## General Requirement
 - Neovim
   - ripgrep fd bat tree xdotool xprop wmctrl gcc clang lazygit delve
 - Foot terminal
@@ -19,14 +20,13 @@ This repository contains my personal dotfiles for configuring my Linux environme
 - Zathura
   - zathura zathura-pdf-mupdf
   - xdg-mime default org.pwmt.zathura.desktop application/pdf
----
 
-## Required Fonts
+Required Fonts
  - Cantarell -> waybar
  - Liberation Serif -> waybar and system
  - San-serif -> system
  - Nerd Fonts - Hack Nerd, Fira Code, nerd font symbols (including common and mono) 
-
+---
 ## Installation
 
 To set up these dotfiles on a new machine:

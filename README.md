@@ -15,7 +15,10 @@ This repository contains my personal dotfiles for configuring my Linux environme
 - Zsh
   - [Oh My Zsh](https://ohmyz.sh/)
 - Emacs
-  - cmake (for some plugins) 
+  - cmake (for some plugins)
+- Zathura
+  - zathura zathura-pdf-mupdf
+  - xdg-mime default org.pwmt.zathura.desktop application/pdf
 ---
 
 ## Required Fonts

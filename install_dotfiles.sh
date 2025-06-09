@@ -28,6 +28,7 @@ declare -a folders=(
   "waybar"
   "wlogout"
   "yazi"
+  "zathura"
 )
 
 for folder in "${folders[@]}"; do

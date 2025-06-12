@@ -50,7 +50,6 @@ button {
 #workspaces button.active {
   background-color: rgba(0,0,0,0.0);
   color:#A000A0;
-
 }
 
 #workspaces button.urgent {

@@ -104,10 +104,10 @@
         "scroll-step": 5, // %, can be a float
         "format": "{icon} ",
         "tooltip-format": "Volume {volume}%",
-        "format-bluetooth": " {icon} {volume}% {format_source}",
-        "format-bluetooth-muted": "  {icon} {format_source}",
-        "format-muted": "  {format_source}",
-        "format-source": " {volume}%",
+        "format-bluetooth": "  {volume}% ",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": "{format_source}",
+        "format-source": "",
         "format-source-muted": "",
         "format-icons": {
 //            "headphone": "",

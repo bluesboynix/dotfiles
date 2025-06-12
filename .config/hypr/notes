@@ -1,0 +1,46 @@
+1. Configure logind to ignore default lid behavior
+
+sudo nano /etc/systemd/logind.conf
+HandleLidSwitch=ignore
+HandleLidSwitchDocked=ignore
+HandleLidSwitchExternalPower=ignore
+Restart logind:
+
+sudo systemctl restart systemd-logind
+
+2. Install acpid to detect lid close
+sudo pacman -S acpid
+Enable and start:
+
+sudo systemctl enable --now acpid
+
+3. Create ACPI event for lid close
+Create the event file:
+
+sudo mkdir -p /etc/acpi/events
+sudo nano /etc/acpi/events/lid
+Content:
+
+event=button/lid.*
+action=/etc/acpi/lid.sh
+
+4. Create the lid action script
+sudo nano /etc/acpi/lid.sh
+Content:
+#!/bin/bash
+
+# Check lid state
+LID_STATE=$(cat /proc/acpi/button/lid/LID0/state | awk '{ print $2 }')
+
+if [ "$LID_STATE" = "closed" ]; then
+  # Lock screen and turn off display
+  sudo -u YOUR_USERNAME DISPLAY=:1 hyprlock &
+  sleep 1
+  sudo -u YOUR_USERNAME DISPLAY=:1 xset dpms force off
+fi
+-> Replace YOUR_USERNAME with your actual username
+-> Replace DISPLAY=:1 if your Hyprland session uses a different display (commonly :1, :0, or use loginctl to check)
+
+Make it executable:
+
+sudo chmod +x /etc/acpi/lid.sh

@@ -185,7 +185,7 @@
         "tooltip-format": "process"       
     },
     "custom/filemanager": {
-        "format": "󰟒 ",
+        "format": " ",
         "on-click": "thunar",
         "tooltip-format": "File Manager"       
     }

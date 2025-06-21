@@ -70,12 +70,11 @@
 ;; -------------------------
 ;; 3. Package Declarations (use-package)
 ;; -------------------------
-;; (sly, paredit, rainbow-delimiters, treemacs, treemacs icons, vterm etc.)
+;; (slime, paredit, rainbow-delimiters, treemacs, treemacs icons, vterm etc.)
 
-;; SLY
-(use-package sly
+;; slime
+(use-package slime
   :ensure t
-  :hook (lisp-mode . sly-mode)
   :config
   (setq inferior-lisp-program "sbcl"))
 
@@ -85,7 +84,7 @@
   :hook ((emacs-lisp-mode
           lisp-mode
           lisp-interaction-mode
-          sly-mrepl-mode) . paredit-mode))
+          slime-mrepl-mode) . paredit-mode))
 
 ;; Rainbow-delimiters
 (use-package rainbow-delimiters
@@ -93,7 +92,7 @@
   :hook ((lisp-mode
           emacs-lisp-mode
           lisp-interaction-mode
-          sly-mrepl-mode) . rainbow-delimiters-mode))
+          slime-mrepl-mode) . rainbow-delimiters-mode))
 
 ;; Treemacs
 (use-package treemacs

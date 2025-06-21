@@ -12,6 +12,8 @@ path=(
 )
 export PATH="${(j/:/)path}"
 
+export PATH=$PATH:~/.roswell/bin
+
 export EDITOR=nvim
 
 
@@ -89,3 +91,4 @@ alias grep='grep --color=auto'
 alias diff='diff --color=auto'
 alias ip='ip --color=auto'
 alias sbcl='rlwrap sbcl'
+alias slem="lem-sdl2"

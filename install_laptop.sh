@@ -2,7 +2,7 @@
 set -e
 
 REPO_URL="https://github.com/bluesboynix/dotfiles.git"
-TARGET_DIR="$HOME/.dotfiles_pc"  # or .dotfiles_pc for PC branch
+TARGET_DIR="$HOME/.dotfiles_laptop"  # or .dotfiles_pc for PC branch
 BRANCH="laptop"
 BACKUP_DIR="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 

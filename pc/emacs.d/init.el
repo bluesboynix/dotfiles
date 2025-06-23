@@ -1,1 +1,0 @@
-/home/bluesboy/.dotfiles_pc/pc/emacs/init.el

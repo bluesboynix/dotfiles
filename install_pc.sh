@@ -2,7 +2,7 @@
 set -e
 
 REPO_URL="https://github.com/bluesboynix/dotfiles.git"
-TARGET_DIR="$HOME/.dotfiles_laptop"  # change to .dotfiles_pc if installing pc branch
+TARGET_DIR="$HOME/.dotfiles_pc"  # change to .dotfiles_pc if installing pc branch
 BRANCH="pc"
 
 echo "[*] Cloning $BRANCH branch of dotfiles..."

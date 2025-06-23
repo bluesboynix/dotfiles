@@ -3,7 +3,7 @@ set -e
 
 REPO_URL="https://github.com/bluesboynix/dotfiles.git"
 TARGET_DIR="$HOME/.dotfiles_laptop"  # change to .dotfiles_pc if installing pc branch
-BRANCH="laptop"
+BRANCH="pc"
 
 echo "[*] Cloning $BRANCH branch of dotfiles..."
 git clone --branch "$BRANCH" "$REPO_URL" "$TARGET_DIR"

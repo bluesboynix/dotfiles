@@ -63,6 +63,37 @@ for dir in "${REQUIRED_DIRS[@]}"; do
     fi
 done
 
+# Configuration types
+declare -A CONFIG_TYPES=(
+    ["directory"]="foot hypr rofi waybar wlogout yazi zathura"
+    ["file"]="nvim"
+)
+
+# Process directory-level symlinks
+echo "[*] Processing directory-level symlinks..."
+for dir in ${CONFIG_TYPES["directory"]}; do
+    echo "  Processing $dir..."
+    create_symlink "$TARGET_DIR/$BRANCH/config/$dir" "$HOME/.config/$dir" "$BACKUP_DIR/.config"
+done
+
+# Process file-level symlinks (Neovim)
+echo "[*] Processing Neovim configuration..."
+NVIM_FILES=(
+    "init.lua"
+    "lua/config/keymaps.lua"
+    "lua/config/lazy.lua"
+    "lua/config/vim-options.lua"
+    "lua/plugins/"*.lua  # All plugin files
+)
+
+for file in "${NVIM_FILES[@]}"; do
+    for source_file in "$TARGET_DIR/$BRANCH/config/nvim/$file"; do
+        [ -e "$source_file" ] || continue
+        rel_path="${source_file#$TARGET_DIR/$BRANCH/config/nvim/}"
+        create_symlink "$source_file" "$HOME/.config/nvim/$rel_path" "$BACKUP_DIR/.config/nvim"
+    done
+done
+
 # Process Emacs config (now under config/emacs)
 echo "[*] Setting up Emacs configuration..."
 mkdir -p "$EMACS_CONFIG_DIR"

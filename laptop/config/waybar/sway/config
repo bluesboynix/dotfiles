@@ -1,0 +1,192 @@
+{
+    // "layer": "top", // Waybar at top layer
+    // "position": "bottom", // Waybar position (top|bottom|left|right)
+    "height": 35, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 2, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": ["sway/workspaces",
+                    "sway/scratchpad",
+                    "custom/terminal",
+                    "custom/browser",
+                    "custom/editor",
+                    "custom/player",
+                    "custom/filemanager",
+                    "custom/systeminfo",
+                    "sway/mode"],
+    "modules-center": ["sway/window"],
+    "modules-right": ["network",
+                     "pulseaudio",
+                     "backlight",
+                     "battery",
+                     "custom/notification",
+                     "idle_inhibitor",
+                     "clock"],
+    // Modules configuration
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "warp-on-scroll": false,
+        "format": "{icon}",
+        "format-icons": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "urgent": "  ",
+            "focused": "  ",
+            "default": "  "
+        },
+        "persistent-workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": []
+        }
+    },                              
+    "sway/window": {
+            "format":"{app_id}"    
+    },
+    "sway/scratchpad": {
+        "format": "{icon} {count}",
+        "show-empty": false,
+        "format-icons": ["", ""],
+        "tooltip": true,
+        "tooltip-format": "{app}: {title}"
+    },
+    "idle_inhibitor": {
+        "start-activated": true,
+        "format": "{icon}",
+        "format-icons": {
+            "activated": " ",
+            "deactivated": " "
+        }
+    },
+    "clock": {
+        "interval": 1,
+        "format": "{:%r}",
+        "max-length": 25,
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+                    "mode"          : "year",
+                    "mode-mon-col"  : 3,
+                    "weeks-pos"     : "right",
+                    "on-scroll"     : 1,
+                    "format": {
+                              "months":     "<span color='#ffead3'><b>{}</b></span>",
+                              "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+                              "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                              "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                              "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+                              }
+                    },
+        "actions":  {
+                    "on-click-right": "mode",
+                    "on-scroll-up": "tz_up",
+                    "on-scroll-down": "tz_down",
+                    "on-scroll-up": "shift_up",
+                    "on-scroll-down": "shift_down"
+                    }
+
+    },
+    "network": {
+        "format-wifi": "{icon}",
+        "format-icons": {
+          "wifi": ["󰤯 ","󰤟 ","󰤢 ","󰤥 ","󰤨 "]
+        },
+        "format-ethernet": "󰛳",
+        "tooltip-format": " {ifname} via {gwaddr}",
+        "format-linked": " {ifname} (No IP)",
+        "format-disconnected": "⚠ ",
+        "format-alt": " {ifname}: {ipaddr}/{cidr}"
+    },
+    "pulseaudio": {
+        "scroll-step": 5, // %, can be a float
+        "format": "{icon} ",
+        "tooltip-format": "Volume {volume}%",
+        "format-bluetooth": "  {volume}% ",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": "{format_source}",
+        "format-source": "",
+        "format-source-muted": "",
+        "format-icons": {
+//            "headphone": "",
+//            "hands-free": "",
+//            "headset": "",
+//            "phone": "",
+//            "portable": "",
+//            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click-right": "pavucontrol"
+    },
+    "battery": {
+        "states": {
+            // "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} ",
+        "format-charging": "󰂄",
+        "format-plugged": "",
+        "format-alt": "{icon} {time}",
+        // "format-good": "", // An empty format will hide the module
+        // "format-full": "",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "backlight": {
+        // "device": "acpi_video1",
+        "format": "{icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "<span foreground='red'><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-none": ""
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
+    "custom/terminal": {
+        "format": " ",
+        "on-click": "foot",
+        "tooltip-format": "terminal"
+    },
+    "custom/browser": {
+        "format": " ",
+        "on-click": "firefox",
+        "tooltip-format": "firefox"
+    },
+    "custom/player": {
+        "format": "󰕼 ",
+        "on-click": "vlc",
+        "tooltip-format": "vlc"
+    },
+    "custom/editor": {
+        "format": " ",
+        "on-click": "foot nvim",
+        "tooltip-format": "nvim"
+     },
+    "custom/systeminfo": {
+        "format": " ",
+        "on-click": "foot -e btop",
+        "tooltip-format": "process"       
+    },
+    "custom/filemanager": {
+        "format": " ",
+        "on-click": "thunar",
+        "tooltip-format": "File Manager"       
+    }
+}

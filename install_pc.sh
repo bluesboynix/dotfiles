@@ -76,29 +76,28 @@ for dir in ${CONFIG_TYPES["directory"]}; do
     create_symlink "$TARGET_DIR/$BRANCH/config/$dir" "$HOME/.config/$dir" "$BACKUP_DIR/.config"
 done
 
-# In your installer script, replace the Neovim section with:
+# In your install.sh, update the Neovim section to:
+
 echo "[*] Setting up Neovim configuration..."
 NVIM_SOURCE="$TARGET_DIR/$BRANCH/config/nvim"
 NVIM_TARGET="$HOME/.config/nvim"
 
-# Create base directory
-mkdir -p "$NVIM_TARGET/lua"
+# Create all necessary directories
+mkdir -p "$NVIM_TARGET/lua/config"
+mkdir -p "$NVIM_TARGET/lua/plugins"
 
-# Link core files
-CORE_FILES=(
-    "init.lua"
-    "lua/config/keymaps.lua"
-    "lua/config/lazy.lua"
-    "lua/config/vim-options.lua"
-)
-
-for file in "${CORE_FILES[@]}"; do
-    create_symlink "$NVIM_SOURCE/$file" "$NVIM_TARGET/$file" "$BACKUP_DIR/.config/nvim"
+# Link all Lua files
+find "$NVIM_SOURCE/lua" -type f -name "*.lua" | while read -r file; do
+    rel_path="${file#$NVIM_SOURCE/}"
+    create_symlink "$file" "$NVIM_TARGET/$rel_path" "$BACKUP_DIR/.config/nvim"
 done
 
-# Initialize Lazy.nvim (plugin manager)
+# Link init.lua separately
+create_symlink "$NVIM_SOURCE/init.lua" "$NVIM_TARGET/init.lua" "$BACKUP_DIR/.config/nvim"
+
+# Initialize Lazy.nvim if not already done
 if [ ! -f "$NVIM_TARGET/lazy-lock.json" ]; then
-    echo "  ⏳ Initializing plugins (first run may take time)..."
+    echo "  ⏳ Installing plugins (first run may take time)..."
     nvim --headless "+Lazy! sync" +qa 2>/dev/null
     echo "  ✓ Plugins installed"
 fi

@@ -92,7 +92,7 @@ done < <(find "$TARGET_DIR/$BRANCH/config/nvim" -type f \( -name "*.lua" -o -nam
 echo "[*] Setting up Emacs (XDG-only)..."
 mkdir -p "$EMACS_CONFIG_DIR"
 
-EMACS_FILES=("init.el" "early-init.el" "custom.el")
+EMACS_FILES=("init.el" "custom.el")
 for file in "${EMACS_FILES[@]}"; do
     [[ -f "$TARGET_DIR/$BRANCH/emacs/$file" ]] && 
         create_symlink "$TARGET_DIR/$BRANCH/emacs/$file" "$EMACS_CONFIG_DIR/$file" "$BACKUP_DIR/.config/emacs"

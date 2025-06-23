@@ -24,14 +24,21 @@ for folder in foot hypr nvim rofi waybar wlogout yazi zathura; do
   echo "✓ Linked $folder in .config"
 done
 
-echo "[*] Backing up and linking emacs.d, bashrc, and zshrc..."
+echo "[*] Backing up and linking init.el and custom.el for Emacs..."
 
-# emacs.d
-if [ -e "$HOME/.emacs.d" ] || [ -L "$HOME/.emacs.d" ]; then
-  mv "$HOME/.emacs.d" "$HOME/.emacs.d.backup.$(date +%s)"
-fi
-ln -s "$TARGET_DIR/$BRANCH/emacs.d" "$HOME/.emacs.d"
-echo "✓ Linked .emacs.d"
+mkdir -p "$HOME/.emacs.d"
+
+for file in init.el custom.el; do
+  TARGET="$HOME/.emacs.d/$file"
+  SOURCE="$TARGET_DIR/$BRANCH/emacs/$file"
+
+  if [ -e "$TARGET" ] || [ -L "$TARGET" ]; then
+    mv "$TARGET" "${TARGET}.backup.$(date +%s)"
+  fi
+
+  ln -s "$SOURCE" "$TARGET"
+  echo "✓ Linked $file"
+done
 
 # bashrc
 if [ -e "$HOME/.bashrc" ] || [ -L "$HOME/.bashrc" ]; then

@@ -76,23 +76,32 @@ for dir in ${CONFIG_TYPES["directory"]}; do
     create_symlink "$TARGET_DIR/$BRANCH/config/$dir" "$HOME/.config/$dir" "$BACKUP_DIR/.config"
 done
 
-# Process file-level symlinks (Neovim)
-echo "[*] Processing Neovim configuration..."
-NVIM_FILES=(
+# In your installer script, replace the Neovim section with:
+echo "[*] Setting up Neovim configuration..."
+NVIM_SOURCE="$TARGET_DIR/$BRANCH/config/nvim"
+NVIM_TARGET="$HOME/.config/nvim"
+
+# Create base directory
+mkdir -p "$NVIM_TARGET/lua"
+
+# Link core files
+CORE_FILES=(
     "init.lua"
     "lua/config/keymaps.lua"
     "lua/config/lazy.lua"
     "lua/config/vim-options.lua"
-    "lua/plugins/"*.lua  # All plugin files
 )
 
-for file in "${NVIM_FILES[@]}"; do
-    for source_file in "$TARGET_DIR/$BRANCH/config/nvim/$file"; do
-        [ -e "$source_file" ] || continue
-        rel_path="${source_file#$TARGET_DIR/$BRANCH/config/nvim/}"
-        create_symlink "$source_file" "$HOME/.config/nvim/$rel_path" "$BACKUP_DIR/.config/nvim"
-    done
+for file in "${CORE_FILES[@]}"; do
+    create_symlink "$NVIM_SOURCE/$file" "$NVIM_TARGET/$file" "$BACKUP_DIR/.config/nvim"
 done
+
+# Initialize Lazy.nvim (plugin manager)
+if [ ! -f "$NVIM_TARGET/lazy-lock.json" ]; then
+    echo "  ⏳ Initializing plugins (first run may take time)..."
+    nvim --headless "+Lazy! sync" +qa 2>/dev/null
+    echo "  ✓ Plugins installed"
+fi
 
 # Process Emacs config (now under config/emacs)
 echo "[*] Setting up Emacs configuration..."

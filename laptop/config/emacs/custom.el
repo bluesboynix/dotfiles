@@ -6,8 +6,8 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(company-box company-lsp corfu counsel-projectile dashboard
-		 doom-modeline doom-themes flycheck go-mode helpful
-		 highlight-quoted lsp-ui magit paredit
+		 doom-modeline doom-themes dracula-theme flycheck
+		 go-mode helpful highlight-quoted lsp-ui magit paredit
 		 rainbow-delimiters slime smartparens
 		 treemacs-all-the-icons vterm-toggle
 		 yasnippet-snippets))

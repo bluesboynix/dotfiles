@@ -1,4 +1,4 @@
-;; -*- lexical-binding: t; -*-
+;;; init.el --- My Emacs Configuration -*- lexical-binding: t; -*-
 
 ;; ====================
 ;; Early Performance Tweaks
@@ -14,13 +14,12 @@
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("gnu"   . "https://elpa.gnu.org/packages/")
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-(package-initialize)
+;;(package-initialize)
 
 ;; Bootstrap `use-package`
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-
 (eval-when-compile
   (require 'use-package))
 (setq use-package-always-ensure t
@@ -34,6 +33,11 @@
 (scroll-bar-mode -1)
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message nil)
+(global-tab-line-mode 1)
+
+;; icons
+(use-package all-the-icons :if (display-graphic-p))
+;; run M-x all-the-icons-install-fonts
 
 ;; Font and Theme
 (set-face-attribute 'default nil :font "Hack Nerd Font" :height 120)
@@ -59,7 +63,7 @@
         dashboard-set-heading-icons t
         dashboard-items '((recents . 5)
                           (projects . 5)))
-  (dashboard-setup-startup-hook)
+  (dashboard-setup-startup-hook))
 
 ;; ====================
 ;; Editing Enhancements
@@ -105,17 +109,105 @@
   :after ivy
   :bind (("C-s" . swiper)))
 
+;; corfu completions
+;;(use-package corfu
+;;  :init
+;;  (global-corfu-mode))
+
+;; company mode
+(use-package company
+  :hook (after-init . global-company-mode)
+  :config
+  (setq company-minimum-prefix-length 1
+        company-idle-delay 0.0)) ; Show immediately
+
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+
+;; lsp mode
+(use-package lsp-mode
+  :commands lsp
+  :hook ((python-mode . lsp)
+         (c-mode . lsp)
+	 (go-mode . lsp)
+         (c++-mode . lsp)
+         (yaml-mode . lsp)
+         (sh-mode . lsp))
+  :config
+  (setq lsp-completion-provider :capf))
+  ;;(setq lsp-prefer-flymake nil)) ; use flycheck instead
+
+;; install the following in system
+;; pyright, clang, yaml-language-server, bash-language-server
+(use-package go-mode
+  :mode "\\.go\\'"
+  :hook ((go-mode . lsp)
+         (before-save . gofmt-before-save))
+  :config
+  (setq gofmt-command "goimports"))
+
+(use-package lsp-ui
+  :after lsp-mode
+  :commands lsp-ui-mode
+  :hook (lsp-mode . lsp-ui-mode)
+  :config
+  (setq lsp-ui-doc-enable t
+        lsp-ui-sideline-enable t))
+
+;; tree-sitter
+(use-package treesit-auto
+  :config
+  (setq treesit-auto-install 'prompt) ;; or 'always
+  (global-treesit-auto-mode))
+
+;; Remap scheme-mode to scheme-ts-mode if Tree-sitter is available
+(add-to-list 'major-mode-remap-alist
+             '(scheme-mode . scheme-ts-mode))
+
+;; Better font lock and optional folding
+(setq treesit-font-lock-level 4)
+(setq treesit-fold-enable t)
+
 ;; Lisp Development
 (use-package slime
-  :init (setq inferior-lisp-program "sbcl"))
+  :ensure t
+  :init
+  (setq inferior-lisp-program "sbcl")
+  :config
+  (slime-setup '(slime-fancy)))
 
-(use-package paredit
-  :hook ((emacs-lisp-mode lisp-mode slime-repl-mode) . paredit-mode)
-  :diminish)
+;; Smartparens configuration
+(use-package smartparens
+  :hook ((emacs-lisp-mode lisp-mode slime-repl-mode) . smartparens-mode)
+  :config
+  (require 'smartparens-config)
+  (smartparens-global-mode 1)  ; Enable globally
+  (show-smartparens-global-mode 1)  ; Highlight matching pairs
+  
+  ;; Customize behavior
+  (setq sp-autoescape-string-quote nil
+        sp-show-pair-delay 0.2
+        sp-highlight-pair-overlay nil)
+  
+  ;; SLIME-specific integration
+  (with-eval-after-load 'slime
+    (define-key slime-repl-mode-map (kbd "DEL") #'sp-backward-delete-char)))
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
+;; highlight quoted
+(use-package highlight-quoted
+  :hook (emacs-lisp-mode lisp-mode))
+
+;; macrostep - expand macros inline
+(use-package macrostep
+  :bind (:map emacs-lisp-mode-map
+              ("C-c e" . macrostep-expand)))
+
+;; ====================
+;; Optional Add-ons
+;; ====================
 ;; Terminal
 (use-package vterm
   :commands vterm
@@ -128,17 +220,15 @@
 
 ;; File Explorer
 (use-package treemacs
-  :commands (treemacs treemacs-select-window)
-  :config
-  (setq treemacs-is-never-other-window t))
+  :defer t
+  :bind
+  (:map global-map
+        ("M-0" . treemacs-select-window)))
 
 (use-package treemacs-all-the-icons
   :after treemacs
   :config (treemacs-load-theme 'all-the-icons))
 
-;; ====================
-;; Optional Add-ons
-;; ====================
 ;; Git Integration
 (use-package magit
   :bind ("C-x g" . magit-status))
@@ -151,9 +241,16 @@
 (use-package yasnippet
   :config (yas-global-mode))
 
+(use-package yasnippet-snippets
+  :after yasnippet)
+
 ;; Project Management
 (use-package projectile
   :config (projectile-mode 1))
+
+(use-package counsel-projectile
+  :after (counsel projectile)
+  :config (counsel-projectile-mode))
 
 ;; Helpful (Better Help Buffers)
 (use-package helpful

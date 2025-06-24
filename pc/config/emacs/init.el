@@ -1,4 +1,4 @@
-;; -*- lexical-binding: t; -*-
+; -*- lexical-binding: t; -*-
 
 ;; ====================
 ;; Early Performance Tweaks
@@ -20,7 +20,6 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-
 (eval-when-compile
   (require 'use-package))
 (setq use-package-always-ensure t
@@ -59,7 +58,7 @@
         dashboard-set-heading-icons t
         dashboard-items '((recents . 5)
                           (projects . 5)))
-  (dashboard-setup-startup-hook)
+  (dashboard-setup-startup-hook))
 
 ;; ====================
 ;; Editing Enhancements

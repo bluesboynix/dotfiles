@@ -33,7 +33,7 @@
 (scroll-bar-mode -1)
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message nil)
-(global-tab-line-mode 1)
+(global-tab-line-mode -1)
 
 ;; icons
 (use-package all-the-icons :if (display-graphic-p))
@@ -57,13 +57,17 @@
 
 ;; Dashboard
 (use-package dashboard
+  :ensure t
   :config
   (setq dashboard-startup-banner 'official
         dashboard-center-content t
         dashboard-set-heading-icons t
+        dashboard-set-file-icons t
         dashboard-items '((recents . 5)
                           (projects . 5)))
   (dashboard-setup-startup-hook))
+
+(setq initial-buffer-choice (lambda () (get-buffer-create dashboard-buffer-name)))
 
 ;; ====================
 ;; Editing Enhancements
@@ -139,12 +143,6 @@
 
 ;; install the following in system
 ;; pyright, clang, yaml-language-server, bash-language-server
-(use-package go-mode
-  :mode "\\.go\\'"
-  :hook ((go-mode . lsp)
-         (before-save . gofmt-before-save))
-  :config
-  (setq gofmt-command "goimports"))
 
 (use-package lsp-ui
   :after lsp-mode

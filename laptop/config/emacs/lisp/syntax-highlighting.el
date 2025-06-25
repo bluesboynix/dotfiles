@@ -1,7 +1,6 @@
 ;; =====================
 ;; SYNTAX-HIGHLIGHTING
 ;; =====================
-(prism-mode -1)
 
 (defface font-lock-quoted-symbol-face
   '((t (:foreground "#e5c07b" :weight bold)))

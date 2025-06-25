@@ -1,21 +1,11 @@
-;;; init.el --- My Emacs Configuration -*- lexical-binding: t; -*-
-
-;; ====================
-;; Early Performance Tweaks
-;; ====================
-(setq gc-cons-threshold (* 50 1000 1000))  ; 50MB GC threshold during startup
+;;; init.el --- Entry point -*- lexical-binding: t; -*-
+(setq gc-cons-threshold (* 50 1000 1000))
 (add-hook 'emacs-startup-hook
-          (lambda () (setq gc-cons-threshold (* 2 1000 1000)))) ; Reset to 2MB after init
+          (lambda () (setq gc-cons-threshold (* 2 1000 1000))))
 
-;; ====================
-;; Package Management
-;; ====================
-(require 'package)
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("gnu"   . "https://elpa.gnu.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-;;(package-initialize)
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
+<<<<<<< HEAD
 ;; Bootstrap `use-package`
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -262,11 +252,26 @@
 (require 'server)
 (unless (server-running-p)
   (server-start))
+=======
+;; Load modules
+(require 'packages)
+(require 'core-ui)
+(require 'editing)
+(require 'keybindings)
+(require 'completion)
+(require 'lsp-config)
+(require 'lisp-dev)
+(require 'syntax-highlighting)
+(require 'extras)
+>>>>>>> e0a10e2 (add lisp directory in emacs config)
 
 ;; Custom file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load custom-file))
+
+(require 'server)
+(unless (server-running-p) (server-start))
 
 (provide 'init)
 ;;; init.el ends here

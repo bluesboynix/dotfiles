@@ -6,10 +6,17 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(company-box company-lsp corfu counsel-projectile dashboard
+<<<<<<< HEAD
 		 doom-modeline doom-themes dracula-theme flycheck
 		 go-mode helpful highlight-quoted lsp-ui magit paredit
 		 rainbow-delimiters slime smartparens
 		 treemacs-all-the-icons vterm-toggle
+=======
+		 doom-modeline doom-themes dracula-theme eldoc-box
+		 flycheck go-mode helpful highlight-quoted lsp-ui
+		 magit paredit prism rainbow-delimiters slime
+		 smartparens treemacs-all-the-icons vterm-toggle
+>>>>>>> e0a10e2 (add lisp directory in emacs config)
 		 yasnippet-snippets))
  '(warning-suppress-types '((use-package))))
 (custom-set-faces

@@ -34,4 +34,20 @@
   :bind (:map emacs-lisp-mode-map
               ("C-c e" . macrostep-expand)))
 
+;; rainbow coloring parenthesis
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+(require 'rainbow-delimiters)
+
+(custom-set-faces
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "#E06C75"))))  ; red
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "#E5C07B"))))  ; yellow
+ '(rainbow-delimiters-depth-3-face ((t (:foreground "#98C379"))))  ; green
+ '(rainbow-delimiters-depth-4-face ((t (:foreground "#56B6C2"))))  ; cyan
+ '(rainbow-delimiters-depth-5-face ((t (:foreground "#61AFEF"))))  ; blue
+ '(rainbow-delimiters-depth-6-face ((t (:foreground "#C678DD"))))  ; magenta
+ '(rainbow-delimiters-depth-7-face ((t (:foreground "#ABB2BF"))))  ; light gray
+ '(rainbow-delimiters-unmatched-face ((t (:foreground "white" :background "#E06C75"))))) ; unmatched
+
 (provide 'lisp-dev)

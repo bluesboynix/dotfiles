@@ -25,8 +25,7 @@
 
 ;; eldoc
 (use-package eldoc-box
-  (use-package eldoc-box
-    :hook (slime-mode . eldoc-box-hover-mode)))
+  :hook (slime-mode . eldoc-box-hover-mode))
 
 (add-hook 'slime-mode-hook #'eldoc-mode)
 

@@ -10,4 +10,4 @@
 (global-set-key (kbd "<f8>") #'treemacs)         ; F8 for treemacs
 (global-set-key (kbd "<f9>") #'vterm-toggle)     ; F9 for vterm
 
-(provide 'keybinding)
+(provide 'keybindings)

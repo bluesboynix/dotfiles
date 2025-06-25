@@ -17,3 +17,4 @@
       use-package-verbose t)  ; Debugging
 
 (provide 'packages)
+;;; packages.el ends here

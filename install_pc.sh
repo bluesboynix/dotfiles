@@ -113,6 +113,16 @@ for file in "${EMACS_FILES[@]}"; do
         "$BACKUP_DIR/.config/emacs"
 done
 
+# Symlink the lisp directory
+LISP_SOURCE="$TARGET_DIR/$BRANCH/config/emacs/lisp"
+LISP_TARGET="$EMACS_CONFIG_DIR/lisp"
+
+if [ -d "$LISP_SOURCE" ]; then
+    create_symlink "$LISP_SOURCE" "$LISP_TARGET" "$BACKUP_DIR/.config/emacs"
+else
+    echo "  ⚠️  Warning: Lisp directory not found at $LISP_SOURCE"
+fi
+
 # Process shell configuration
 echo "[*] Setting up shell configuration..."
 declare -A SHELL_FILES=(
@@ -145,6 +155,9 @@ done
 for file in "${EMACS_FILES[@]}"; do
     verify_installation "$EMACS_CONFIG_DIR/$file" || FAILED=1
 done
+
+# Verify the lisp directory separately (not in the loop)
+verify_installation "$EMACS_CONFIG_DIR/lisp" || FAILED=0
 
 for target in "${!SHELL_FILES[@]}"; do
     verify_installation "$HOME/.$target" || FAILED=1

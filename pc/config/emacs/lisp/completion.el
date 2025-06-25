@@ -1,4 +1,5 @@
-;; Ivy/Counsel/Swiper (Enhanced Search)
+;;; Ivy/Counsel/Swiper --- (Enhanced Search)
+;;; some UI enhenced config
 (use-package ivy
   :diminish
   :config

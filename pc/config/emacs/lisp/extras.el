@@ -50,4 +50,4 @@
   :bind (("C-h f" . helpful-callable)
          ("C-h v" . helpful-variable)))
 
-(require 'extras)
+(provide 'extras)

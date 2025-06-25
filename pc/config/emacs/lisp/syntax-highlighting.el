@@ -1,8 +1,9 @@
-;; =====================
-;; SYNTAX-HIGHLIGHTING
-;; =====================
-(prism-mode -1)
+;;; syntax-highlighting.el --- Custom Lisp highlighting -*- lexical-binding: t -*-
 
+;; Enable full highlighting
+(setq font-lock-maximum-decoration t)
+
+;;; CUSTOM FACES
 (defface font-lock-quoted-symbol-face
   '((t (:foreground "#e5c07b" :weight bold)))
   "Face for quoted symbols like 'foo or #'bar.")
@@ -47,10 +48,10 @@
    `(
      ;; Macros and special forms (purple)
      ("\\<\\(defun\\|defmacro\\|lambda\\|let\\*?\\|if\\|cond\\|when\\|unless\\|quote\\|function\\|progn\\|and\\|or\\|case\\|list\\|loop\\|do\\|dotimes\\|dolist\\|for\\)\\>"
-      . 'font-lock-keyword-face)
+ . 'font-lock-keyword-face)
 
      ;; Function name after defun/defmacro (cyan)
-     ("\\<\\(defun\\|defmacro\\)\\s +\\(\\(?:\\sw\\|\\s_\\)+\\)"
+     ("\\<\\(defun\\|defmacro\\)\\s +\\(\\(?:\\sw\\|\\s_\\|-\\)+\\)"
       (2 'font-lock-function-name-face))
 
      ;; Arguments in defun/lambda (gold)
@@ -68,12 +69,15 @@
      ;; Strings (yellow)
      ("\"[^\"]*\"" . 'font-lock-string-face)
 
-     ;; List operator (purple)
-     ("\\<\\(list\\)\\>" . 'font-lock-keyword-face)
-
-     ;; Function/operator names in head position (purple)
-     ("(\\s-*\\(\\(?:\\sw\\|\\s_\\)+\\)"
-      (1 'font-lock-lisp-operator-face))
+     ;; Operators in head position, except special forms
+     (`(,(rx "(" (0+ space)
+             (group (1+ (or word (syntax symbol)))))
+	(1 (let ((sym (match-string 1)))
+             (unless (member sym
+                        '("defun" "defmacro" "lambda" "let" "let*" "if" "cond"
+                          "when" "unless" "quote" "function" "progn" "and" "or"
+                          "case" "list" "loop" "do" "dotimes" "dolist" "for"))
+          'font-lock-lisp-operator-face))))
 
      ;; Booleans: t, nil (green)
      ("\\<\\(t\\|nil\\)\\>" . 'font-lock-boolean-face)

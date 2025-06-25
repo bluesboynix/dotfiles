@@ -16,4 +16,4 @@
 (setq use-package-always-ensure t
       use-package-verbose t)  ; Debugging
 
-(provide 'package)
+(provide 'packages)

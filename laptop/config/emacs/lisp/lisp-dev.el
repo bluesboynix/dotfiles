@@ -40,14 +40,29 @@
 
 (require 'rainbow-delimiters)
 
+;; (custom-set-faces
+;;  ;; VIBGYOR order
+;;  '(rainbow-delimiters-depth-1-face ((t (:foreground "#8A2BE2")))) ; Violet
+;;  '(rainbow-delimiters-depth-2-face ((t (:foreground "#4B0082")))) ; Indigo
+;;  '(rainbow-delimiters-depth-3-face ((t (:foreground "#0000FF")))) ; Blue
+;;  '(rainbow-delimiters-depth-4-face ((t (:foreground "#00FF00")))) ; Green
+;;  '(rainbow-delimiters-depth-5-face ((t (:foreground "#FFFF00")))) ; Yellow
+;;  '(rainbow-delimiters-depth-6-face ((t (:foreground "#FFA500")))) ; Orange
+;;  '(rainbow-delimiters-depth-7-face ((t (:foreground "#FF0000")))) ; Red
+
+;;  ;; Optional: unmatched parens
+;;  '(rainbow-delimiters-unmatched-face ((t (:foreground "white" :background "#FF0000" :weight bold)))))
+
 (custom-set-faces
- '(rainbow-delimiters-depth-1-face ((t (:foreground "#E06C75"))))  ; red
- '(rainbow-delimiters-depth-2-face ((t (:foreground "#E5C07B"))))  ; yellow
- '(rainbow-delimiters-depth-3-face ((t (:foreground "#98C379"))))  ; green
- '(rainbow-delimiters-depth-4-face ((t (:foreground "#56B6C2"))))  ; cyan
- '(rainbow-delimiters-depth-5-face ((t (:foreground "#61AFEF"))))  ; blue
- '(rainbow-delimiters-depth-6-face ((t (:foreground "#C678DD"))))  ; magenta
- '(rainbow-delimiters-depth-7-face ((t (:foreground "#ABB2BF"))))  ; light gray
- '(rainbow-delimiters-unmatched-face ((t (:foreground "white" :background "#E06C75"))))) ; unmatched
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "#FF0000")))) ; Red
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "#FF8C00")))) ; Orange
+ '(rainbow-delimiters-depth-3-face ((t (:foreground "#FFFF00")))) ; Yellow
+ '(rainbow-delimiters-depth-4-face ((t (:foreground "#00FF00")))) ; Green
+ '(rainbow-delimiters-depth-5-face ((t (:foreground "#56B6C2")))) ; Cyan
+ '(rainbow-delimiters-depth-6-face ((t (:foreground "#9467BD")))) ; Purple
+ '(rainbow-delimiters-depth-7-face ((t (:foreground "#D19A66")))) ; Bronze
+
+ ;; Optional: unmatched delimiters (bright red background)
+ '(rainbow-delimiters-unmatched-face ((t (:foreground "white" :background "#FF0000" :weight bold)))))
 
 (provide 'lisp-dev)

@@ -1,94 +1,116 @@
 # ~/.bashrc
 
-### PATH ###
-# Function to remove duplicates in PATH
+############################################################
+# ░█▀█░█▀▀░█░░░▀█▀░█░█░█▀█░█▀▀░█░█
+# ░█▀█░█▀▀░█░░░░█░░█░█░█░█░█░█░█▀▄
+# ░▀░▀░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░▀░▀▀▀░▀░▀
+############################################################
+
+### --- PATH Setup with Deduplication ---
 remove_path_duplicates() {
   local OLD_PATH="$1"
   local NEW_PATH=""
   local IFS=':'
-  local DIR
   declare -A SEEN
-
   for DIR in $OLD_PATH; do
-    if [[ -n "$DIR" && -z "${SEEN[$DIR]}" ]]; then
-      NEW_PATH+="$DIR:"
-      SEEN[$DIR]=1
-    fi
+    [[ -n "$DIR" && -z "${SEEN[$DIR]}" ]] && NEW_PATH+="$DIR:" && SEEN["$DIR"]=1
   done
-
-  # Remove trailing colon
-  NEW_PATH="${NEW_PATH%:}"
-
-  echo "$NEW_PATH"
+  echo "${NEW_PATH%:}"
 }
 
-# Build desired path order explicitly
+# Explicit priority path order
 DESIRED_PATH="$HOME/.local/bin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin"
-
-# Append existing PATH to include any others
-FULL_PATH="$DESIRED_PATH:$PATH"
-
-# Remove duplicates while preserving order
-export PATH=$(remove_path_duplicates "$FULL_PATH")
+# Combine and deduplicate
+export PATH=$(remove_path_duplicates "$DESIRED_PATH:$PATH")
 
 
-### Smart TERM setup for SSH/local/tmux/modern terminals ###
-# Priority: kitty > foot > wezterm > tmux > 256color > xterm > fallback
-
-# Function to safely set TERM if it's supported
+### --- Smart TERM Setup (Local, SSH, Tmux, Modern) ---
 set_term_if_supported() {
   local term=$1
-  if infocmp "$term" >/dev/null 2>&1; then
-    export TERM="$term"
-    return 0
-  fi
+  infocmp "$term" >/dev/null 2>&1 && export TERM="$term" && return 0
   return 1
 }
 
-# 1. Detect Kitty
-if [[ "$TERM_PROGRAM" == "Kitty" ]] || [[ "$TERM" == *"kitty"* ]]; then
-  set_term_if_supported "xterm-kitty"
-# 2. Detect foot (based on env var)
-elif [[ -n "$FOOT" ]] || [[ "$TERM" == "foot" ]]; then
-  set_term_if_supported "foot"
-# 3. Detect wezterm (based on env var)
-elif [[ "$TERM_PROGRAM" == "WezTerm" ]] || [[ "$TERM" == "wezterm" ]]; then
-  set_term_if_supported "wezterm"
-# 4. Inside tmux
-elif [[ -n "$TMUX" ]]; then
-  set_term_if_supported "screen-256color"
-# 5. Normal 256color xterm
-elif set_term_if_supported "xterm-256color"; then
-  :
-# 6. Fallback to basic xterm
-elif set_term_if_supported "xterm"; then
-  :
-# 7. Very last resort fallback
-else
-  export TERM="dumb"
-fi
+set_best_term() {
+  case "$TERM_PROGRAM" in
+    "Kitty")      set_term_if_supported "xterm-kitty" && return;;
+    "WezTerm")    set_term_if_supported "wezterm" && return;;
+  esac
+
+  [[ -n "$FOOT" || "$TERM" == "foot" ]] && set_term_if_supported "foot" && return
+  [[ "$TERM" == *"kitty"* ]]            && set_term_if_supported "xterm-kitty" && return
+  [[ -n "$TMUX" ]]                      && set_term_if_supported "screen-256color" && return
+  set_term_if_supported "xterm-256color" || set_term_if_supported "xterm" || export TERM="dumb"
+}
+
+set_best_term
 
 
-### ALIASES ###
-
-# Always alias pacman to use sudo
+### --- Aliases ---
+# Package manager
 alias pacman='sudo pacman'
 
-#Force TERM to xterm-256color
+# Force reliable TERM for SSH
 alias ssh='TERM=xterm-256color ssh'
 
-# Conditionally alias 'ls' based on available tools
-#if command -v lsd >/dev/null 2>&1; then
-#  # If lsd is installed, use it with preferred options
-#  alias ls='lsd --group-dirs=first --icon=always'
-#  export LS_MODE="lsd"
-#else
-#  # Fallback to regular ls with color and -h for sizes
-#  alias ls='ls --color=auto -h'
-#  export LS_MODE="gnu-ls"
-#fi
+# Conditional 'ls' (uncomment to activate)
+# if command -v lsd &>/dev/null; then
+#   alias ls='lsd --group-dirs=first --icon=always'
+#   export LS_MODE="lsd"
+# else
+#   alias ls='ls --color=auto -h'
+#   export LS_MODE="gnu-ls"
+# fi
 
-# Neat Colorized Grep, Diff, etc.
+# Color-enhanced tools
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
 alias ip='ip --color=auto'
+
+# Common convenience aliases
+alias cls='clear'
+alias please='sudo'
+alias mkdir='mkdir -pv'
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias rm='rm -iv'
+
+# Navigation shortcuts
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# Reload shell config
+alias reload='source ~/.bashrc'
+
+# Safe file viewing
+alias less='less -R'
+alias more='less'
+
+
+### --- Environment Improvements ---
+
+# Pager improvements
+export LESS='-R --quit-if-one-screen --no-init'
+export EDITOR=nvim
+export VISUAL=nvim
+
+# Prompt (PS1) enhancement (optional)
+# Use a subtle, clean prompt with Git info
+if [[ $- == *i* ]]; then  # Only in interactive shells
+  PS1='\[\e[0;36m\]\u@\h\[\e[m\]:\[\e[0;33m\]\w\[\e[m\]$(__git_ps1 " (%s)") \$ '
+fi
+
+# Git prompt helper (if installed)
+if [ -f /usr/share/git/completion/git-prompt.sh ]; then
+  source /usr/share/git/completion/git-prompt.sh
+fi
+
+
+### --- Optional Debugging ---
+# Uncomment for shell debug info
+# echo "[.bashrc] Loaded: TERM=$TERM, SHELL=$SHELL, PATH=$PATH"
+
+# Add this if not already present
+[[ -f /usr/share/bash-completion/bash_completion ]] && \
+  . /usr/share/bash-completion/bash_completion

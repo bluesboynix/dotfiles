@@ -163,6 +163,5 @@
                       :foreground "#5c5c5c"
                       :slant 'italic))
 
-
 (provide 'syntax-highlighting)
 ;;; syntax-highlighting.el ends here

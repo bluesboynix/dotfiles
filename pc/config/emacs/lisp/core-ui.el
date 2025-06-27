@@ -1,21 +1,9 @@
-;;; core-ui.el --- Core UI/UX Setup -*- lexical-binding: t; -*-
-;;
+;;; core-ui.el --- Core UI/UX Configuration
+
 ;;; Commentary:
-;;
-;; This file configures the core user interface and user experience settings
-;; for Emacs.  It includes:
-;;
-;; - Minimal GUI elements (no menu/scroll/tool bars)
-;; - Font and theme setup (with fallbacks)
-;; - Doom modeline customization
-;; - Dashboard startup screen with icons and messages
-;; - Icons support via `all-the-icons`
-;; - Line and column number display
-;;
-;; All configurations are done using `use-package` for better structure and
-;; modularity.  The goal is a clean, modern, informative Emacs UI while
-;; keeping everything in a single, readable file.
-;;
+;; Sets up the visual appearance of Emacs, including themes,
+;; fonts, modeline, and dashboard.
+
 ;;; Code:
 
 ;; -------------------------------
@@ -28,8 +16,21 @@
 
 (setq inhibit-startup-screen t
       initial-scratch-message nil
+      use-dialog-box nil
       column-number-mode t
       line-number-mode t)
+
+;; Line numbers
+(setq display-line-numbers-type 'absolute)
+(global-display-line-numbers-mode t)
+
+;; Highlight current line
+;;(global-hl-line-mode 1)
+;;(set-face-attribute 'hl-line nil :background "#303030")
+
+
+;; Disable visual bell and use modeline flash if needed
+(setq visible-bell nil)
 
 ;; -------------------------------
 ;; Icons (UI Enhancer)
@@ -99,6 +100,11 @@
   (doom-modeline-indent-info t)
   (doom-modeline-modal-icon nil))
 
+;; Ensure modeline fonts work
+(use-package nerd-icons
+  :if (display-graphic-p)
+  :ensure t)
+
 ;; -------------------------------
 ;; Dashboard Configuration
 ;; -------------------------------
@@ -123,8 +129,18 @@
           "Let the lisping begin."
           "Minimalism is power."
           (format "Emacs %s ready for action." emacs-version)))
-
   (dashboard-setup-startup-hook))
+
+;; -------------------------------
+;; Corfu-friendly minibuffer tweaks
+;; -------------------------------
+;; Ensure Corfu works correctly in minibuffer
+(setq completion-in-region-function
+      (lambda (&rest args)
+        (apply (if (and (bound-and-true-p corfu-mode) (natnump corfu-auto))
+                   #'completion--in-region
+                 #'completion--in-region)
+               args)))
 
 (provide 'core-ui)
 ;;; core-ui.el ends here

@@ -33,7 +33,7 @@
 (require 'completion)            ;; Completion framework (vertico, corfu, etc.)
 (require 'lsp-config)            ;; LSP setup for various languages
 (require 'lisp-dev)              ;; Common Lisp/Emacs Lisp tools
-(require 'syntax-highlighting)  ;; Tree-sitter or font-lock enhancements
+(require 'syntax-highlighting)   ;; Tree-sitter or font-lock enhancements
 (require 'extras)                ;; Miscellaneous helpers and UX improvements
 
 ;; --------------------------------------------------

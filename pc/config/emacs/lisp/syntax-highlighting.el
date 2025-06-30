@@ -66,7 +66,7 @@
   "Face for macros.")
 
 (defface cl-special-form-face
-  '((t (:foreground "#56b6c2" :weight bold))) ; cyan, bold
+  '((t (:foreground "#79f7f5" :weight bold))) ; cyan, bold
   "Face for special forms.")
 
 (defface cl-custom-fn-face

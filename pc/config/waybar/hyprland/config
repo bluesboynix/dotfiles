@@ -174,10 +174,15 @@
         "on-click": "vlc",
         "tooltip-format": "vlc"
     },
+//    "custom/editor": {
+//        "format": " ",
+//        "on-click": "foot nvim",
+//        "tooltip-format": "nvim"
+//     },
     "custom/editor": {
-        "format": " ",
-        "on-click": "foot nvim",
-        "tooltip-format": "nvim"
+        "format": " ",
+        "on-click": "ecc",
+        "tooltip-format": "emacsclient"
      },
     "custom/systeminfo": {
         "format": " ",

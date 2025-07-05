@@ -65,7 +65,7 @@ done
 
 # Configuration types
 declare -A CONFIG_TYPES=(
-    ["directory"]="foot hypr rofi waybar wlogout yazi zathura"
+    ["directory"]="foot hypr rofi sway swaync swaylock waybar wlogout yazi zathura"
     ["file"]="nvim"
 )
 

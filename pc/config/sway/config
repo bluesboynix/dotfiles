@@ -1,0 +1,69 @@
+# ~/.config/sway/config
+
+### ENVIRONMENT ###
+set $mod Mod4
+set $term foot
+set $menu rofi -show drun
+
+### OUTPUT / BACKGROUND ###
+output * bg ~/Pictures/Collections/emacs.jpg fill
+
+### KEYBINDINGS ###
+bindsym $mod+Return exec $term
+bindsym $mod+d exec $menu
+bindsym $mod+Shift+r reload
+bindsym $mod+Escape kill
+bindsym Control+Mod1+Delete exec wlogout
+
+# Move focus with arrow keys
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move windows with arrow keys
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Resize
+mode "resize" {
+    bindsym h resize shrink width 10px
+    bindsym j resize grow height 10px
+    bindsym k resize shrink height 10px
+    bindsym l resize grow width 10px
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+### WINDOW BEHAVIOR ###
+# Disable titlebars (only borderless)
+default_border none
+default_floating_border none
+
+# Automatically enable tiling
+workspace_auto_back_and_forth yes
+focus_follows_mouse yes
+mouse_warping container
+gaps inner 5
+gaps outer 5
+
+### AUTOSTART ###
+exec_always autotiling -w 1 2 3 4
+exec_always swaybg -i ~/Pictures/Collections/emacs.jpg -m fill
+exec_always waybar -c ~/.config/waybar/sway/config -s ~/.config/waybar/sway/style.css
+exec_always swaync
+exec_always dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+exec_always xdg-desktop-portal &
+exec_always xdg-desktop-portal-wlr &
+
+### IDLE & LOCK ###
+exec_always swayidle -w \
+  timeout 300 'swaylock -f -c 000000' \
+  timeout 600 'swaymsg "output * dpms off"' \
+  resume 'swaymsg "output * dpms on"' \
+  before-sleep 'swaylock -f -c 000000'
+

@@ -41,7 +41,7 @@ bindsym $mod+r mode "resize"
 
 ### WINDOW BEHAVIOR ###
 # Disable titlebars (only borderless)
-default_border norma 2
+default_border normal 2
 default_floating_border normal 2
 
 # Automatically enable tiling

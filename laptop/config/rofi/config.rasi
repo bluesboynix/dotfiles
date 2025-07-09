@@ -224,4 +224,6 @@ configuration {
 
 //@theme "/home/bluesboy/.local/share/rofi/themes/squared-black.rasi"
 
-@theme "/home/bluesboy/.local/share/rofi/themes/spotlight-dark.rasi"
+//@theme "/home/bluesboy/.local/share/rofi/themes/spotlight-dark.rasi"
+
+@theme "/home/bluesboy/.local/share/rofi/themes/squared-black.rasi"

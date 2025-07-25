@@ -1,0 +1,8 @@
+# Ignore everything by default
+*
+
+# Track only the main config files and lisp directory
+!init.el
+!custom.el
+!lisp/
+!.gitignore

@@ -20,13 +20,13 @@ stow emacs foot hypr nvim rofi waybar wlogout yazi zathura zsh
 * GNU Stow (sudo pacman -S stow on Arch)
 * A Unix-like system with configs under ~/.config/
 # Configured Applications
--- emacs – main editor
--- foot – Wayland terminal
--- hypr – Hyprland WM
--- nvim – Neovim config
--- rofi – app launcher
--- waybar – status bar
--- wlogout – logout menu
--- yazi – TUI file manager
--- zathura – minimalist PDF viewer
--- zsh – shell configuration
+* emacs – main editor
+* foot – Wayland terminal
+* hypr – Hyprland WM
+* nvim – Neovim config
+* rofi – app launcher
+* waybar – status bar
+* wlogout – logout menu
+* yazi – TUI file manager
+* zathura – minimalist PDF viewer
+* zsh – shell configuration

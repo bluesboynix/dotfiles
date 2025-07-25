@@ -1,7 +1,7 @@
 ;; Lisp Development
 
-;; Load SLIME helper from Roswell (auto-sets inferior-lisp-program)
-(load (expand-file-name "~/.roswell/helper.el"))
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+(setq inferior-lisp-program "sbcl")
 
 (use-package slime
   :ensure t

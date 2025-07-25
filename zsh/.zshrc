@@ -27,7 +27,7 @@ path=(
 export PATH="${(j/:/)path}"
 export PATH="$PATH:$HOME/.roswell/bin"
 
-# ─── EDITOR & CURSOR CONFIG ─────────────────────────────────────────────────────
+# ─── other varialbes ─────────────────────────────────────────────────────
 
 export EDITOR=nvim
 export XCURSOR_THEME=Bibata-Modern-Ice
@@ -91,6 +91,8 @@ alias vi="nvim"
 alias vim="nvim"
 alias sbcl='rlwrap sbcl'
 alias slem="lem-sdl2"
+alias bat="bat --style=full --theme=ansi"
+alias man="man -P 'bat -l man -p'"
 
 # Smart ls alias
 if command -v lsd >/dev/null 2>&1; then

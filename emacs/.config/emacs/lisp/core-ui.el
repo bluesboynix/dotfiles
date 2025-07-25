@@ -121,7 +121,7 @@
         '("Hacking time!"
           "Let the lisping begin."
           "Minimalism is power."
-          (format t "Emacs %s ready for action." emacs-version)))
+          '(format t "Emacs ~d ready for action." emacs-version)))
 
   (dashboard-setup-startup-hook))
 

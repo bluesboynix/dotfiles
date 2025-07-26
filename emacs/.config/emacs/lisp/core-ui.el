@@ -125,5 +125,10 @@
 
   (dashboard-setup-startup-hook))
 
+(use-package rainbow-mode
+  :hook ((prog-mode . rainbow-mode)
+	 (css-mode . rainbow-mode)
+	 (html-mode . rainbow-mode)))
+
 (provide 'core-ui)
 ;;; core-ui.el ends here

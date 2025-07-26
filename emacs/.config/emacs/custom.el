@@ -4,7 +4,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(company-box counsel-projectile dashboard doom-modeline doom-themes
+		 eldoc-box flycheck helpful lsp-pyright lsp-ui magit
+		 rainbow-delimiters rainbow-mode slime smartparens
+		 treemacs-all-the-icons treesit-auto vterm-toggle
+		 yasnippet-snippets))
  '(warning-suppress-types '((use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

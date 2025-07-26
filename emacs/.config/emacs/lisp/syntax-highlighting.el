@@ -1,168 +1,152 @@
-;;; syntax-highlighting.el --- Doom One style Common Lisp syntax highlighting -*- lexical-binding: t -*-
+;;; syntax-highlighting.el --- Doom One style Common Lisp syntax highlighting -*- lexical-binding: t; -*-
 
 ;;; Commentary:
-
 ;; This Emacs Lisp script provides enhanced syntax highlighting
 ;; for Common Lisp code using the Doom One color palette.
-;;
-;; Features include:
-;; - Distinct colors for booleans, numbers, keywords, characters, and strings.
-;; - Highlighting the first symbol of lists (function and macro names).
-;; - Special coloring for quoted symbols and quoted lists.
-;; - Highlighting common type predicates (e.g., stringp, listp).
-;; - Additional highlighting for macros, special forms, and user-defined functions.
-;;
-;; The highlighting is applied to `lisp-mode` and `lisp-interaction-mode`,
-;; making it suitable for editing Common Lisp source files and interactive Lisp buffers.
-;;
-;; To use, load this file in your Emacs configuration and the highlighting
-;; rules will automatically activate for Lisp buffers.
 
 ;;; Code:
 
 (setq font-lock-maximum-decoration t)
 
-;;; Faces based on Doom One palette
-
-(defface font-lock-comment-face
-  '((t (:foreground "#5c6370" :slant italic)))
-  "Face for comments with dark grey color and italic style."
-  :group 'font-lock-faces)
-
-(defface cl-boolean-face
-  '((t (:foreground "#98be65" :weight bold))) ; green
-  "Face for booleans: t, nil.")
-
-(defface cl-number-face
-  '((t (:foreground "#da8548"))) ; orange
-  "Face for numeric literals.")
-
-(defface cl-keyword-face
-  '((t (:foreground "#c678dd" :slant italic))) ; purple
-  "Face for keywords like :key.")
-
-(defface cl-character-face
-  '((t (:foreground "#ff6c6b"))) ; red
-  "Face for character literals like #\\A.")
-
-(defface cl-string-face
-  '((t (:foreground "#98be65"))) ; yellow
-  "Face for strings.")
-
-(defface cl-list-head-face
-  '((t (:foreground "#51afef" :weight bold))) ; bright blue
-  "Face for the first symbol of lists (functions/macros).")
-
-(defface cl-quoted-face
-  '((t (:foreground "#98be65" :slant italic))) ; green italic
-  "Face for quoted symbols and lists.")
-
-(defface cl-type-predicate-face
-  '((t (:foreground "#51afef" :weight bold))) ; bright blue (same as list head)
-  "Face for type predicates (stringp, listp, etc.).")
-
-(defface cl-macro-face
-  '((t (:foreground "#d19a66" :weight bold :underline t))) ; orange, bold, underlined
-  "Face for macros.")
+;;;; Face Definitions
 
 (defface cl-special-form-face
-  '((t (:foreground "#56b6c2" :weight bold))) ; cyan, bold
-  "Face for special forms.")
+  '((t (:foreground "#a678de" :weight bold))) ; violet
+  "Face for Common Lisp special forms.")
 
-(defface cl-custom-fn-face
-  '((t (:foreground "#98be65" :weight bold :italic t))) ; green, bold italic
-  "Face for user-defined functions.")
+(defface cl-macro-face
+  '((t (:foreground "#6d5acf" :weight bold))) ; indigo
+  "Face for standard macros.")
 
-;;; Regexes for atoms
+(defface cl-function-face
+  '((t (:foreground "#0d80ba" :weight bold))) ; blue
+  "Face for standard built-in functions.")
 
-(defconst cl-boolean-regexp
-  "\\_<\\(t\\|nil\\)\\_>")
+(defface cl-user-function-face
+  '((t (:foreground "#66ccff" :slant italic :weight semi-bold))) ; light blue
+  "Face for user-defined Common Lisp functions.")
+
+(defface cl-quoted-face
+  '((t (:foreground "#39ff14" :slant italic))) ; green
+  "Face for quoted symbols and lists.")
+
+(defface cl-boolean-face
+  '((t (:foreground "#ffff00" :weight bold))) ; yellow
+  "Face for booleans: T and NIL.")
+
+(defface cl-operator-face
+  '((t (:foreground "#ffa500" :weight bold))) ; orange
+  "Face for symbol operators like +, -, =, *, etc.")
+
+(defface cl-first-form-face
+  '((t (:foreground "#afa9f0" :weight semi-bold)))
+  "Face for first element in forms not caught by other rules.")
+
+(defface cl-number-face
+  '((t (:slant italic :foreground "#b0c4de"))) ; soft blue
+  "Face for numbers and hex literals.")
+
+;;;; Regex Definitions
+
+(defconst cl-user-defun-regexp
+  "(\\s-*defun\\s-+\\(\\(?:\\sw\\|\\s_\\)+\\)")
 
 (defconst cl-number-regexp
-  "\\_<[+-]?[0-9]+\\(?:\\.[0-9]+\\)?\\_>")
+  "\\_<\\(?:[+-]?[0-9]+\\(?:\\.[0-9]*\\)?\\|#x[0-9a-fA-F]+\\)\\_>")
 
-(defconst cl-keyword-regexp
-  "\\_<:\\(\\(?:\\sw\\|\\s_\\)+\\)\\_>")
-
-(defconst cl-character-regexp
-  "#\\\\\\(?:.\\|newline\\|space\\|tab\\|backspace\\|return\\|rubout\\)")
-
-(defconst cl-string-regexp
-  "\"\\(?:\\\\.\\|[^\"\\]\\)*\"")
-
-;;; List head regexp (first symbol after '(' possibly with spaces)
-
-(defconst cl-list-head-regexp
+(defconst cl-generic-form-regexp
   "(\\s-*\\(\\(?:\\sw\\|\\s_\\)+\\)")
 
-;;; Quoted symbols and lists: 'foo or '(a b)
-
 (defconst cl-quoted-regexp
-  "'\\(\\(?:\\sw\\|\\s_\\)+\\)")
+  "'\\(\\(?:\\sw\\|\\s_\\)+\\)\\|'(\\(?:.\\|\n\\)*?)")
 
-;;; Type predicates list - add more if you want
+(defconst cl-boolean-regexp
+  "\\_<\\(?:t\\|nil\\)\\_>")
 
-(defconst cl-type-predicates
-  '("stringp" "listp" "numberp" "symbolp" "functionp" "arrayp" "vectorp" "hash-table-p"))
+(defconst cl-operator-regexp
+  "\\_<\\(?:\\+\\|-\\|\\*\\|/\\|=\\|/=\\|<\\|<=\\|>\\|>=\\)\\_>")
 
-(defconst cl-type-predicate-regexp
-  (concat "\\_<" (regexp-opt cl-type-predicates t) "\\_>"))
-
-;;; Macros, special forms, and custom functions
-
-(defconst cl-macros
-  '("defmacro" "macrolet" "symbol-macrolet" "and" "or" "when" "unless"))
+;;;; Lists and Their Regex Variants
 
 (defconst cl-special-forms
-  '("if" "let" "let*" "setq" "quote" "progn" "block" "return" "catch" "throw"))
+  '("block" "catch" "declare" "eval-when" "flet" "function"
+    "go" "if" "labels" "let" "let*" "load-time-value" "locally"
+    "macrolet" "progn" "progv" "quote" "return-from" "setq"
+    "symbol-macrolet" "tagbody" "the" "throw" "unwind-protect"))
 
-(defconst cl-custom-functions
-  '("my-fn" "custom-add" "compute-thing")) ; add your custom function names here
-
-(defconst cl-macros-regexp
-  (concat "(" (regexp-opt cl-macros t) "\\_>"))
-
-(defconst cl-special-forms-regexp
+(defconst cl-special-form-regexp
   (concat "(" (regexp-opt cl-special-forms t) "\\_>"))
 
-(defconst cl-custom-fns-regexp
-  (concat "(" (regexp-opt cl-custom-functions t) "\\_>"))
+(defconst cl-standard-macros
+  '("defun" "defmacro"
+    "destructuring-bind" "multiple-value-bind" "multiple-value-setq"
+    "with-open-file" "with-open-stream" "with-input-from-string"
+    "with-output-to-string" "with-slots" "with-accessors"
+    "with-hash-table-iterator" "with-standard-io-syntax"
+    "when" "unless" "and" "or" "cond" "case" "ecase" "typecase"
+    "etypecase" "ctypecase" "loop" "do" "do*" "dotimes" "dolist"
+    "assert" "check-type" "declaim" "define-compiler-macro"
+    "define-condition" "define-modify-macro" "define-setf-expander"
+    "define-symbol-macro" "define-method-combination" "defclass"
+    "defgeneric" "defmethod" "defpackage" "defparameter"
+    "defvar" "defconstant" "time" "ignore-errors" "handler-case"
+    "handler-bind" "restart-case" "restart-bind" "prog1" "prog2"
+    "shiftf" "rotatef" "psetf" "psetq" "setf" "remf"))
 
-;;; Add font-lock keywords to Lisp modes
+(defconst cl-macro-regexp
+  (concat "(" (regexp-opt cl-standard-macros t) "\\_>"))
+
+(defconst cl-standard-functions
+  '("car" "cdr" "cons" "append" "list" "member" "assoc" "mapcar"
+    "reduce" "remove" "length" "reverse" "apply" "funcall" "eq"
+    "eql" "equal" "type-of" "symbol-name" "make-array" "aref"
+    "format" "read" "print" "write" "load" "find" "position"
+    "copy-list" "sort"))
+
+(defconst cl-function-regexp
+  (concat "(" (regexp-opt cl-standard-functions t) "\\_>"))
+
+;;;; Font Lock Application
 
 (dolist (mode '(lisp-mode lisp-interaction-mode))
-  (font-lock-add-keywords mode
-    `(
-      ;; Macros (first symbol in list)
-      (,cl-macros-regexp . 'cl-macro-face)
-      ;; Special forms (first symbol in list)
-      (,cl-special-forms-regexp . 'cl-special-form-face)
-      ;; Custom functions (first symbol in list)
-      (,cl-custom-fns-regexp . 'cl-custom-fn-face)
-      ;; Booleans
-      (,cl-boolean-regexp      . 'cl-boolean-face)
-      ;; Numbers
-      (,cl-number-regexp       . 'cl-number-face)
-      ;; Keywords
-      (,cl-keyword-regexp      . 'cl-keyword-face)
-      ;; Characters
-      (,cl-character-regexp    . 'cl-character-face)
-      ;; Strings
-      (,cl-string-regexp       . 'cl-string-face)
-      ;; List heads (generic)
-      (,cl-list-head-regexp 1 'cl-list-head-face)
-      ;; Quoted symbols
-      (,cl-quoted-regexp 1 'cl-quoted-face)
-      ;; Type predicates
-      (,cl-type-predicate-regexp . 'cl-type-predicate-face)
-      )))
+  (font-lock-add-keywords
+   mode
+   `(
+     ;; Special Forms
+     (,cl-special-form-regexp       . 'cl-special-form-face)
 
-;; Ensure comment face uses dark grey after theme loads
+     ;; Standard Macros
+     (,cl-macro-regexp              . 'cl-macro-face)
+
+     ;; Standard Functions
+     (,cl-function-regexp           . 'cl-function-face)
+
+     ;; User-defined function name in defun
+     (,cl-user-defun-regexp 1       'cl-user-function-face)
+
+     ;; Quoted items
+     (,cl-quoted-regexp             . 'cl-quoted-face)
+
+     ;; Boolean
+     (,cl-boolean-regexp            . 'cl-boolean-face)
+
+     ;; Operators
+     (,cl-operator-regexp           . 'cl-operator-face)
+
+     ;; Fallback form head
+     (,cl-generic-form-regexp 1     'cl-first-form-face)
+
+     ;; Numbers
+     (,cl-number-regexp             . 'cl-number-face)
+     )))
+
+;;;; Comment Face Tweaking (after Doom themes load)
+
 (with-eval-after-load 'doom-themes
   (set-face-attribute 'font-lock-comment-face nil
                       :foreground "#5c5c5c"
                       :slant 'italic))
 
-
 (provide 'syntax-highlighting)
+
 ;;; syntax-highlighting.el ends here

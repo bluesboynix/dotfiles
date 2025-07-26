@@ -1,0 +1,12 @@
+#!/bin/bash
+
+TEXT=$(wl-paste)
+
+if [ -z "$TEXT" ]; then
+  notify-send "No text selected"
+  exit 1
+fi
+
+gtts-cli "$TEXT" --output /tmp/speech.mp3
+
+mpv --really-quiet /tmp/speech.mp3

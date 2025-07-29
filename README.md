@@ -1,6 +1,7 @@
 # My Dotfiles
 
-Personal, modular dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/). Clean, minimal, and easily reproducible across systems.
+Personal, modular dotfiles and scripts managed with [GNU Stow](https://www.gnu.org/software/stow/). Clean, minimal, and easily reproducible across systems.
+
 
 ## 🛠 Structure
 

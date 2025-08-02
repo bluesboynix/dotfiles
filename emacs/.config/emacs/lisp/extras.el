@@ -5,7 +5,7 @@
 (use-package vterm
   :commands vterm
   :config
-  (setq vterm-shell "/bin/bash"))  ; Customize shell if needed
+  (setq vterm-shell "/bin/zsh"))  ; Customize shell if needed
 
 (use-package vterm-toggle
   :after vterm

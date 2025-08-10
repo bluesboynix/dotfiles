@@ -22,7 +22,7 @@
 (require 'lisp-dev)
 (require 'syntax-highlighting)
 (require 'extras)
-(require 'scheme-dev.el)
+(require 'scheme-dev)
 (require 'syntax-highlighting-scheme)
 
 ;; Custom file

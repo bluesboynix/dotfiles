@@ -22,6 +22,8 @@
 (require 'lisp-dev)
 (require 'syntax-highlighting)
 (require 'extras)
+(require 'scheme-dev.el)
+(require 'syntax-highlighting-scheme)
 
 ;; Custom file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

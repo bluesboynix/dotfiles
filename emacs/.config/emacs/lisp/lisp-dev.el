@@ -1,47 +1,56 @@
 ;; Lisp Development
 
-(load (expand-file-name "~/quicklisp/slime-helper.el"))
-(setq inferior-lisp-program "sbcl")
-
+;; ================================
+;; Common Lisp (SLIME)
+;; ================================
 (use-package slime
   :ensure t
+  :mode ("\\.lisp\\'" . lisp-mode)
+  :commands (slime slime-connect)
   :init
-  (load (expand-file-name "sbcl"))
+  (load (expand-file-name "~/quicklisp/slime-helper.el"))
+  (setq inferior-lisp-program "sbcl")
   :config
-  (slime-setup '(slime-fancy)))
+  (slime-setup '(slime-fancy))
+  ;; SLIME-specific integration with smartparens
+  (with-eval-after-load 'slime
+    (define-key slime-repl-mode-map (kbd "DEL") #'sp-backward-delete-char)))
 
+;; ================================
 ;; Smartparens configuration
+;; ================================
 (use-package smartparens
-  :hook ((emacs-lisp-mode lisp-mode slime-repl-mode) . smartparens-mode)
+  :hook ((emacs-lisp-mode lisp-mode slime-repl-mode scheme-mode) . smartparens-mode)
   :config
   (require 'smartparens-config)
   (smartparens-global-mode 1)
   (show-smartparens-global-mode 1)
   (setq sp-autoescape-string-quote nil
         sp-show-pair-delay 0.2
-        sp-highlight-pair-overlay nil)
+        sp-highlight-pair-overlay nil))
 
-  ;; SLIME-specific integration
-  (with-eval-after-load 'slime
-    (define-key slime-repl-mode-map (kbd "DEL") #'sp-backward-delete-char)))
-
-;; Eldoc and eldoc-box for hover tooltips
+;; ================================
+;; Eldoc & Eldoc-box
+;; ================================
 (use-package eldoc-box
-  :hook ((slime-mode lisp-mode) . eldoc-box-hover-mode))
+  :hook ((slime-mode lisp-mode scheme-mode) . eldoc-box-hover-mode))
 
 (add-hook 'slime-mode-hook #'eldoc-mode)
 (add-hook 'lisp-mode-hook  #'eldoc-mode)
+(add-hook 'scheme-mode-hook #'eldoc-mode)
 
-;; macrostep - expand macros inline
+;; ================================
+;; Macrostep - expand macros inline
+;; ================================
 (use-package macrostep
   :bind (:map emacs-lisp-mode-map
               ("C-c e" . macrostep-expand)))
 
-;; rainbow-delimiters for colorful parens
+;; ================================
+;; Rainbow Delimiters
+;; ================================
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
-
-(require 'rainbow-delimiters)
 
 (custom-set-faces
  '(rainbow-delimiters-depth-1-face ((t (:foreground "#FF0000")))) ; Red
@@ -54,4 +63,3 @@
  '(rainbow-delimiters-unmatched-face ((t (:foreground "white" :background "#FF0000" :weight bold)))))
 
 (provide 'lisp-dev)
-

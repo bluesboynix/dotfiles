@@ -120,8 +120,7 @@
         dashboard-footer-messages
         '("Hacking time!"
           "Let the lisping begin."
-          "Minimalism is power."
-          '(format t "Emacs ~d ready for action." emacs-version)))
+          "Minimalism is power."))
 
   (dashboard-setup-startup-hook))
 

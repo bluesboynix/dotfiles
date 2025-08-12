@@ -21,6 +21,7 @@
 (require 'lsp-config)
 (require 'lisp-dev)
 (require 'syntax-highlighting)
+(require 'scheme-syntax-highlighting)
 (require 'extras)
 
 ;; Custom file

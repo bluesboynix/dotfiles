@@ -62,10 +62,15 @@
   (setq treesit-auto-install 'prompt)
   (global-treesit-auto-mode))
 
-;; Remap major modes to Tree-sitter versions (if available)
+;; Remap major modes to Tree-sitter versions (if available), excluding Scheme
 (with-eval-after-load 'treesit
-  (add-to-list 'major-mode-remap-alist
-               '(scheme-mode . scheme-ts-mode)))
+  (dolist (remap '((python-mode . python-ts-mode)
+                   (c-mode . c-ts-mode)
+                   (c++-mode . c++-ts-mode)
+                   (go-mode . go-ts-mode)
+                   (yaml-mode . yaml-ts-mode)
+                   (sh-mode . bash-ts-mode)))
+    (add-to-list 'major-mode-remap-alist remap)))
 
 ;; Optional font lock and folding improvements
 (setq treesit-font-lock-level 4)

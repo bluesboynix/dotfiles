@@ -9,10 +9,10 @@
  '(geiser-default-implementation 'gambit)
  '(package-selected-packages
    '(company-box counsel-projectile dashboard doom-modeline doom-themes
-		 eldoc-box flycheck geiser-gambit helpful lsp-pyright
-		 lsp-ui magit rainbow-delimiters rainbow-mode slime
-		 smartparens treemacs-all-the-icons treesit-auto
-		 vterm-toggle yasnippet-snippets))
+		 eldoc-box flycheck helpful lsp-pyright lsp-ui magit
+		 rainbow-delimiters rainbow-mode slime smartparens
+		 treemacs-all-the-icons treesit-auto vterm-toggle
+		 yasnippet-snippets))
  '(warning-suppress-types '((use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

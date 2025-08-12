@@ -20,8 +20,8 @@
 (require 'completion)
 (require 'lsp-config)
 (require 'lisp-dev)
-(require 'syntax-highlighting)
-(require 'scheme-syntax-highlighting)
+(require 'common-lisp-colors)
+(require 'scheme-colors)
 (require 'extras)
 
 ;; Custom file

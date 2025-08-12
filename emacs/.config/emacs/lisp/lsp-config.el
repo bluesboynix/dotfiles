@@ -11,10 +11,6 @@
 (use-package lsp-mode
   :commands lsp
   :hook ((python-mode . lsp)
-         (c-mode . lsp)
-         (c++-mode . lsp)
-         (go-mode . lsp)
-         (yaml-mode . lsp)
          (sh-mode . lsp))
   :init
   (setq lsp-keymap-prefix "C-c l")
@@ -60,17 +56,11 @@
 (use-package treesit-auto
   :config
   (setq treesit-auto-install 'prompt)
-  (global-treesit-auto-mode))
-
-;; Remap major modes to Tree-sitter versions (if available), excluding Scheme
-(with-eval-after-load 'treesit
-  (dolist (remap '((python-mode . python-ts-mode)
-                   (c-mode . c-ts-mode)
-                   (c++-mode . c++-ts-mode)
-                   (go-mode . go-ts-mode)
-                   (yaml-mode . yaml-ts-mode)
-                   (sh-mode . bash-ts-mode)))
-    (add-to-list 'major-mode-remap-alist remap)))
+  ;; Don't enable globally
+  ;; (global-treesit-auto-mode) ; ← removed
+  ;; Enable only when you want
+  (add-to-list 'major-mode-remap-alist
+               '(python-mode . python-ts-mode)))
 
 ;; Optional font lock and folding improvements
 (setq treesit-font-lock-level 4)

@@ -1,6 +1,6 @@
 ;;; init.el --- Entry point -*- lexical-binding: t; -*-
 
-(setq gc-cons-threshold (* 50 1000 1000))
+(setq gc-cons-threshold (* 49 1000 1000))
 (add-hook 'emacs-startup-hook
           (lambda ()
             (message "Emacs ready in %s with %d garbage collections."

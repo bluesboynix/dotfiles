@@ -34,6 +34,14 @@
     (,(regexp-opt '("define" "lambda" "if" "cond" "else" "let" "let*" "letrec" "begin" "set!" "quote") 'symbols)
      . 'scheme-keyword-face)
 
+    ;; Function names immediately after define/define*
+    ("(define[ \t]+\\(\\(?:\\sw\\|\\s_\\)+\\)"
+     (1 'scheme-function-face))
+
+    ;; Variable names inside lambda or let bindings
+    ("(\\(?:lambda\\|let\\*?\\)[ \t]*(\\([^)]*\\))"
+     (1 'scheme-variable-face))
+
     ;; Booleans and numbers
     ("#[tf]" . 'scheme-constant-face)
     ("\\_<[0-9]+\\(?:\\.[0-9]+\\)?\\_>" . 'scheme-constant-face)
@@ -50,7 +58,6 @@
   (font-lock-add-keywords nil scheme-font-lock-keywords))
 
 (add-hook 'scheme-mode-hook #'scheme-colors-setup)
-
 
 (defun my-scheme-rainbow-setup ()
   "Enable rainbow-delimiters with custom colors for Scheme."

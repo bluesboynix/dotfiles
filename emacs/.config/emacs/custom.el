@@ -5,11 +5,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(doom-modeline-check-simple-format t nil nil "Customized with use-package doom-modeline")
- '(package-selected-packages
-   '(company-box counsel-projectile dashboard doom-modeline doom-themes
-		 flycheck helpful lsp-pyright lsp-ui magit
-		 rainbow-mode slime treemacs-all-the-icons
-		 treesit-auto vterm-toggle yasnippet-snippets))
+ '(package-selected-packages nil)
  '(warning-suppress-types '((use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

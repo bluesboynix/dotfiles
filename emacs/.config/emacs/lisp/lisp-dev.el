@@ -110,52 +110,5 @@
                          #'scheme-load-file)))
 
 
-;; ======================================================
-;; Racket (Comint Mode)
-;; ======================================================
-(defun run-racket ()
-  "Run Racket REPL in a comint buffer."
-  (interactive)
-  (unless (comint-check-proc "*racket*")
-    (set-buffer (make-comint "racket" "racket")))
-  (pop-to-buffer-same-window "*racket*"))
-
-(defun racket--send-and-return (string)
-  "Helper to send STRING to the Racket REPL."
-  (unless (comint-check-proc "*racket*")
-    (set-buffer (make-comint "racket" "racket")))
-  (with-current-buffer "*racket*"
-    (goto-char (point-max))
-    (insert string)
-    (comint-send-input)))
-
-(defun racket-send-region (start end)
-  (interactive "r")
-  (racket--send-and-return (buffer-substring-no-properties start end)))
-
-(defun racket-send-buffer ()
-  (interactive)
-  (racket-send-region (point-min) (point-max)))
-
-(defun racket-send-definition ()
-  (interactive)
-  (save-excursion
-    (mark-defun)
-    (racket-send-region (region-beginning) (region-end)))
-  (deactivate-mark))
-
-(defun racket-load-file ()
-  (interactive)
-  (when buffer-file-name
-    (racket--send-and-return (format "(load \"%s\")" buffer-file-name))))
-
-(with-eval-after-load 'scheme ;; or you can hook into racket-mode if installed
-  (lisp-dev-apply-keys scheme-mode-map
-                       #'run-racket
-                       #'racket-send-definition
-                       #'racket-send-region
-                       #'racket-send-buffer
-                       #'racket-load-file))
-
 (provide 'lisp-dev)
 ;;; lisp-dev.el ends here

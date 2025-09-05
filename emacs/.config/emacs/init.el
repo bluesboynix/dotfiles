@@ -19,8 +19,9 @@
 (require 'keybindings)
 (require 'completion)
 (require 'lsp-config)
-(require 'lisp-dev)
+(require 'common-lisp-dev)
 (require 'common-lisp-colors)
+(require 'scheme-dev)
 (require 'scheme-colors)
 (require 'extras)
 

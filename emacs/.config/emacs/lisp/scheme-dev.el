@@ -77,13 +77,11 @@
   (pop-to-buffer-same-window "*gambit*"))
 
 (defun gambit--send-and-return (string)
-  "Send STRING to Gambit REPL without switching windows."
+  "Send STRING to Gambit REPL without echoing the input."
   (unless (comint-check-proc "*gambit*")
     (set-buffer (make-comint "gambit" "gsi")))
-  (with-current-buffer "*gambit*"
-    (goto-char (point-max))
-    (insert string)
-    (comint-send-input)))
+  (let ((proc (get-buffer-process "*gambit*")))
+    (comint-send-string proc (concat string "\n"))))
 
 (defun gambit-send-region (start end)
   "Send the current region to the Gambit REPL."
@@ -119,3 +117,4 @@
 
 (provide 'scheme-dev)
 ;;; scheme-dev.el ends here
+

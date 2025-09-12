@@ -6,23 +6,19 @@
 ;; Custom Faces
 ;; --------------------------
 (defface scheme-keyword-face
-  '((t :foreground "#a020f0"))
+  '((t :foreground "#d010d0"))
   "Face for Scheme keywords (define, lambda, etc.).")
 
 (defface scheme-function-face
-  '((t :foreground "#51afef"))
+  '((t :foreground "#00ffaf"))
   "Face for Scheme function names immediately after define.")
-
-(defface scheme-variable-face
-  '((t :foreground "#c678dd"))
-  "Face for Scheme variables (lambda or let bindings).")
 
 (defface scheme-builtin-face
   '((t :foreground "#10a0f0"))
   "Face for built-in Scheme procedures like display, newline, car, cdr, etc.")
 
 (defface scheme-constant-face
-  '((t :foreground "#98be65"))
+  '((t :foreground "#aadd00"))
   "Face for constants like #t, #f, numbers, nil.")
 
 (defface scheme-string-face
@@ -37,15 +33,28 @@
   '((t :foreground "#98be65" :slant italic))
   "Face for the quote symbol `'` in Scheme.")
 
+(defface scheme-quoted-content
+  '((t :slant italic :foreground "#98be65"))
+  "Face for everything inside quoted forms.")
+
+(defface scheme-first-symbol-face
+  '((t :foreground "#50ff50"))
+  "Face for the first symbol in any s-expression (except those already highlighted).")
+
+
 ;; --------------------------
 ;; Font-lock Keywords
 ;; --------------------------
 (defvar scheme-font-lock-keywords
   `(
-    ;; 1. Quote symbol first
-    ("\\('\\)\\(?:\\sw\\|\\s_\\|\\s(\\)" 1 'scheme-quote-face)
+    ;; Handles 'atom, '( ... ), (quote ( ... ))
+    ("('\\(?:\\(?:\\sw\\|\\s_\\)+\\|([^)]*)\\))" . 'scheme-quoted-content)
+    ("(quote[ \t]+\\([^)]*\\))" 1 'scheme-quoted-content)
 
-    ;; 2. Special forms / Keywords
+    ;; Highlight the quote character itself
+    ("\\('\\)" 1 'scheme-quote-face)
+    
+    ;; Special forms / Keywords
     (,(regexp-opt
        '("define" "define-values" "define-syntax"
          "lambda" "if" "cond" "else" "case"
@@ -54,7 +63,7 @@
          "syntax-rules" "parameterize" "guard") 'symbols)
      . 'scheme-keyword-face)
 
-    ;; 3. Built-in functions
+    ;; Built-in functions
     (,(regexp-opt
        '("car" "cdr" "cons" "list" "length" "append"
          "display" "newline" "eval" "apply" "map" "foldl" "foldr"
@@ -63,28 +72,31 @@
          "vector?" "list?" "pair?") 'symbols)
      . 'scheme-builtin-face)
 
-    ;; 4. Function names immediately after define / define-values
+    ;; Function names immediately after define / define-values
     ("(define\\(?:-values\\)?[ \t]+\\(\\(?:\\sw\\|\\s_\\)+\\)"
      (1 'scheme-function-face))
 
-    ;; 5. Variable names in lambda or let bindings
-    ("(\\(?:lambda\\|let\\*?\\|let-values\\|let*-values\\)[ \t]*(\\([^)]*\\))"
-     (1 'scheme-variable-face))
-
-    ;; 6. Booleans
+    ;; Booleans
     ("\\(#t\\|#f\\)" . 'scheme-constant-face)
 
-    ;; 7. Numbers (integer and float)
-    ("\\_<[0-9]+\\(?:\\.[0-9]+\\)?\\_>" . 'scheme-constant-face)
+    ;; Numbers (integer and float, with optional sign)
+    ("\\_<[+-]?[0-9]+\\(?:\\.[0-9]+\\)?\\(?:/[0-9]+\\)?\\_>" . 'scheme-constant-face)
 
-    ;; 8. Nil / empty list
+    ;; Nil / empty list
     ("'()" . 'scheme-constant-face)
 
-    ;; 9. Strings
+    ;; Strings
     ("\".*?\"" . 'scheme-string-face)
 
-    ;; 10. Comments
+    ;; Comments
     (";.*" . 'scheme-comment-face)
+
+    ;; First symbol in any S-expression (fallback)
+    ("(\\s-*\\(\\(?:\\sw\\|\\s_\\)+\\)"
+     (1 (unless (or
+                 ;; do NOT recolor if already highlighted by higher-priority rules
+                 (get-text-property (match-beginning 1) 'face))
+          'scheme-first-symbol-face)))
     ))
 
 ;; --------------------------

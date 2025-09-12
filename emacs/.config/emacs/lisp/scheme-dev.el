@@ -115,6 +115,26 @@
   (define-key scheme-mode-map (kbd "C-c C-b") #'gambit-send-buffer)
   (define-key scheme-mode-map (kbd "C-c C-z") #'run-gambit))
 
+
+
+;; -------------------------------------------------
+;; Tree-sitter quoted-data highlighting (Scheme)
+;; -------------------------------------------------
+;; Requires Emacs 29+ and `M-x treesit-install-language-grammar RET scheme RET`
+;; to install the Scheme grammar.
+
+;; Face for everything inside a quoted form:  '( ... )
+(defface my-scheme-quoted-face
+  '((t :slant italic :foreground "MediumSpringGreen"))
+  "Face for quoted S-expressions in scheme-ts-mode.")
+
+(defun my-scheme-ts-quoted-highlights ()
+  "Tree-sitter patterns to highlight quoted data."
+  `((quoted (datum) @my-scheme-quoted-face)))
+
+(with-eval-after-load 'scheme-ts-mode
+  (tree-sitter-hl-add-patterns 'scheme
+    (my-scheme-ts-quoted-highlights)))
+
 (provide 'scheme-dev)
 ;;; scheme-dev.el ends here
-

@@ -66,12 +66,27 @@
     ;; Built-in functions
     (,(regexp-opt
        '("car" "cdr" "cons" "list" "length" "append"
-         "display" "newline" "eval" "apply" "map" "foldl" "foldr"
-         "call/cc" "force" "read" "read-line" "eq?" "equal?" "not"
-         "number?" "symbol?" "boolean?" "procedure?" "string?"
-         "vector?" "list?" "pair?") 'symbols)
+	 "display" "newline" "eval" "apply" "map" "foldl" "foldr"
+	 "call/cc" "force" "read" "read-line" "eq?" "eqv?" "equal?" "not"
+	 ;; Type predicates
+	 "boolean?" "symbol?" "char?" "string?" "vector?"
+	 "pair?" "list?" "null?"
+	 "number?" "complex?" "real?" "rational?" "integer?"
+	 "exact?" "inexact?" "procedure?" "port?" "input-port?"
+	 "output-port?" "bytevector?"
+	 ;; Number predicates
+	 "zero?" "positive?" "negative?" "odd?" "even?"
+	 "finite?" "infinite?" "nan?"
+	 ;; Miscellaneous
+	 "eof-object?"
+	 "char-alphabetic?" "char-numeric?" "char-whitespace?"
+	 "char-upper-case?" "char-lower-case?"
+	 ;; Common list utilities often used as predicates
+	 "memq" "memv" "member" "assq" "assv" "assoc")
+       'symbols)
      . 'scheme-builtin-face)
 
+    
     ;; Function names immediately after define / define-values
     ("(define\\(?:-values\\)?[ \t]+\\(\\(?:\\sw\\|\\s_\\)+\\)"
      (1 'scheme-function-face))

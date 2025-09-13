@@ -7,8 +7,8 @@
  '(doom-modeline-check-simple-format t nil nil "Customized with use-package doom-modeline")
  '(package-selected-packages
    '(company-box counsel-projectile dashboard doom-modeline doom-themes
-		 eldoc-box flycheck helpful lsp-pyright lsp-ui magit
-		 pdf-tools rainbow-delimiters rainbow-mode slime
+		 eldoc-box flycheck geiser helpful lsp-pyright lsp-ui
+		 magit pdf-tools rainbow-delimiters rainbow-mode slime
 		 smartparens treemacs-all-the-icons treesit-auto
 		 vterm-toggle yasnippet-snippets))
  '(warning-suppress-types '((use-package))))

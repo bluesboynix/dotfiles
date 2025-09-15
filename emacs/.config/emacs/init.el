@@ -21,8 +21,8 @@
 (require 'lsp-config)
 (require 'common-lisp-dev)
 (require 'common-lisp-colors)
-(require 'scheme-dev)
 (require 'scheme-colors)
+(require 'scheme-dev)
 (require 'extras)
 
 ;; Custom file

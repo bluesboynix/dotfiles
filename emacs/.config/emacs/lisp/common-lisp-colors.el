@@ -12,11 +12,11 @@
 ;; ---------------------------------------------------------------------------
 
 (defface cl-special-form-face
-  '((t (:foreground "#ffc0cb")))
+  '((t (:foreground "#00ee00" :weight semi-bold)))
   "Face for Common Lisp special forms.")
 
 (defface cl-macro-face
-  '((t (:foreground "#cf90ff")))
+  '((t (:foreground "#f339ff")))
   "Face for standard macros.")
 
 (defface cl-function-face

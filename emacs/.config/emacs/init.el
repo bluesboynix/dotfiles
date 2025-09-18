@@ -24,6 +24,7 @@
 (require 'scheme-colors)
 (require 'scheme-dev)
 (require 'extras)
+(require 'rust-dev)
 
 ;; Custom file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

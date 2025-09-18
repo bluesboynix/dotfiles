@@ -18,7 +18,6 @@
 (require 'editing)
 (require 'keybindings)
 (require 'completion)
-(require 'lsp-config)
 (require 'common-lisp-dev)
 (require 'common-lisp-colors)
 (require 'scheme-colors)

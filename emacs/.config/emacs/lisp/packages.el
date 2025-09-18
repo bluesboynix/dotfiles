@@ -16,5 +16,12 @@
 (setq use-package-always-ensure t
       use-package-verbose t)  ; Debugging
 
+
+;; Package to read path from shell
+(use-package exec-path-from-shell
+  :init
+  (exec-path-from-shell-initialize))
+
+
 (provide 'packages)
 ;;; packages.el ends here

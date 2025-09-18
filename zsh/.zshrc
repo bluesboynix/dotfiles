@@ -18,6 +18,7 @@ zstyle ':completion:*' mathcer-list 'm:{a-z}={A-Za-z}'
 typeset -U path
 path=(
   $HOME/.local/bin
+  $HOME/.cargo/bin
   /bin
   /usr/bin
   /usr/local/bin

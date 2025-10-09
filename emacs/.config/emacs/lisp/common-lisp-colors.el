@@ -12,23 +12,23 @@
 ;; ---------------------------------------------------------------------------
 
 (defface cl-special-form-face
-  '((t (:foreground "#00ee00" :weight semi-bold)))
+  '((t (:foreground "#00aa00")))
   "Face for Common Lisp special forms.")
 
 (defface cl-macro-face
-  '((t (:foreground "#f339ff")))
+  '((t (:foreground "#7b30ff")))
   "Face for standard macros.")
 
 (defface cl-function-face
-  '((t (:foreground "#0090ff")))
+  '((t (:foreground "#66ccff")))
   "Face for standard built-in functions.")
 
 (defface cl-user-function-face
-  '((t (:foreground "#66ccff")))
+  '((t (:foreground "#ff00ff")))
   "Face for user-defined functions (names in defun).")
 
 (defface cl-constant-face
-  '((t (:foreground "#ff5555" :weight bold)))
+  '((t (:foreground "#ff5555")))
   "Face for symbols declared with defconstant/defparameter.")
 
 (defface cl-quoted-face

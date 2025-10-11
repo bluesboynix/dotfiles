@@ -43,8 +43,14 @@
     (rust-format-buffer)))
 
 (defun rust-dev--setup-prettify ()
-  "Enable prettify-symbols in rust-mode if desired."
   (when rust-dev-prettify-symbols
+    (setq prettify-symbols-alist
+          '(("->" . ?→)
+            ("=>" . ?⇒)
+            ("<=" . ?≤)
+            (">=" . ?≥)
+            ("!=" . ?≠)
+            ("==" . ?≡)))
     (prettify-symbols-mode 1)))
 
 (defun rust-dev--lsp-rust-setup ()
@@ -86,16 +92,16 @@
   :group 'rust-dev
   (if rust-dev-mode
       (progn
-        ;; Enable rust-mode (if not already)
-        (unless (derived-mode-p 'rust-mode)
-          (rust-mode))
         ;; Setup our things
         (rust-dev-mode-setup))
     ;; On disable: you might want to clean up hooks, but we'll leave it minimal
     (remove-hook 'before-save-hook #'rust-dev--maybe-format-buffer t)))
 
 ;;;###autoload
-(add-hook 'rust-mode-hook #'rust-dev-mode)
+(add-hook 'rust-mode-hook
+          (lambda ()
+            (rust-colors-mode 1)
+            (rust-dev-mode 1)))
 
 (provide 'rust-dev)
 ;;; rust-dev.el ends here

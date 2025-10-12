@@ -89,6 +89,7 @@ PROMPT='%F{cyan}%B%1~%b%f %F{yellow}$(git_prompt_info)%f %F{yellow}%B$%b%f '
 
 alias pacman='sudo pacman'
 alias ssh='TERM=xterm-256color ssh'
+alias hx="helix"
 alias vi="nvim"
 alias vim="nvim"
 alias sbcl='rlwrap sbcl'

@@ -9,21 +9,11 @@ return {
 
     local ensure_installed = {
       -- LSPs
-      "pylsp",
-      "yamlls",
 
       -- Formatters
-      "black",
-      "isort",
       "stylua",
-      "gofumpt",
-      "goimports",
-      "yamlfmt",
 
       -- Linters
-      "pylint",
-      "golangci-lint",
-      "yamllint",
     }
 
     for _, name in ipairs(ensure_installed) do

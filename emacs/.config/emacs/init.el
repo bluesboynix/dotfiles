@@ -23,6 +23,7 @@
 (require 'scheme-colors)
 (require 'scheme-dev)
 (require 'extras)
+(require 'rust-dev)
 (require 'rust-colors)
 (require 'gcc-dev)
 (require 'c-colors)

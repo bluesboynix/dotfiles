@@ -5,7 +5,13 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(doom-modeline-check-simple-format t nil nil "Customized with use-package doom-modeline")
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(clippy-flymake company-box counsel-projectile dashboard
+		    doom-modeline doom-themes eldoc-box
+		    exec-path-from-shell flycheck helpful magit
+		    rainbow-delimiters rainbow-mode rust-mode slime
+		    smartparens treemacs-all-the-icons vterm-toggle
+		    yasnippet-snippets))
  '(warning-suppress-log-types '((native-compiler) (native-compiler)))
  '(warning-suppress-types '((native-compiler) (use-package))))
 (custom-set-faces

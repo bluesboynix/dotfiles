@@ -12,7 +12,8 @@
 ;;  * prettify symbols
 ;;  * LSP integration
 ;;  * Convenient keybindings for cargo / run / test / debug
-;;  * Toggles and minor customizations  
+;;  * Toggles and minor customizations
+;;  * Explicitly avoids tree-sitter (rust-ts-mode)
 
 ;;; Code:
 
@@ -36,9 +37,9 @@
   :group 'rust-dev)
 
 (defun rust-dev--maybe-format-buffer ()
-  "Format buffer if `rust-dev-format-on-save` is non-nil and `rust-format-on-save` is nil."
+  "Format buffer if `rust-dev-format-on-save` is non-nil."
   (when (and rust-dev-format-on-save
-             (bound-and-true-p rust-mode)
+             (derived-mode-p 'rust-mode)
              (fboundp 'rust-format-buffer))
     (rust-format-buffer)))
 
@@ -55,7 +56,7 @@
 
 (defun rust-dev--lsp-rust-setup ()
   "Setup LSP for Rust."
-  (lsp))  ;; you may want to configure lsp-mode variables before this
+  (lsp))  ;; You can configure lsp-mode variables before this if needed
 
 (defun rust-dev--cargo-setup ()
   "Enable cargo minor mode if available."
@@ -76,31 +77,27 @@
   (add-hook 'before-save-hook #'rust-dev--maybe-format-buffer nil t)
   ;; Custom keybindings
   (let ((map rust-mode-map))
-    ;; run tests
     (define-key map (kbd "C-c C-c t") #'rust-test)
     (define-key map (kbd "C-c C-c r") #'rust-run)
     (define-key map (kbd "C-c C-c c") #'rust-compile)
     (define-key map (kbd "C-c C-c l") #'rust-run-clippy)
     (define-key map (kbd "C-c C-d") #'rust-dbg-wrap-or-unwrap)
-    ;; toggle mutability
     (define-key map (kbd "C-c C-m") #'rust-toggle-mutability)))
 
 ;;;###autoload
 (define-minor-mode rust-dev-mode
-  "Minor mode to augment `rust-mode` with dev conveniences."
+  "Minor mode to augment `rust-mode` with dev conveniences (no tree-sitter)."
   :lighter " RustDev"
   :group 'rust-dev
   (if rust-dev-mode
-      (progn
-        ;; Setup our things
-        (rust-dev-mode-setup))
-    ;; On disable: you might want to clean up hooks, but we'll leave it minimal
+      (rust-dev-mode-setup)
     (remove-hook 'before-save-hook #'rust-dev--maybe-format-buffer t)))
 
 ;;;###autoload
 (add-hook 'rust-mode-hook
           (lambda ()
-            (rust-colors-mode 1)
+            (when (fboundp 'rust-colors-mode)
+              (rust-colors-mode 1))
             (rust-dev-mode 1)))
 
 (provide 'rust-dev)

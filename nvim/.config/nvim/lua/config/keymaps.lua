@@ -92,14 +92,6 @@ vim.keymap.set('n', '<leader>D', vim.diagnostic.setloclist, { desc = "Open diagn
 ------------------------------------------------------
 -- Formatting (none-ls or LSP)
 map("n", "<leader>gf", vim.lsp.buf.format, { desc = "Format File" })
-----------------------------
-local dap = require("dap")
-vim.keymap.set("n", "<F5>", dap.continue, { desc = "DAP continue" })
-vim.keymap.set("n", "<F10>", dap.step_over, { desc = "DAP step over" })
-vim.keymap.set("n", "<F11>", dap.step_into, { desc = "DAP step into" })
-vim.keymap.set("n", "<F12>", dap.step_out, { desc = "DAP step out" })
-vim.keymap.set("n", "<Leader>b", dap.toggle_breakpoint, { desc = "DAP toggle breakpoint" })
-vim.keymap.set("n", "<Leader>dc", require("dap-go").debug_test, { desc = "DAP debug Go test" })
 ------------------------------------------------------------
 --- allow ctrl + h,j,k,l to nevigate while in insert mode
 vim.keymap.set("i", "<C-h>", "<Left>")

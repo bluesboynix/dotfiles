@@ -93,6 +93,7 @@ alias hx="helix"
 alias vi="nvim"
 alias vim="nvim"
 alias sbcl='rlwrap sbcl'
+alias bigloo="rlwrap bigloo"
 alias slem="lem-sdl2"
 alias bat="bat --style=full --theme=ansi"
 alias man="man -P 'bat -l man -p'"

@@ -20,8 +20,11 @@ stow emacs foot hypr nvim rofi waybar wlogout yazi zathura zsh
 # Requirements
 * GNU Stow (sudo pacman -S stow on Arch)
 * A Unix-like system with configs under ~/.config/
-# Configured Applications
-* emacs – main editor
+* emacs
+  - Core system and utilities - git ripgrep fd make gcc tree exa
+  - Fonts - ttf-fira-code ttf-dejavu
+  - Programming languages - sbcl python go nodejs npm
+  - Rust - https://rust-lang.org/tools/install/
 * foot – Wayland terminal
 * hypr – Hyprland WM
 * nvim – Neovim config

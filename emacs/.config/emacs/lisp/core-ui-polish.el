@@ -20,13 +20,21 @@
 ;; ----------------------------
 (use-package doom-modeline
   :ensure t
-  :hook (after-init . doom-modeline-mode)
-  :config
-  (setq doom-modeline-height 25
-        doom-modeline-icon t
+  :init
+  ;; Optional: use the bar style
+  (setq doom-modeline-icon t
         doom-modeline-major-mode-icon t
-        doom-modeline-buffer-state-icon t))
+        doom-modeline-minor-modes nil
+        doom-modeline-buffer-file-name-style 'relative-to-project
+        doom-modeline-enable-word-count t
+        doom-modeline-persp-name t
+        doom-modeline-lsp t
+        doom-modeline-github t
+        doom-modeline-env-version t
+        doom-modeline-height 25)
+  :hook (after-init . doom-modeline-mode))
 
+  (setq doom-modeline-bar-width 3)
 ;; ----------------------------
 ;; Icons
 ;; ----------------------------

@@ -1,4 +1,4 @@
-theme = "onedark"
+theme = "term16_dark"
 
 [editor]
 scroll-lines = 5

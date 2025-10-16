@@ -17,26 +17,28 @@
 (require 'core-git)          ;; Magit + diff-hl
 (require 'core-dashboard)    ;; dashboard for emacs
 (require 'core-file-browser) ;; use treemacs
+
+;; -------------------------------------------------------------------
+;; Extra
+;; -------------------------------------------------------------------
+(require 'emms-config)               ;; Emacs Music
+
 ;; -------------------------------------------------------------------
 ;; Language modules
 ;; -------------------------------------------------------------------
 (require 'lang-cpp)          ;; C/C++
 (require 'lang-python)       ;; Python
 (require 'lang-rust)         ;; Rust
-
 ;; -------------------------------------------------------------------
 ;; Common Lisp
 ;; -------------------------------------------------------------------
 (require 'common-lisp-colors) ;; Custom syntax highlighting
 (require 'common-lisp-dev)    ;; SLIME, Smartparens, Eldoc, Rainbow delimiters
-
-
-;; -------------------------------------------------------------------
+;; -------------------------------------------------------------------y
 ;; Scheme -> current implementation : bigloo
 ;; -------------------------------------------------------------------
 (require 'scheme-colors) ;; Custom syntax highlighting
 (require 'scheme-dev)
-
 
 ;; -------------------------------------------------------------------
 ;; Load custom-set-variables and custom-set-faces

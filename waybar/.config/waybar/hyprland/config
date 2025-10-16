@@ -175,9 +175,9 @@
         "tooltip-format": "smplayer"
     },
     "custom/editor": {
-        "format": " ",
-        "on-click": "foot nvim",
-        "tooltip-format": "nvim"
+        "format": " ",
+        "on-click": "emacs",
+        "tooltip-format": "emacs"
      },
     "custom/systeminfo": {
         "format": " ",

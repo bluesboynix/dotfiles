@@ -4,34 +4,53 @@
   :ensure t
   :defer t
   :bind
-  (:map global-map
-        ("M-0"     . treemacs-select-window) ;; Focus sidebar
-        ("C-x t t" . treemacs)              ;; Toggle Treemacs
-        ("C-x t B" . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file))
+  (("<f8>" . my/treemacs-toggle))
   :config
-  ;; Optional: theme-aware icon support
+  ;; ---------------------------------------------------------------------------
+  ;; Integrations
+  ;; ---------------------------------------------------------------------------
   (use-package treemacs-icons-dired
     :ensure t
-    :config
-    (treemacs-icons-dired-mode))
+    :hook (dired-mode . treemacs-icons-dired-enable-once))
 
-  ;; Optional: integrate with projectile
   (use-package treemacs-projectile
     :after (treemacs projectile)
     :ensure t)
-  
-  ;; Optional: integrate with lsp
+
   (use-package treemacs-evil
     :after treemacs
     :ensure t)
 
-  ;; Automatically open Treemacs for the current project
-  (setq treemacs-is-never-other-window t)
-  (setq treemacs-silent-refresh t)
-  (setq treemacs-sorting 'alphabetic-asc)
-  (setq treemacs-width 30))
+  ;; ---------------------------------------------------------------------------
+  ;; Treemacs behavior
+  ;; ---------------------------------------------------------------------------
+  (setq treemacs-is-never-other-window t
+        treemacs-silent-refresh t
+        treemacs-sorting 'alphabetic-asc
+        treemacs-width 30
+        treemacs-follow-after-init t)
+
+  ;; ---------------------------------------------------------------------------
+  ;; Smart toggle for Treemacs
+  ;; ---------------------------------------------------------------------------
+  (defun my/treemacs-open-at-current-directory ()
+    "Open Treemacs and set its root to the current buffer's directory."
+    (interactive)
+    (let ((path (or (buffer-file-name) default-directory)))
+      (if (treemacs-current-visibility)
+          (treemacs-select-window)
+        (treemacs)))
+    ;; Change Treemacs root to match the current buffer
+    (when-let ((path (or (buffer-file-name) default-directory)))
+      (treemacs-add-and-display-current-project-exclusively)
+      (treemacs-find-file)))
+
+  (defun my/treemacs-toggle ()
+    "Toggle Treemacs and reveal the current file directory as root."
+    (interactive)
+    (if (treemacs-current-visibility)
+        (treemacs)
+      (my/treemacs-open-at-current-directory))))
 
 (provide 'core-file-browser)
 ;;; core-file-browser.el ends here
-

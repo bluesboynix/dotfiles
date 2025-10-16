@@ -21,7 +21,7 @@
 
   ;; Footer / shortcut hints
   (setq dashboard-footer-messages
-        '("Shortcuts: C-x C-f Open file | C-c s Start SLIME REPL | C-x g Magit | C-c t Terminal"))
+        '("Shortcuts: C-x C-f Open file | C-x g Magit | F8 treemacs | F9 Terminal"))
 
   ;; Enable icons (requires all-the-icons package)
   (setq dashboard-set-heading-icons t)

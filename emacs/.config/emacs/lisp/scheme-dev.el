@@ -62,62 +62,10 @@
 ;; Enable rainbow in bigloo REPL buffers
 (add-hook 'comint-mode-hook
           (lambda ()
-            (when (string-match-p "\\*bigloo\\*" (buffer-name))
+            (when (string-match-p "\\*bigloo\\*" (buffer-name)) ;; choose scheme implementation
               (rainbow-delimiters-mode 1))))
 
-;; Two options cominit mode and geiser
-
-;; -----------------------------
-;; Gambit Scheme (Comint Mode)
-;; -----------------------------
-;; (defun run-gambit ()
-;;   "Run Gambit Scheme REPL in a comint buffer."
-;;   (interactive)
-;;   (unless (comint-check-proc "*gambit*")
-;;     (set-buffer (make-comint "gambit" "gsi")))
-;;   (pop-to-buffer-same-window "*gambit*"))
-
-;; (defun gambit--send-and-return (string)
-;;   "Send STRING to Gambit REPL without echoing the input."
-;;   (unless (comint-check-proc "*gambit*")
-;;     (set-buffer (make-comint "gambit" "gsi")))
-;;   (let ((proc (get-buffer-process "*gambit*")))
-;;     (comint-send-string proc (concat string "\n"))))
-
-;; (defun gambit-send-region (start end)
-;;   "Send the current region to the Gambit REPL."
-;;   (interactive "r")
-;;   (gambit--send-and-return (buffer-substring-no-properties start end)))
-
-;; (defun gambit-send-buffer ()
-;;   "Send the whole buffer to the Gambit REPL."
-;;   (interactive)
-;;   (gambit-send-region (point-min) (point-max)))
-
-;; (defun gambit-send-definition ()
-;;   "Send the current definition to the Gambit REPL."
-;;   (interactive)
-;;   (save-excursion
-;;     (mark-defun)
-;;     (gambit-send-region (region-beginning) (region-end)))
-;;   (deactivate-mark))
-
-;; (defun gambit-clear-repl ()
-;;   "Clear Gambit REPL buffer."
-;;   (interactive)
-;;   (with-current-buffer "*gambit*"
-;;     (let ((comint-buffer-maximum-size 0))
-;;       (comint-truncate-buffer))))
-
-;; Keybindings for Scheme mode
-;; (with-eval-after-load 'scheme
-;;   (define-key scheme-mode-map (kbd "C-c C-c") #'gambit-send-definition)
-;;   (define-key scheme-mode-map (kbd "C-c C-r") #'gambit-send-region)
-;;   (define-key scheme-mode-map (kbd "C-c C-b") #'gambit-send-buffer)
-;;   (define-key scheme-mode-map (kbd "C-c C-z") #'run-gambit))
-
-
-;; bigloo version
+;; bigloo (Cominit Mode)
 (defun run-bigloo ()
   "Run Bigloo Scheme REPL in a comint buffer."
   (interactive)
@@ -164,12 +112,59 @@
   (define-key scheme-mode-map (kbd "C-c C-b") #'bigloo-send-buffer)
   (define-key scheme-mode-map (kbd "C-c C-z") #'run-bigloo))
 
+;; Gambit Scheme (Comint Mode)
+;; (defun run-gambit ()
+;;   "Run Gambit Scheme REPL in a comint buffer."
+;;   (interactive)
+;;   (unless (comint-check-proc "*gambit*")
+;;     (set-buffer (make-comint "gambit" "gsi")))
+;;   (pop-to-buffer-same-window "*gambit*"))
+
+;; (defun gambit--send-and-return (string)
+;;   "Send STRING to Gambit REPL without echoing the input."
+;;   (unless (comint-check-proc "*gambit*")
+;;     (set-buffer (make-comint "gambit" "gsi")))
+;;   (let ((proc (get-buffer-process "*gambit*")))
+;;     (comint-send-string proc (concat string "\n"))))
+
+;; (defun gambit-send-region (start end)
+;;   "Send the current region to the Gambit REPL."
+;;   (interactive "r")
+;;   (gambit--send-and-return (buffer-substring-no-properties start end)))
+
+;; (defun gambit-send-buffer ()
+;;   "Send the whole buffer to the Gambit REPL."
+;;   (interactive)
+;;   (gambit-send-region (point-min) (point-max)))
+
+;; (defun gambit-send-definition ()
+;;   "Send the current definition to the Gambit REPL."
+;;   (interactive)
+;;   (save-excursion
+;;     (mark-defun)
+;;     (gambit-send-region (region-beginning) (region-end)))
+;;   (deactivate-mark))
+
+;; (defun gambit-clear-repl ()
+;;   "Clear Gambit REPL buffer."
+;;   (interactive)
+;;   (with-current-buffer "*gambit*"
+;;     (let ((comint-buffer-maximum-size 0))
+;;       (comint-truncate-buffer))))
+
+;; Keybindings for Scheme mode
+;; (with-eval-after-load 'scheme
+;;   (define-key scheme-mode-map (kbd "C-c C-c") #'gambit-send-definition)
+;;   (define-key scheme-mode-map (kbd "C-c C-r") #'gambit-send-region)
+;;   (define-key scheme-mode-map (kbd "C-c C-b") #'gambit-send-buffer)
+;;   (define-key scheme-mode-map (kbd "C-c C-z") #'run-gambit))
+
 ;; ------------------------
 ;; Geiser + Scheme setup
 ;; ------------------------
 ;;(require 'geiser)
 ;;(require 'geiser-guile)
-;; Make Gambit the default Scheme for Geiser
+;; Make guile the default Scheme for Geiser
 ;;(setq geiser-active-implementations '(guile))
 
 (provide 'scheme-dev)

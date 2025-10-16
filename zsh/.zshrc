@@ -31,7 +31,7 @@ export PATH="/home/bluesboy/.qlot/bin:$PATH"
 
 # ─── other varialbes ─────────────────────────────────────────────────────
 
-export EDITOR=nvim
+export EDITOR=emacs
 export XCURSOR_THEME=Bibata-Modern-Ice
 export XCURSOR_SIZE=24
 

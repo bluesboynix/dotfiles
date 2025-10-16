@@ -12,19 +12,19 @@
 ;; ---------------------------------------------------------------------------
 
 (defface cl-special-form-face
-  '((t (:foreground "#00aa00")))
+  '((t (:foreground "#fcac60")))
   "Face for Common Lisp special forms.")
 
 (defface cl-macro-face
-  '((t (:foreground "#7b30ff")))
+  '((t (:foreground "#ffaaff")))
   "Face for standard macros.")
 
 (defface cl-function-face
-  '((t (:foreground "#66ccff")))
+  '((t (:foreground "#7777ff")))
   "Face for standard built-in functions.")
 
 (defface cl-user-function-face
-  '((t (:foreground "#ff00ff")))
+  '((t (:foreground "#05acfa")))
   "Face for user-defined functions (names in defun).")
 
 (defface cl-constant-face
@@ -44,7 +44,7 @@
   "Face for arithmetic/comparison operators (+, -, =, etc.).")
 
 (defface cl-first-form-face
-  '((t (:foreground "#00f0a0")))
+  '((t (:foreground "#bbffbb")))
   "Face for first element in forms not caught by other rules.")
 
 (defface cl-number-face

@@ -92,7 +92,7 @@ alias ssh='TERM=xterm-256color ssh'
 alias hx="helix"
 alias vi="nvim"
 alias vim="nvim"
-alias sbcl='rlwrap sbcl'
+alias rsbcl='rlwrap sbcl'
 alias bigloo="rlwrap bigloo"
 alias slem="lem-sdl2"
 alias bat="bat --style=full --theme=ansi"

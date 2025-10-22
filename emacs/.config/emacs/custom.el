@@ -14,7 +14,7 @@
      "0325a6b5eea7e5febae709dab35ec8648908af12cf2d2b569bedc8da0a3a81c1"
      default))
  '(package-selected-packages
-   '(all-the-icons consult corfu dashboard diff-hl doom-modeline
+   '(all-the-icons cape consult corfu dashboard diff-hl doom-modeline
                    doom-themes eldoc-box emms kind-icon magit
                    marginalia orderless python-black
                    rainbow-delimiters rust-mode slime smartparens

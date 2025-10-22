@@ -1,10 +1,10 @@
-;;; scheme-dev.el --- Scheme Development Config
+;;; scheme-dev.el --- Scheme Development Config (CHICKEN Scheme) -*- lexical-binding: t; -*-
 
 ;; -----------------------------
 ;; Smartparens
 ;; -----------------------------
 (use-package smartparens
-  :hook ((emacs-lisp-mode lisp-mode slime-repl-mode) . smartparens-mode)
+  :hook ((emacs-lisp-mode lisp-mode slime-repl-mode scheme-mode) . smartparens-mode)
   :config
   (require 'smartparens-config)
   (smartparens-global-mode 1)
@@ -17,7 +17,7 @@
 ;; Eldoc and Hover Docs
 ;; -----------------------------
 (use-package eldoc-box
-  :hook ((scheme-mode) . eldoc-box-hover-mode))
+  :hook (scheme-mode . eldoc-box-hover-mode))
 
 (add-hook 'scheme-mode-hook #'eldoc-mode)
 
@@ -25,7 +25,8 @@
 ;; Macro Expansion
 ;; -----------------------------
 (use-package macrostep
-  :bind (:map emacs-lisp-mode-map
+  :after scheme
+  :bind (:map scheme-mode-map
               ("C-c e" . macrostep-expand)))
 
 ;; -----------------------------
@@ -42,10 +43,9 @@
           slime-repl-mode)
          . rainbow-delimiters-mode)
   :config
-  ;; Explicitly enable for scheme hooks
   (add-hook 'scheme-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'scheme-ts-mode-hook #'rainbow-delimiters-mode)
-  ;; Reapply colors after startup in case theme overwrites
+  ;; Custom colors (Doom One inspired)
   (add-hook 'emacs-startup-hook
             (lambda ()
               (with-eval-after-load 'rainbow-delimiters
@@ -59,113 +59,112 @@
                 (set-face-attribute 'rainbow-delimiters-unmatched-face nil
                                     :foreground "white" :background "#FF0000" :weight 'bold)))))
 
-;; Enable rainbow in bigloo REPL buffers
-(add-hook 'comint-mode-hook
-          (lambda ()
-            (when (string-match-p "\\*bigloo\\*" (buffer-name)) ;; choose scheme implementation
-              (rainbow-delimiters-mode 1))))
+;; -----------------------------
+;; Corfu for completion
+;; -----------------------------
+(use-package corfu
+  :ensure t
+  :init
+  (global-corfu-mode)
+  :custom
+  (corfu-auto t)                 ;; Auto-popup completion
+  (corfu-auto-prefix 1)
+  (corfu-auto-delay 0.1)
+  (corfu-quit-no-match t)
+  (corfu-scroll-margin 4)
+  :bind (:map corfu-map
+              ("TAB" . corfu-next)
+              ([tab] . corfu-next)
+              ("S-TAB" . corfu-previous)
+              ([backtab] . corfu-previous)))
 
-;; bigloo (Cominit Mode)
-(defun run-bigloo ()
-  "Run Bigloo Scheme REPL in a comint buffer."
+;; Optional: Cape for extra completion sources
+(use-package cape
+  :ensure t
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-symbol)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+
+;; -----------------------------
+;; Geiser + CHICKEN integration
+;; -----------------------------
+;; (use-package geiser
+;;   :ensure t
+;;   :defer t
+;;   :config
+;;   (setq geiser-active-implementations '(chicken)))
+
+;; (use-package geiser-chicken
+;;   :ensure t
+;;   :after geiser
+;;   :config
+;;   (setq geiser-chicken-binary "/usr/bin/chicken-csi"))
+
+;; Keybindings (Geiser already provides these):
+;; C-c C-c — Eval definition
+;; C-c C-r — Eval region
+;; C-c C-b — Eval buffer
+;; C-c C-z — Switch to REPL
+;; C-x C-e — Eval last expression
+
+;; -----------------------------
+;; Fallback: CHICKEN Scheme (Comint Mode)
+;; ----------------------------
+
+(defun run-chicken ()
+  "Run CHICKEN Scheme REPL (csi) in a vertical split, keeping focus on the code buffer."
   (interactive)
-  (unless (comint-check-proc "*bigloo*")
-    (set-buffer (make-comint "bigloo" "bigloo")))
-  (pop-to-buffer-same-window "*bigloo*"))
+  (unless (comint-check-proc "*chicken*")
+    (set-buffer (make-comint "chicken" "/usr/bin/chicken-csi")))
+  (let ((repl-buffer (get-buffer "*chicken*"))
+        (cur-window (selected-window)))
+    (unless (get-buffer-window repl-buffer)
+      ;; Split current window vertically (code left, REPL right)
+      (let ((new-window (split-window-right)))
+        (set-window-buffer new-window repl-buffer)))
+    ;; Keep focus on the code buffer
+    (select-window cur-window)))
 
-(defun bigloo--send-and-return (string)
-  "Send STRING to Bigloo REPL without echoing the input."
-  (unless (comint-check-proc "*bigloo*")
-    (set-buffer (make-comint "bigloo" "bigloo")))
-  (let ((proc (get-buffer-process "*bigloo*")))
+(defun chicken--send-and-return (string)
+  "Send STRING to CHICKEN REPL without echoing input."
+  (unless (comint-check-proc "*chicken*")
+    (set-buffer (make-comint "chicken" "/usr/bin/chicken-csi")))
+  (let ((proc (get-buffer-process "*chicken*")))
     (comint-send-string proc (concat string "\n"))))
 
-(defun bigloo-send-region (start end)
-  "Send the current region to the Bigloo REPL."
+(defun chicken-send-region (start end)
+  "Send the current region to the CHICKEN REPL."
   (interactive "r")
-  (bigloo--send-and-return (buffer-substring-no-properties start end)))
+  (chicken--send-and-return (buffer-substring-no-properties start end)))
 
-(defun bigloo-send-buffer ()
-  "Send the whole buffer to the Bigloo REPL."
+(defun chicken-send-buffer ()
+  "Send the entire buffer to the CHICKEN REPL."
   (interactive)
-  (bigloo-send-region (point-min) (point-max)))
+  (chicken-send-region (point-min) (point-max)))
 
-(defun bigloo-send-definition ()
-  "Send the current definition to the Bigloo REPL."
+(defun chicken-send-definition ()
+  "Send the current definition to the CHICKEN REPL."
   (interactive)
   (save-excursion
     (mark-defun)
-    (bigloo-send-region (region-beginning) (region-end)))
+    (chicken-send-region (region-beginning) (region-end)))
   (deactivate-mark))
 
-(defun bigloo-clear-repl ()
-  "Clear Bigloo REPL buffer."
+(defun chicken-clear-repl ()
+  "Clear CHICKEN REPL buffer."
   (interactive)
-  (with-current-buffer "*bigloo*"
+  (with-current-buffer "*chicken*"
     (let ((comint-buffer-maximum-size 0))
       (comint-truncate-buffer))))
 
 ;; Keybindings for Scheme mode
 (with-eval-after-load 'scheme
-  (define-key scheme-mode-map (kbd "C-c C-c") #'bigloo-send-definition)
-  (define-key scheme-mode-map (kbd "C-c C-r") #'bigloo-send-region)
-  (define-key scheme-mode-map (kbd "C-c C-b") #'bigloo-send-buffer)
-  (define-key scheme-mode-map (kbd "C-c C-z") #'run-bigloo))
-
-;; Gambit Scheme (Comint Mode)
-;; (defun run-gambit ()
-;;   "Run Gambit Scheme REPL in a comint buffer."
-;;   (interactive)
-;;   (unless (comint-check-proc "*gambit*")
-;;     (set-buffer (make-comint "gambit" "gsi")))
-;;   (pop-to-buffer-same-window "*gambit*"))
-
-;; (defun gambit--send-and-return (string)
-;;   "Send STRING to Gambit REPL without echoing the input."
-;;   (unless (comint-check-proc "*gambit*")
-;;     (set-buffer (make-comint "gambit" "gsi")))
-;;   (let ((proc (get-buffer-process "*gambit*")))
-;;     (comint-send-string proc (concat string "\n"))))
-
-;; (defun gambit-send-region (start end)
-;;   "Send the current region to the Gambit REPL."
-;;   (interactive "r")
-;;   (gambit--send-and-return (buffer-substring-no-properties start end)))
-
-;; (defun gambit-send-buffer ()
-;;   "Send the whole buffer to the Gambit REPL."
-;;   (interactive)
-;;   (gambit-send-region (point-min) (point-max)))
-
-;; (defun gambit-send-definition ()
-;;   "Send the current definition to the Gambit REPL."
-;;   (interactive)
-;;   (save-excursion
-;;     (mark-defun)
-;;     (gambit-send-region (region-beginning) (region-end)))
-;;   (deactivate-mark))
-
-;; (defun gambit-clear-repl ()
-;;   "Clear Gambit REPL buffer."
-;;   (interactive)
-;;   (with-current-buffer "*gambit*"
-;;     (let ((comint-buffer-maximum-size 0))
-;;       (comint-truncate-buffer))))
-
-;; Keybindings for Scheme mode
-;; (with-eval-after-load 'scheme
-;;   (define-key scheme-mode-map (kbd "C-c C-c") #'gambit-send-definition)
-;;   (define-key scheme-mode-map (kbd "C-c C-r") #'gambit-send-region)
-;;   (define-key scheme-mode-map (kbd "C-c C-b") #'gambit-send-buffer)
-;;   (define-key scheme-mode-map (kbd "C-c C-z") #'run-gambit))
-
-;; ------------------------
-;; Geiser + Scheme setup
-;; ------------------------
-;;(require 'geiser)
-;;(require 'geiser-guile)
-;; Make guile the default Scheme for Geiser
-;;(setq geiser-active-implementations '(guile))
+  (define-key scheme-mode-map (kbd "C-c C-c") #'chicken-send-definition)
+  (define-key scheme-mode-map (kbd "C-c C-r") #'chicken-send-region)
+  (define-key scheme-mode-map (kbd "C-c C-b") #'chicken-send-buffer)
+  (define-key scheme-mode-map (kbd "C-c C-z") #'run-chicken)
+  (define-key scheme-mode-map (kbd "C-c C-l") #'chicken-clear-repl))
 
 (provide 'scheme-dev)
 ;;; scheme-dev.el ends here

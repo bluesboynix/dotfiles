@@ -97,6 +97,8 @@ alias bigloo="rlwrap bigloo"
 alias slem="lem-sdl2"
 alias bat="bat --style=full --theme=ansi"
 alias man="man -P 'bat -l man -p'"
+alias csi="chicken-csi"
+alias csc="chicken-csc"
 
 # Smart ls alias
 if command -v lsd >/dev/null 2>&1; then

@@ -3,8 +3,6 @@
 ;; EMMS setup with MPV backend, local music, playlists, YouTube, and radio
 ;;; Code:
 
-(require 'emms-setup)
-
 ;; Lazy-load EMMS on first use
 (use-package emms
   :defer t

@@ -6,7 +6,7 @@
 ;; Custom Faces
 ;; --------------------------
 (defface scheme-keyword-face
-  '((t :foreground "#d010d0"))
+  '((t :foreground "#fca7f7"))
   "Face for Scheme keywords (define, lambda, etc.).")
 
 (defface scheme-function-face
@@ -14,7 +14,7 @@
   "Face for Scheme function names immediately after define.")
 
 (defface scheme-builtin-face
-  '((t :foreground "#10a0f0"))
+  '((t :foreground "#90bbff"))
   "Face for built-in Scheme procedures like display, newline, car, cdr, etc.")
 
 (defface scheme-constant-face

@@ -1,0 +1,13 @@
+# Ignore everything by default
+*
+
+# Except init.el and lisp folder
+!init.el
+!lisp/
+!lisp/**
+
+# Ignore Emacs backup and compiled files
+*~
+*.elc
+.#*
+*custom.el

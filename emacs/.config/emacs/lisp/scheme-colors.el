@@ -1,308 +1,359 @@
-;;; scheme-colors.el --- Fully Enhanced Scheme syntax highlighting -*- lexical-binding: t; -*-
+;;; scheme-colors.el --- Comprehensive Scheme syntax coloring for R5RS and R7RS
 
-(setq font-lock-maximum-decoration t)
+;; Copyright (C) 2023 Scheme Colors
+;; Author: Scheme Colors
+;; Version: 1.0
+;; Package-Requires: ((emacs "27.1"))
+;; Keywords: languages, scheme, syntax, colors
 
-;; --------------------------
-;; Custom Faces
-;; --------------------------
-(defface scheme-keyword-face
-  '((t :foreground "#fca7f7"))
-  "Face for Scheme keywords (define, lambda, etc.).")
+;; This file is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
 
-(defface scheme-function-face
-  '((t :foreground "#00ffaf"))
-  "Face for Scheme function names immediately after define.")
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
 
-(defface scheme-builtin-face
-  '((t :foreground "#90bbff"))
-  "Face for built-in Scheme procedures like display, newline, car, cdr, etc.")
+;; You should have received a copy of the GNU General Public License
+;; along with GNU Emacs; see the file COPYING.  If not, write to
+;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+;; Boston, MA 02111-1307, USA.
 
-(defface scheme-constant-face
-  '((t :foreground "#aadd00"))
-  "Face for constants like #t, #f, numbers, nil, characters, vectors.")
+;;; Commentary:
 
-(defface scheme-string-face
-  '((t :foreground "#da8548"))
-  "Face for strings.")
+;; This package provides comprehensive syntax highlighting for Scheme
+;; with full support for R5RS and R7RS standards.
 
-(defface scheme-comment-face
-  '((t :foreground "#5B6268" :slant italic))
-  "Face for comments.")
+;; Color Scheme:
+;; - Keywords: #00bfff (Deep Sky Blue)
+;; - Built-in functions: #4169e1 (Royal Blue)
+;; - Constants: #32cd32 (Lime Green)
+;; - Strings: #ffd700 (Gold)
+;; - Comments: #808080 (Gray)
+;; - Types: #da70d6 (Orchid)
+;; - Function definitions: #00ffff (Cyan)
+;; - Variable definitions: #87cefa (Light Sky Blue)
+;; - Numbers: #f4a460 (Sandy Brown)
+;; - Characters: #daa520 (Goldenrod)
+;; - Errors: #ff0000 (Red)
+;; - Warnings: #ffa500 (Orange)
+;; - Operators: #ff8c00 (Dark Orange)
 
-(defface scheme-quote-face
-  '((t :foreground "#98be65" :slant italic))
-  "Face for the quote symbol `'` in Scheme.")
+;;; Code:
 
-(defface scheme-quoted-content
-  '((t :slant italic :foreground "#98be65"))
-  "Face for everything inside quoted forms.")
+(defgroup scheme-colors nil
+  "Scheme syntax highlighting colors."
+  :group 'faces
+  :prefix "scheme-colors-")
 
-(defface scheme-first-symbol-face
-  '((t :foreground "#50ff50"))
-  "Face for the first symbol in any s-expression (except those already highlighted).")
+(defface scheme-colors-keyword
+  '((t :foreground "#00bfff"))
+  "Face for Scheme keywords and special forms. Color: #00bfff (Deep Sky Blue)"
+  :group 'scheme-colors)
 
-(defface scheme-quasiquote-face
-  '((t :foreground "#ff79c6" :weight bold))
-  "Face for quasiquote/backquote `")
+(defface scheme-colors-builtin
+  '((t :foreground "#4169e1"))
+  "Face for Scheme built-in procedures. Color: #4169e1 (Royal Blue)"
+  :group 'scheme-colors)
 
-(defface scheme-unquote-face
-  '((t :foreground "#ff5555" :weight bold))
-  "Face for unquote , and unquote-splicing ,@")
+(defface scheme-colors-constant
+  '((t :foreground "#32cd32"))
+  "Face for Scheme constants. Color: #32cd32 (Lime Green)"
+  :group 'scheme-colors)
 
-;; --------------------------
-;; Font-lock Keywords
-;; --------------------------
-(defvar scheme-font-lock-keywords
+(defface scheme-colors-string
+  '((t :foreground "#ffd700"))
+  "Face for Scheme strings. Color: #ffd700 (Gold)"
+  :group 'scheme-colors)
+
+(defface scheme-colors-comment
+  '((t :foreground "#808080"))
+  "Face for Scheme comments. Color: #808080 (Gray)"
+  :group 'scheme-colors)
+
+(defface scheme-colors-type
+  '((t :foreground "#da70d6"))
+  "Face for Scheme type definitions and declarations. Color: #da70d6 (Orchid)"
+  :group 'scheme-colors)
+
+(defface scheme-colors-function
+  '((t :foreground "#00ffff"))
+  "Face for function definitions. Color: #00ffff (Cyan)"
+  :group 'scheme-colors)
+
+(defface scheme-colors-variable
+  '((t :foreground "#87cefa"))
+  "Face for variable definitions. Color: #87cefa (Light Sky Blue)"
+  :group 'scheme-colors)
+
+(defface scheme-colors-number
+  '((t :foreground "#f4a460"))
+  "Face for numbers. Color: #f4a460 (Sandy Brown)"
+  :group 'scheme-colors)
+
+(defface scheme-colors-char
+  '((t :foreground "#daa520"))
+  "Face for character literals. Color: #daa520 (Goldenrod)"
+  :group 'scheme-colors)
+
+(defface scheme-colors-error
+  '((t :foreground "#ff0000"))
+  "Face for error-related syntax. Color: #ff0000 (Red)"
+  :group 'scheme-colors)
+
+(defface scheme-colors-warning
+  '((t :foreground "#ffa500"))
+  "Face for warning-related syntax. Color: #ffa500 (Orange)"
+  :group 'scheme-colors)
+
+(defface scheme-colors-operator
+  '((t :foreground "#ff8c00"))
+  "Face for S-expression operators (first element). Color: #ff8c00 (Dark Orange)"
+  :group 'scheme-colors)
+
+(defconst scheme-colors-r5rs-keywords
+  '("lambda" "define" "if" "cond" "case" "and" "or" "let" "let*" "letrec"
+    "begin" "do" "set!" "quote" "quasiquote" "unquote" "unquote-splicing"
+    "delay" "force" "eval" "apply" "call-with-current-continuation" "call/cc"
+    "values" "call-with-values" "dynamic-wind" "syntax-rules" "else" "=>"
+    "define-syntax" "let-syntax" "letrec-syntax" "syntax-rules")
+  "R5RS keywords and special forms.")
+
+(defconst scheme-colors-r7rs-keywords
+  '("define-record-type" "define-library" "import" "export" "include" "include-ci"
+    "cond-expand" "parameterize" "guard" "unless" "when" "case-lambda"
+    "let-values" "let*-values" "letrec*" "define-values" "define-record-type"
+    "identifier-syntax" "syntax-error" "make-parameter" "current-input-port"
+    "current-output-port" "current-error-port" "file-exists?" "delete-file"
+    "command-line" "emergency-exit" "get-environment-variable"
+    "get-environment-variables" "features")
+  "R7RS-specific keywords and special forms.")
+
+(defconst scheme-colors-builtin-functions
+  '("cons" "car" "cdr" "caar" "cadr" "cdar" "cddr" "caaar" "caadr" "cadar" "caddr"
+    "cdaar" "cdadr" "cddar" "cdddr" "list" "length" "append" "reverse" "list-tail"
+    "list-ref" "memq" "memv" "member" "assq" "assv" "assoc" "list?" "null?"
+    "symbol?" "symbol->string" "string->symbol" "number?" "complex?" "real?"
+    "rational?" "integer?" "exact?" "inexact?" "=" "<" ">" "<=" ">=" "zero?"
+    "positive?" "negative?" "odd?" "even?" "max" "min" "+" "-" "*" "/" "abs"
+    "quotient" "remainder" "modulo" "gcd" "lcm" "numerator" "denominator" "floor"
+    "ceiling" "truncate" "round" "rationalize" "exp" "log" "sin" "cos" "tan"
+    "asin" "acos" "atan" "sqrt" "expt" "make-rectangular" "make-polar" "real-part"
+    "imag-part" "magnitude" "angle" "exact->inexact" "inexact->exact" "number->string"
+    "string->number" "char?" "char=?" "char<?" "char>?" "char<=?" "char>=?"
+    "char-ci=?" "char-ci<?" "char-ci>?" "char-ci<=?" "char-ci>=?" "char-alphabetic?"
+    "char-numeric?" "char-whitespace?" "char-upper-case?" "char-lower-case?"
+    "char->integer" "integer->char" "char-upcase" "char-downcase" "string?"
+    "make-string" "string" "string-length" "string-ref" "string-set!" "string=?"
+    "string-ci=?" "string<?" "string>?" "string<=?" "string>=?" "string-ci<?"
+    "string-ci>?" "string-ci<=?" "string-ci>=?" "substring" "string-append"
+    "string->list" "list->string" "string-copy" "string-fill!" "vector?"
+    "make-vector" "vector" "vector-length" "vector-ref" "vector-set!" "vector->list"
+    "list->vector" "vector-fill!" "procedure?" "apply" "map" "for-each" "call-with-current-continuation"
+    "call/cc" "values" "call-with-values" "dynamic-wind" "eval" "scheme-report-environment"
+    "null-environment" "interaction-environment" "input-port?" "output-port?"
+    "current-input-port" "current-output-port" "current-error-port" "with-input-from-file"
+    "with-output-to-file" "call-with-input-file" "call-with-output-file" "open-input-file"
+    "open-output-file" "close-input-port" "close-output-port" "read" "read-char"
+    "peek-char" "eof-object?" "char-ready?" "read-line" "write" "display" "newline"
+    "write-char" "load" "transcript-on" "transcript-off")
+  "R5RS built-in functions.")
+
+(defconst scheme-colors-r7rs-builtin-functions
+  '("boolean=?" "symbol=?" "bytevector?" "make-bytevector" "bytevector-length"
+    "bytevector-u8-ref" "bytevector-u8-set!" "bytevector-copy" "bytevector-copy!"
+    "bytevector-append" "utf8->string" "string->utf8" "error" "error-object?"
+    "error-object-message" "error-object-irritants" "read-error?" "file-error?"
+    "get-output-bytevector" "get-output-string" "open-input-bytevector"
+    "open-output-bytevector" "open-input-string" "open-output-string" "input-port-open?"
+    "output-port-open?" "close-port" "read-u8" "peek-u8" "read-bytevector"
+    "read-bytevector!" "read-string" "write-u8" "write-bytevector" "write-string"
+    "flush-output-port" "output-port-buffer-mode" "set-current-input-port!"
+    "set-current-output-port!" "set-current-error-port!" "textual-port?"
+    "binary-port?" "port?" "input-port?" "output-port?" "eof-object" "exit"
+    "emergency-exit" "get-environment-variable" "get-environment-variables"
+    "current-second" "current-jiffy" "jiffies-per-second" "features"
+    "sleep" "command-line" "digit-value" "assert" "finite?" "infinite?" "nan?"
+    "square" "exact-integer-sqrt" "real-valued?" "rational-valued?" "integer-valued?"
+    "div" "mod" "div-and-mod" "div0" "mod0" "div0-and-mod0" "exact" "inexact"
+    "string-for-each" "string-map" "vector-for-each" "vector-map" "vector-copy"
+    "vector-copy!" "vector-append" "vector-fill!" "make-list" "list-copy"
+    "list-set!" "assoc" "member" "memv" "memq" "assq" "assv" "assoc" "delete"
+    "delete!" "delete-duplicates" "delete-duplicates!" "length+" "acons"
+    "alist-copy" "alist-delete" "alist-delete!" "any" "every" "filter" "filter!"
+    "fold" "fold-right" "partition" "partition!" "remove" "remove!" "find" "find-tail"
+    "take" "take!" "drop" "drop!" "split-at" "split-at!" "last" "last-pair"
+    "append!" "append-reverse" "append-reverse!" "concatenate" "concatenate!"
+    "reverse!" "count" "iota" "zip" "unzip1" "unzip2" "unzip3" "unzip4" "unzip5")
+  "R7RS-specific built-in functions.")
+
+(defconst scheme-colors-constants
+  '("#t" "#f" "#true" "#false" "#\\newline" "#\\space" "#\\tab" "#\\return"
+    "#\\null" "#\\alarm" "#\\backspace" "#\\escape" "#\\vtab" "#\\page"
+    "#\\linefeed" "#\\rubout" "#\\x" "#\\u" "#\\U" "...")
+  "Scheme constants and special values.")
+
+(defconst scheme-colors-types
+  '("boolean" "char" "string" "symbol" "number" "pair" "list" "vector" "procedure"
+    "port" "input-port" "output-port" "bytevector" "eof-object" "error-object"
+    "record-type" "syntax" "environment" "promise" "parameter" "hashtable")
+  "Scheme type names.")
+
+;; Combined list of all defined names that should NOT be colored as operators
+(defconst scheme-colors-defined-names
+  (append scheme-colors-r5rs-keywords
+          scheme-colors-r7rs-keywords
+          scheme-colors-builtin-functions
+          scheme-colors-r7rs-builtin-functions
+          scheme-colors-constants
+          scheme-colors-types)
+  "All defined names that should not be colored as operators.")
+
+(defconst scheme-colors-syntax-highlighting
   `(
-    ;; Single-line comments
-    (";.*" . 'scheme-comment-face)
+    ;; Comments - #808080 (Gray)
+    (";.*" . 'scheme-colors-comment)
+    ("#;.*" . 'scheme-colors-comment)
+    ("#![^\n]*" . 'scheme-colors-comment)  ; Shebang comments
+    
+    ;; Strings - #ffd700 (Gold)
+    ("\"\\(?:[^\"\\]\\|\\\\.\\)*\"" . 'scheme-colors-string)
+    
+    ;; Character literals - #daa520 (Goldenrod)
+    ("#\\\\[^()\\[\\]{}\",'`;#|\\s]*" . 'scheme-colors-char)
+    ("#\\\\space\\|#\\\\newline\\|#\\\\tab\\|#\\\\return" . 'scheme-colors-char)
+    
+    ;; Numbers - #f4a460 (Sandy Brown)
+    ("\\_<-?[0-9]+\\_>" . 'scheme-colors-number)
+    ("\\_<-?[0-9]+\\.[0-9]*\\_>" . 'scheme-colors-number)
+    ("\\_<-?[0-9]+/[0-9]+\\_>" . 'scheme-colors-number)
+    ("\\_<[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?\\_>" . 'scheme-colors-number)
+    ("\\_<[-+]?[0-9]+/[-+]?[0-9]+\\_>" . 'scheme-colors-number)
+    ("\\_<[-+]?[0-9]*\\.?[0-9]+[-+][0-9]*\\.?[0-9]+i\\_>" . 'scheme-colors-number)
+    
+    ;; Hex, binary, octal numbers - #f4a460 (Sandy Brown)
+    ("#x[0-9a-fA-F]+\\_>" . 'scheme-colors-number)
+    ("#b[01]+\\_>" . 'scheme-colors-number)
+    ("#o[0-7]+\\_>" . 'scheme-colors-number)
+    ("#d[0-9]+\\_>" . 'scheme-colors-number)
+    
+    ;; Constants and booleans - #32cd32 (Lime Green)
+    (,(regexp-opt scheme-colors-constants 'symbols) . 'scheme-colors-constant)
+    
+    ;; R5RS Keywords - #00bfff (Deep Sky Blue)
+    (,(regexp-opt scheme-colors-r5rs-keywords 'symbols) . 'scheme-colors-keyword)
+    
+    ;; R7RS Keywords - #00bfff (Deep Sky Blue)
+    (,(regexp-opt scheme-colors-r7rs-keywords 'symbols) . 'scheme-colors-keyword)
+    
+    ;; R5RS Built-in functions - #4169e1 (Royal Blue)
+    (,(regexp-opt scheme-colors-builtin-functions 'symbols) . 'scheme-colors-builtin)
+    
+    ;; R7RS Built-in functions - #4169e1 (Royal Blue)
+    (,(regexp-opt scheme-colors-r7rs-builtin-functions 'symbols) . 'scheme-colors-builtin)
+    
+    ;; Type names - #da70d6 (Orchid)
+    (,(regexp-opt scheme-colors-types 'symbols) . 'scheme-colors-type)
+    
+    ;; S-expression operators (first element) - #ff8c00 (Dark Orange) (excludes defined names)
+    (,(lambda (limit)
+        (let ((pos (point)))
+          (catch 'found
+            (while (and (< pos limit)
+                        (setq pos (re-search-forward "(\\([^() \t\n]+\\)" limit t)))
+              (let ((op (match-string 1)))
+                (unless (member op scheme-colors-defined-names)
+                  (throw 'found t)))))))
+     1 'scheme-colors-operator)
+    
+    ;; Function definitions - #00ffff (Cyan)
+    ("(\\(define\\)\\s-+(\\(\\sw+\\)" (1 'scheme-colors-keyword) (2 'scheme-colors-function))
+    ("(\\(define\\)\\s-+\\(\\sw+\\)" (1 'scheme-colors-keyword) (2 'scheme-colors-function))
+    ("(\\(define-syntax\\)\\s-+\\(\\sw+\\)" (1 'scheme-colors-keyword) (2 'scheme-colors-function))
+    ("(\\(define-values\\|define-record-type\\)\\s-+(\\(\\sw+\\)" 
+     (1 'scheme-colors-keyword) (2 'scheme-colors-type))
+    
+    ;; Variable definitions - #87cefa (Light Sky Blue)
+    ("(\\(define\\)\\s-+\\(\\sw+\\)\\s-+" (1 'scheme-colors-keyword) (2 'scheme-colors-variable))
+    ("(\\(let\\|let\\*\\|letrec\\|letrec\\*\\)\\s-+(\\(\\sw+\\)" 
+     (1 'scheme-colors-keyword) (2 'scheme-colors-variable))
+    
+    ;; Library declarations - #00bfff (Deep Sky Blue)
+    ("(\\(define-library\\|import\\|export\\|include\\|include-ci\\)\\s-+" 
+     1 'scheme-colors-keyword)
+    
+    ;; Pattern matching - #00bfff (Deep Sky Blue)
+    ("(\\(match\\|match-lambda\\|match-let\\|match-let\\*\\)\\s-+" 
+     1 'scheme-colors-keyword)
+    
+    ;; Error handling - #ff0000 (Red)
+    ("(\\(guard\\|with-exception-handler\\|raise\\|raise-continuable\\)\\s-+" 
+     1 'scheme-colors-error)
+    
+    ;; Parameters - #4169e1 (Royal Blue)
+    ("(\\(make-parameter\\|parameterize\\)\\s-+" 1 'scheme-colors-builtin)
+    
+    ;; Quoting forms - #00bfff (Deep Sky Blue)
+    ("['`]" . 'scheme-colors-keyword)
+    (",@?" . 'scheme-colors-keyword)
+    
+    ;; Vector literals - #4169e1 (Royal Blue)
+    ("#(" . 'scheme-colors-builtin)
+    
+    ;; Bytevector literals - #4169e1 (Royal Blue)
+    ("#u8(" . 'scheme-colors-builtin)
+    
+    ;; Syntax for various number types - #f4a460 (Sandy Brown)
+    ("#e\\|#i\\|#b\\|#o\\|#x\\|#d" . 'scheme-colors-number)
+    
+    ;; R7RS cond-expand features - #00bfff (Deep Sky Blue)
+    ("(\\(library\\|and\\|or\\|not\\)\\s-+" 1 'scheme-colors-keyword)
+    )
+  "Syntax highlighting rules for Scheme.")
 
-    ;; Strings
-    ("\".*?\"" . 'scheme-string-face)
+(defun scheme-colors-add-keywords ()
+  "Add Scheme colors to the current major mode."
+  (interactive)
+  (font-lock-add-keywords nil scheme-colors-syntax-highlighting))
 
-    ;; Booleans
-    ("\\(#t\\|#f\\)" . 'scheme-constant-face)
+(defun scheme-colors-remove-keywords ()
+  "Remove Scheme colors from the current major mode."
+  (interactive)
+  (dolist (keywords scheme-colors-syntax-highlighting)
+    (font-lock-remove-keywords nil (list keywords))))
 
-    ;; Numbers
-    ("\\_<[+-]?[0-9]+\\(?:\\.[0-9]+\\)?\\(?:/[0-9]+\\)?\\_>" . 'scheme-constant-face)
-
-    ;; Nil / empty list
-    ("'()" . 'scheme-constant-face)
-
-    ;; Character literals
-    ("#\\\\\\(?:\\sw\\|\\s_\\|[[:punct:]]\\)" . 'scheme-constant-face)
-
-    ;; Vectors
-    ("#(\\([^)]*\\))" . 'scheme-constant-face)
-
-    ;; Quote forms
-    ("('\\(?:\\(?:\\sw\\|\\s_\\)+\\|([^)]*)\\))" . 'scheme-quoted-content)
-    ("(quote[ \t]+\\([^)]*\\))" 1 'scheme-quoted-content)
-    ("\\('\\)" 1 'scheme-quote-face)
-
-    ;; Quasiquote/backquote
-    ("`" . 'scheme-quasiquote-face)
-    (",@" . 'scheme-unquote-face)
-    ("," . 'scheme-unquote-face)
-
-    ;; Keywords / special forms
-    (,(regexp-opt
-       '("define" "define-values" "define-syntax"
-         "lambda" "if" "cond" "else" "case"
-         "and" "or" "let" "let*" "let-values" "let*-values" "letrec"
-         "do" "delay" "begin" "set!" "quote"
-         "syntax-rules" "parameterize" "guard") 'symbols)
-     . 'scheme-keyword-face)
-
-    ;; Built-in functions
-    (,(regexp-opt
-       '("car" "cdr" "cons" "list" "length" "append"
-	 "display" "newline" "eval" "apply" "map" "foldl" "foldr"
-	 "call/cc" "force" "read" "read-line" "eq?" "eqv?" "equal?" "not"
-	 "boolean?" "symbol?" "char?" "string?" "vector?"
-	 "pair?" "list?" "null?"
-	 "number?" "complex?" "real?" "rational?" "integer?"
-	 "exact?" "inexact?" "procedure?" "port?" "input-port?"
-	 "output-port?" "bytevector?"
-	 ;; List utilities
-	 "memq" "memv" "member" "assq" "assv" "assoc"
-	 ;; SRFI examples
-	 "filter" "fold" "fold-right" "for-each" "append-map") 'symbols)
-     . 'scheme-builtin-face)
-
-    ;; Function names immediately after define / define-values
-    ("(define\\(?:-values\\)?[ \t]+\\(\\(?:\\sw\\|\\s_\\)+\\)"
-     (1 'scheme-function-face))
-
-    ;; First symbol in any S-expression (fallback)
-    ("(\\s-*\\(\\(?:\\sw\\|\\s_\\)+\\)"
-     (1 (unless (or
-                 (get-text-property (match-beginning 1) 'face))
-          'scheme-first-symbol-face)))
-    ))
-
-;; --------------------------
-;; Setup Function
-;; --------------------------
+;; Hook for scheme-mode
 (defun scheme-colors-setup ()
-  "Apply enhanced syntax highlighting for Scheme."
-  (font-lock-add-keywords nil scheme-font-lock-keywords))
+  "Setup scheme colors for scheme-mode."
+  (when (derived-mode-p 'scheme-mode)
+    (scheme-colors-add-keywords)))
 
-(add-hook 'scheme-mode-hook #'scheme-colors-setup)
-(add-hook 'scheme-ts-mode-hook #'scheme-colors-setup)
+;; Hook for geiser-mode (if present)
+(defun scheme-colors-geiser-setup ()
+  "Setup scheme colors for geiser-mode."
+  (when (bound-and-true-p geiser-mode)
+    (scheme-colors-add-keywords)))
 
-;; --------------------------
-;; Rainbow Delimiters
-;; --------------------------
-(defun my-scheme-rainbow-setup ()
-  "Enable rainbow-delimiters with custom colors for Scheme."
-  (require 'rainbow-delimiters)
-  (rainbow-delimiters-mode 1)
-  ;; Custom colors
-  (set-face-attribute 'rainbow-delimiters-depth-1-face nil :foreground "#FF0000")
-  (set-face-attribute 'rainbow-delimiters-depth-2-face nil :foreground "#FF8C00")
-  (set-face-attribute 'rainbow-delimiters-depth-3-face nil :foreground "#FFFF00")
-  (set-face-attribute 'rainbow-delimiters-depth-4-face nil :foreground "#00FF00")
-  (set-face-attribute 'rainbow-delimiters-depth-5-face nil :foreground "#56B6C2")
-  (set-face-attribute 'rainbow-delimiters-depth-6-face nil :foreground "#9467BD")
-  (set-face-attribute 'rainbow-delimiters-depth-7-face nil :foreground "#D19A66")
-  (set-face-attribute 'rainbow-delimiters-unmatched-face nil
-                      :foreground "white" :background "#FF0000" :weight 'bold))
+;; Add hooks
+(add-hook 'scheme-mode-hook 'scheme-colors-setup)
+(add-hook 'geiser-mode-hook 'scheme-colors-geiser-setup)
 
-(add-hook 'scheme-mode-hook #'my-scheme-rainbow-setup)
-(add-hook 'scheme-ts-mode-hook #'my-scheme-rainbow-setup)
+;; Interactive functions
+(defun scheme-colors-enable ()
+  "Enable Scheme colors in the current buffer."
+  (interactive)
+  (scheme-colors-add-keywords)
+  (font-lock-flush))
 
+(defun scheme-colors-disable ()
+  "Disable Scheme colors in the current buffer."
+  (interactive)
+  (scheme-colors-remove-keywords)
+  (font-lock-flush))
+
+;; Provide the package
 (provide 'scheme-colors)
+
 ;;; scheme-colors.el ends here
-
-
-
-;; ;;; scheme-colors.el --- Enhanced Scheme syntax highlighting -*- lexical-binding: t; -*-
-
-;; (setq font-lock-maximum-decoration t)
-
-;; ;; --------------------------
-;; ;; Custom Faces
-;; ;; --------------------------
-;; (defface scheme-keyword-face
-;;   '((t :foreground "#d010d0"))
-;;   "Face for Scheme keywords (define, lambda, etc.).")
-
-;; (defface scheme-function-face
-;;   '((t :foreground "#00ffaf"))
-;;   "Face for Scheme function names immediately after define.")
-
-;; (defface scheme-builtin-face
-;;   '((t :foreground "#10a0f0"))
-;;   "Face for built-in Scheme procedures like display, newline, car, cdr, etc.")
-
-;; (defface scheme-constant-face
-;;   '((t :foreground "#aadd00"))
-;;   "Face for constants like #t, #f, numbers, nil.")
-
-;; (defface scheme-string-face
-;;   '((t :foreground "#da8548"))
-;;   "Face for strings.")
-
-;; (defface scheme-comment-face
-;;   '((t :foreground "#5B6268" :slant italic))
-;;   "Face for comments.")
-
-;; (defface scheme-quote-face
-;;   '((t :foreground "#98be65" :slant italic))
-;;   "Face for the quote symbol `'` in Scheme.")
-
-;; (defface scheme-quoted-content
-;;   '((t :slant italic :foreground "#98be65"))
-;;   "Face for everything inside quoted forms.")
-
-;; (defface scheme-first-symbol-face
-;;   '((t :foreground "#50ff50"))
-;;   "Face for the first symbol in any s-expression (except those already highlighted).")
-
-
-;; ;; --------------------------
-;; ;; Font-lock Keywords
-;; ;; --------------------------
-;; (defvar scheme-font-lock-keywords
-;;   `(
-;;     ;; Handles 'atom, '( ... ), (quote ( ... ))
-;;     ("('\\(?:\\(?:\\sw\\|\\s_\\)+\\|([^)]*)\\))" . 'scheme-quoted-content)
-;;     ("(quote[ \t]+\\([^)]*\\))" 1 'scheme-quoted-content)
-
-;;     ;; Highlight the quote character itself
-;;     ("\\('\\)" 1 'scheme-quote-face)
-    
-;;     ;; Special forms / Keywords
-;;     (,(regexp-opt
-;;        '("define" "define-values" "define-syntax"
-;;          "lambda" "if" "cond" "else" "case"
-;;          "and" "or" "let" "let*" "let-values" "let*-values" "letrec"
-;;          "do" "delay" "begin" "set!" "quote"
-;;          "syntax-rules" "parameterize" "guard") 'symbols)
-;;      . 'scheme-keyword-face)
-
-;;     ;; Built-in functions
-;;     (,(regexp-opt
-;;        '("car" "cdr" "cons" "list" "length" "append"
-;; 	 "display" "newline" "eval" "apply" "map" "foldl" "foldr"
-;; 	 "call/cc" "force" "read" "read-line" "eq?" "eqv?" "equal?" "not"
-;; 	 ;; Type predicates
-;; 	 "boolean?" "symbol?" "char?" "string?" "vector?"
-;; 	 "pair?" "list?" "null?"
-;; 	 "number?" "complex?" "real?" "rational?" "integer?"
-;; 	 "exact?" "inexact?" "procedure?" "port?" "input-port?"
-;; 	 "output-port?" "bytevector?"
-;; 	 ;; Number predicates
-;; 	 "zero?" "positive?" "negative?" "odd?" "even?"
-;; 	 "finite?" "infinite?" "nan?"
-;; 	 ;; Miscellaneous
-;; 	 "eof-object?"
-;; 	 "char-alphabetic?" "char-numeric?" "char-whitespace?"
-;; 	 "char-upper-case?" "char-lower-case?"
-;; 	 ;; Common list utilities often used as predicates
-;; 	 "memq" "memv" "member" "assq" "assv" "assoc")
-;;        'symbols)
-;;      . 'scheme-builtin-face)
-
-    
-;;     ;; Function names immediately after define / define-values
-;;     ("(define\\(?:-values\\)?[ \t]+\\(\\(?:\\sw\\|\\s_\\)+\\)"
-;;      (1 'scheme-function-face))
-
-;;     ;; Booleans
-;;     ("\\(#t\\|#f\\)" . 'scheme-constant-face)
-
-;;     ;; Numbers (integer and float, with optional sign)
-;;     ("\\_<[+-]?[0-9]+\\(?:\\.[0-9]+\\)?\\(?:/[0-9]+\\)?\\_>" . 'scheme-constant-face)
-
-;;     ;; Nil / empty list
-;;     ("'()" . 'scheme-constant-face)
-
-;;     ;; Strings
-;;     ("\".*?\"" . 'scheme-string-face)
-
-;;     ;; Comments
-;;     (";.*" . 'scheme-comment-face)
-
-;;     ;; First symbol in any S-expression (fallback)
-;;     ("(\\s-*\\(\\(?:\\sw\\|\\s_\\)+\\)"
-;;      (1 (unless (or
-;;                  ;; do NOT recolor if already highlighted by higher-priority rules
-;;                  (get-text-property (match-beginning 1) 'face))
-;;           'scheme-first-symbol-face)))
-;;     ))
-
-;; ;; --------------------------
-;; ;; Setup Function
-;; ;; --------------------------
-;; (defun scheme-colors-setup ()
-;;   "Apply enhanced syntax highlighting for Scheme."
-;;   (font-lock-add-keywords nil scheme-font-lock-keywords))
-
-;; (add-hook 'scheme-mode-hook #'scheme-colors-setup)
-;; (add-hook 'scheme-ts-mode-hook #'scheme-colors-setup)
-
-;; ;; --------------------------
-;; ;; Rainbow Delimiters
-;; ;; --------------------------
-;; (defun my-scheme-rainbow-setup ()
-;;   "Enable rainbow-delimiters with custom colors for Scheme."
-;;   (require 'rainbow-delimiters)
-;;   (rainbow-delimiters-mode 1)
-;;   ;; Custom colors
-;;   (set-face-attribute 'rainbow-delimiters-depth-1-face nil :foreground "#FF0000")
-;;   (set-face-attribute 'rainbow-delimiters-depth-2-face nil :foreground "#FF8C00")
-;;   (set-face-attribute 'rainbow-delimiters-depth-3-face nil :foreground "#FFFF00")
-;;   (set-face-attribute 'rainbow-delimiters-depth-4-face nil :foreground "#00FF00")
-;;   (set-face-attribute 'rainbow-delimiters-depth-5-face nil :foreground "#56B6C2")
-;;   (set-face-attribute 'rainbow-delimiters-depth-6-face nil :foreground "#9467BD")
-;;   (set-face-attribute 'rainbow-delimiters-depth-7-face nil :foreground "#D19A66")
-;;   (set-face-attribute 'rainbow-delimiters-unmatched-face nil
-;;                       :foreground "white" :background "#FF0000" :weight 'bold))
-
-;; (add-hook 'scheme-mode-hook #'my-scheme-rainbow-setup)
-;; (add-hook 'scheme-ts-mode-hook #'my-scheme-rainbow-setup)
-
-;; (provide 'scheme-colors)
-;; ;;; scheme-colors.el ends here

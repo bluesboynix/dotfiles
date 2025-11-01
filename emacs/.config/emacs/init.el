@@ -27,7 +27,6 @@
 ;; Language modules
 ;; -------------------------------------------------------------------
 (require 'lang-cpp)          ;; C/C++
-(require 'lang-cpp-colors)
 (require 'lang-python)       ;; Python
 (require 'lang-rust)         ;; Rust
 ;; -------------------------------------------------------------------

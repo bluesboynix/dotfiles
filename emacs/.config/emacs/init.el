@@ -30,6 +30,7 @@
 (require 'c-cpp-colors)
 (require 'lang-python)       ;; Python
 (require 'lang-rust)         ;; Rust
+(require 'lang-rust-colors)
 ;; -------------------------------------------------------------------
 ;; Common Lisp
 ;; -------------------------------------------------------------------

@@ -6,27 +6,31 @@
   :mode "\\.rs\\'"
   :hook (rust-mode . (lambda ()
                        (setq tab-width 4)
-                       (setq indent-tabs-mode nil))))
+                       (setq indent-tabs-mode nil)
+                       ;; Add our own format hook
+                       (add-hook 'before-save-hook #'my-rust-format-buffer nil t))))
 
-;; LSP via Eglot
+;; Define safe formatter (replacement for old rust-format-before-save)
+(defun my-rust-format-buffer ()
+  "Format Rust buffer before saving using rustfmt if available."
+  (when (and (eq major-mode 'rust-mode)
+             (executable-find "rustfmt"))
+    (ignore-errors
+      (rust-format-buffer))))
+
+;; Eglot for LSP
 (use-package eglot
   :ensure t
   :hook (rust-mode . eglot-ensure)
   :config
   (setq eglot-send-changes-idle-time 0.5))
 
-;; Flymake for inline syntax checking
+;; Flymake for syntax checking
 (use-package flymake
   :hook (rust-mode . flymake-mode)
   :config
   (setq flymake-no-changes-timeout 0.5))
 
-;; Format Rust code on save using rustfmt
-(defun rust-format-before-save ()
-  "Format Rust code before saving."
-  (add-hook 'before-save-hook 'rust-format-buffer nil t))
-
-(add-hook 'rust-mode-hook 'rust-format-before-save)
-
 (message "Rust IDE module loaded successfully.")
 (provide 'lang-rust)
+;;; lang-rust.el ends here

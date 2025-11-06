@@ -3,17 +3,26 @@
 ;; ----------------------------
 ;; Theme
 ;; ----------------------------
-(use-package doom-themes
-  :ensure t
-  :config
-  ;; Load a theme, e.g., doom-one
-  (load-theme 'doom-one t)
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-  ;; Enable custom neotree / treemacs themes if needed
-  (doom-themes-neotree-config)
-  ;; Corrects org-mode native fontification
-  (doom-themes-org-config))
+;; (use-package doom-themes
+;;   :ensure t
+;;   :config
+;;   ;; Load a theme, e.g., doom-one
+;;   (load-theme 'doom-one t)
+;;   ;; Enable flashing mode-line on errors
+;;   (doom-themes-visual-bell-config)
+;;   ;; Enable custom neotree / treemacs themes if needed
+;;   (doom-themes-neotree-config)
+;;   ;; Corrects org-mode native fontification
+;;   (doom-themes-org-config))
+
+;; ----------------------------
+;; Theme
+;; ----------------------------
+;; Load the custom Genesis Dark theme
+(add-to-list 'custom-theme-load-path
+             (expand-file-name "themes" user-emacs-directory))
+
+(load-theme 'genesis-dark t)
 
 ;; ----------------------------
 ;; Modeline

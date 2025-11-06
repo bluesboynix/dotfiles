@@ -81,7 +81,7 @@
 ;; ----------------------------
 ;; Font settings
 ;; ----------------------------
-(set-face-attribute 'default nil :font "Fira Code" :height 110)
+(set-face-attribute 'default nil :font "Fira Code" :height 120)
 
 (message "UI polish loaded successfully.")
 (provide 'core-ui-polish)

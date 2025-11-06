@@ -1,45 +1,8 @@
 ;;; scheme-colors.el --- Comprehensive Scheme syntax coloring for R5RS and R7RS
-
-;; Copyright (C) 2023 Scheme Colors
-;; Author: Scheme Colors
-;; Version: 1.0
-;; Package-Requires: ((emacs "27.1"))
-;; Keywords: languages, scheme, syntax, colors
-
-;; This file is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation; either version 3, or (at your option)
-;; any later version.
-
-;; This file is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-
-;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to
-;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-;; Boston, MA 02111-1307, USA.
-
 ;;; Commentary:
 
 ;; This package provides comprehensive syntax highlighting for Scheme
 ;; with full support for R5RS and R7RS standards.
-
-;; Color Scheme:
-;; - Keywords: #00bfff (Deep Sky Blue)
-;; - Built-in functions: #4169e1 (Royal Blue)
-;; - Constants: #32cd32 (Lime Green)
-;; - Strings: #ffd700 (Gold)
-;; - Comments: #808080 (Gray)
-;; - Types: #da70d6 (Orchid)
-;; - Function definitions: #00ffff (Cyan)
-;; - Variable definitions: #87cefa (Light Sky Blue)
-;; - Numbers: #f4a460 (Sandy Brown)
-;; - Characters: #daa520 (Goldenrod)
-;; - Errors: #ff0000 (Red)
-;; - Warnings: #ffa500 (Orange)
-;; - Operators: #ff8c00 (Dark Orange)
 
 ;;; Code:
 

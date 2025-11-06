@@ -29,6 +29,7 @@
 (require 'lang-cpp)          ;; C/C++
 (require 'c-cpp-colors)
 (require 'lang-python)       ;; Python
+(require 'lang-python-colors)
 (require 'lang-rust)         ;; Rust
 (require 'lang-rust-colors)
 ;; -------------------------------------------------------------------

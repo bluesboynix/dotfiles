@@ -161,7 +161,7 @@
     },
     "custom/terminal": {
         "format": " ",
-        "on-click": "foot",
+        "on-click": "alacritty",
         "tooltip-format": "terminal"
     },
     "custom/browser": {

@@ -4,6 +4,8 @@
 ;; Setup load-path for custom lisp modules
 ;; -------------------------------------------------------------------
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
+(setenv "PATH" (concat (expand-file-name "~/.cargo/bin") ":" (getenv "PATH")))
 
 ;; -------------------------------------------------------------------
 ;; Core modules

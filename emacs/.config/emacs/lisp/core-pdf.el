@@ -1,31 +1,31 @@
-;;; core-pdf.el --- PDF viewing support -*- lexical-binding: t; -*-
+;;; core-pdf.el --- PDF configuration for Emacs
 
-(use-package pdf-tools
-  :ensure t
-  :mode ("\\.pdf\\'" . pdf-view-mode)
-  :config
-  ;; Activate pdf-tools
-  (pdf-tools-install-noverify)
-
-  ;; Better defaults
-  (setq-default pdf-view-display-size 'fit-page)
-  (setq pdf-view-continuous t)
-
-  ;; Smooth scrolling
-  (define-key pdf-view-mode-map (kbd "j") 'pdf-view-next-line-or-next-page)
-  (define-key pdf-view-mode-map (kbd "k") 'pdf-view-previous-line-or-previous-page)
-
-  ;; Zoom shortcuts
-  (define-key pdf-view-mode-map (kbd "+") 'pdf-view-enlarge)
-  (define-key pdf-view-mode-map (kbd "-") 'pdf-view-shrink)
-
-  ;; Dark mode (inverts colors)
-  (define-key pdf-view-mode-map (kbd "d") 'pdf-view-midnight-mode)
-
-  ;; Midnight mode colors (soft dark)
-  (setq pdf-view-midnight-colors '("#e0e0e0" . "#000000")) ;; fg / bg
-)
-
-(message "PDF support loaded.")
 (provide 'core-pdf)
-;;; core-pdf.el ends here
+
+;; Ensure pdf-tools is installed
+(unless (package-installed-p 'pdf-tools)
+  (package-install 'pdf-tools))
+
+(require 'pdf-tools)
+
+;; Initialize
+(pdf-tools-install)
+
+;; PDF viewing settings
+(add-to-list 'auto-mode-alist '("\\.pdf\\'" . pdf-view-mode))
+(setq pdf-view-resize-factor 1.1)
+
+;; Disable line numbers for PDF files
+(defun core-pdf/disable-line-numbers ()
+  "Disable line numbers for PDF viewing."
+  (when (derived-mode-p 'pdf-view-mode)
+    (display-line-numbers-mode -1)))
+
+(add-hook 'pdf-view-mode-hook 'core-pdf/disable-line-numbers)
+
+;; Key bindings
+(define-key pdf-view-mode-map (kbd "n") 'pdf-view-next-line-or-next-page)
+(define-key pdf-view-mode-map (kbd "p") 'pdf-view-previous-line-or-previous-page)
+(define-key pdf-view-mode-map (kbd "C-c C-t") 'pdf-outline)
+
+(message "PDF tools configured")

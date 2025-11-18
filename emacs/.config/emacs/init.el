@@ -15,15 +15,16 @@
 (require 'core-packages)     ;; Package management setup
 (require 'core-utilities)    ;; Corfu, Which-Key, Projectile
 (require 'core-ui-polish)    ;; Fonts, themes, modeline
-(require 'core-terminal)     ;; vterm integration
-(require 'core-git)          ;; Magit + diff-hl
 (require 'core-dashboard)    ;; dashboard for emacs
-(require 'core-file-browser) ;; use treemacs
 
 ;; -------------------------------------------------------------------
 ;; Extra
 ;; -------------------------------------------------------------------
-(require 'emms-config)               ;; Emacs Music
+(require 'emms-config)       ;; Emacs Music
+(require 'core-pdf)          ;; view pdf in emacs
+(require 'core-terminal)     ;; vterm integration
+(require 'core-git)          ;; Magit + diff-hl
+(require 'core-file-browser) ;; use treemacs
 
 ;; -------------------------------------------------------------------
 ;; Language modules

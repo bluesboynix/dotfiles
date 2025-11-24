@@ -1,6 +1,35 @@
-{
-  "layer": "top",
-  "position": "bottom",
-  "exclusive-zone": true,
-  "margin": 0
-}
+[
+  {
+    "layer": "background",
+    "position": "bottom",
+    "exclusive": false,
+    "height": 41,
+    "width": 2,
+    "modules-left": [
+      "custom/os_button"
+    ],
+    "modules-center": [
+      "hyprland/mode",
+      "wlr/taskbar"
+    ],
+    "margin": "4",
+    "spacing": "5",
+    "sway/window": {
+      "max-length": 50
+    },
+    "custom/os_button": {
+      "format": " 󰈞 |",
+      "on-click": "rofi -show drun",
+      "tooltip": false
+    },
+    "wlr/taskbar": {
+      "format": "{icon}",
+      "icon-size": 36,
+      "spacing": 3,
+      "on-click-middle": "close",
+      "tooltip-format": "{title}",
+      "ignore-list": [],
+      "on-click": "activate"
+    }
+  }
+]

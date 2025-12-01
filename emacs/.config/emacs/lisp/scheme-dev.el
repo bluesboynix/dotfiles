@@ -112,59 +112,68 @@
 ;; Fallback: CHICKEN Scheme (Comint Mode)
 ;; ----------------------------
 
-(defun run-chicken ()
-  "Run CHICKEN Scheme REPL (csi) in a vertical split, keeping focus on the code buffer."
-  (interactive)
-  (unless (comint-check-proc "*chicken*")
-    (set-buffer (make-comint "chicken" "/usr/bin/chicken-csi")))
-  (let ((repl-buffer (get-buffer "*chicken*"))
-        (cur-window (selected-window)))
-    (unless (get-buffer-window repl-buffer)
-      ;; Split current window vertically (code left, REPL right)
-      (let ((new-window (split-window-right)))
-        (set-window-buffer new-window repl-buffer)))
-    ;; Keep focus on the code buffer
-    (select-window cur-window)))
+;; (defun run-chicken ()
+;;   "Run CHICKEN Scheme REPL (csi) in a vertical split, keeping focus on the code buffer."
+;;   (interactive)
+;;   (unless (comint-check-proc "*chicken*")
+;;     (set-buffer (make-comint "chicken" "/usr/bin/chicken-csi")))
+;;   (let ((repl-buffer (get-buffer "*chicken*"))
+;;         (cur-window (selected-window)))
+;;     (unless (get-buffer-window repl-buffer)
+;;       ;; Split current window vertically (code left, REPL right)
+;;       (let ((new-window (split-window-right)))
+;;         (set-window-buffer new-window repl-buffer)))
+;;     ;; Keep focus on the code buffer
+;;     (select-window cur-window)))
 
-(defun chicken--send-and-return (string)
-  "Send STRING to CHICKEN REPL without echoing input."
-  (unless (comint-check-proc "*chicken*")
-    (set-buffer (make-comint "chicken" "/usr/bin/chicken-csi")))
-  (let ((proc (get-buffer-process "*chicken*")))
-    (comint-send-string proc (concat string "\n"))))
+;; (defun chicken--send-and-return (string)
+;;   "Send STRING to CHICKEN REPL without echoing input."
+;;   (unless (comint-check-proc "*chicken*")
+;;     (set-buffer (make-comint "chicken" "/usr/bin/chicken-csi")))
+;;   (let ((proc (get-buffer-process "*chicken*")))
+;;     (comint-send-string proc (concat string "\n"))))
 
-(defun chicken-send-region (start end)
-  "Send the current region to the CHICKEN REPL."
-  (interactive "r")
-  (chicken--send-and-return (buffer-substring-no-properties start end)))
+;; (defun chicken-send-region (start end)
+;;   "Send the current region to the CHICKEN REPL."
+;;   (interactive "r")
+;;   (chicken--send-and-return (buffer-substring-no-properties start end)))
 
-(defun chicken-send-buffer ()
-  "Send the entire buffer to the CHICKEN REPL."
-  (interactive)
-  (chicken-send-region (point-min) (point-max)))
+;; (defun chicken-send-buffer ()
+;;   "Send the entire buffer to the CHICKEN REPL."
+;;   (interactive)
+;;   (chicken-send-region (point-min) (point-max)))
 
-(defun chicken-send-definition ()
-  "Send the current definition to the CHICKEN REPL."
-  (interactive)
-  (save-excursion
-    (mark-defun)
-    (chicken-send-region (region-beginning) (region-end)))
-  (deactivate-mark))
+;; (defun chicken-send-definition ()
+;;   "Send the current definition to the CHICKEN REPL."
+;;   (interactive)
+;;   (save-excursion
+;;     (mark-defun)
+;;     (chicken-send-region (region-beginning) (region-end)))
+;;   (deactivate-mark))
 
-(defun chicken-clear-repl ()
-  "Clear CHICKEN REPL buffer."
-  (interactive)
-  (with-current-buffer "*chicken*"
-    (let ((comint-buffer-maximum-size 0))
-      (comint-truncate-buffer))))
+;; (defun chicken-clear-repl ()
+;;   "Clear CHICKEN REPL buffer."
+;;   (interactive)
+;;   (with-current-buffer "*chicken*"
+;;     (let ((comint-buffer-maximum-size 0))
+;;       (comint-truncate-buffer))))
 
-;; Keybindings for Scheme mode
-(with-eval-after-load 'scheme
-  (define-key scheme-mode-map (kbd "C-c C-c") #'chicken-send-definition)
-  (define-key scheme-mode-map (kbd "C-c C-r") #'chicken-send-region)
-  (define-key scheme-mode-map (kbd "C-c C-b") #'chicken-send-buffer)
-  (define-key scheme-mode-map (kbd "C-c C-z") #'run-chicken)
-  (define-key scheme-mode-map (kbd "C-c C-l") #'chicken-clear-repl))
+;; ;; Keybindings for Scheme mode
+;; (with-eval-after-load 'scheme
+;;   (define-key scheme-mode-map (kbd "C-c C-c") #'chicken-send-definition)
+;;   (define-key scheme-mode-map (kbd "C-c C-r") #'chicken-send-region)
+;;   (define-key scheme-mode-map (kbd "C-c C-b") #'chicken-send-buffer)
+;;   (define-key scheme-mode-map (kbd "C-c C-z") #'run-chicken)
+;;   (define-key scheme-mode-map (kbd "C-c C-l") #'chicken-clear-repl))
+
+(use-package geiser
+  :ensure t
+  :config
+  (setq geiser-active-implementations '(guile)))
+
+(use-package geiser-guile
+  :ensure t)
+
 
 (provide 'scheme-dev)
 ;;; scheme-dev.el ends here

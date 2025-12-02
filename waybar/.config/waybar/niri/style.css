@@ -1,0 +1,157 @@
+* {
+  /* `otf-font-awesome` is required to be installed for icons */
+  font-family: "Cantarell", "Liberation Serif", sans-serif;
+  /*font-family: "D2CodingLigature Nerd Mono";*/
+  font-size: 18px;
+  min-height: 0;
+}
+
+window#waybar {
+    background-color: rgba(0, 0, 0, .9);
+    color: #00F000;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+#waybar.empty #window {
+  background-color: transparent;
+}
+
+#window {
+  margin: 2;
+  padding-left: 8;
+  padding-right: 8;
+  font-weight: bold;
+}
+
+button {
+  /* Use box-shadow instead of border so the text isn't offset */
+  box-shadow: inset 0 -3px transparent; 
+  /* Avoid rounded borders under each button name */
+  border: none;
+  border-radius: 0;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+
+#workspaces button {
+  padding: 10px 15px;
+  color:#500050;
+}
+
+#workspaces button.empty {
+  color:#001000;
+}
+
+#workspaces button.visible {
+  color:#101010;
+}
+
+#workspaces button.focused {
+  background-color: rgba(0,0,0,0.0);
+  color: violet;
+}
+
+#workspaces button.urgent {
+  background-color: #101010;
+}
+
+#window {
+  color: white;
+}
+
+#network
+#pulseaudio
+#backlight
+#battery
+#custom-notification
+#idle_inhibitor
+#clock
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+  margin-left: 0;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+  margin-right: 0;
+}
+
+#network {
+  padding-left: 10px;
+  padding-right: 13px;
+  color: red;
+}
+
+#pulseaudio {
+  padding-left: 5px;
+  padding-right: 5px;
+  color: orange;
+}
+
+#backlight {
+  padding-left: 10px;
+  padding-right: 10px;
+  color: yellow;
+}
+
+#battery {
+  padding-left: 5px;
+  padding-right: 5px;
+  color: green;
+}
+
+#custom-notification {
+  padding-left: 8px;
+  padding-right: 8px;
+  color: blue;
+}
+
+#idle_inhibitor {
+  padding-left: 5px;
+  padding-right: 5px;
+  color: indigo;
+}
+
+#clock {
+  font-weight: bold;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: violet;
+}
+
+#custom-systeminfo {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#custom-filemanager {
+  padding-left: 5px;
+  padding-right: 5px;
+  color:#964B00;
+}
+
+#custom-player {
+  padding-left: 5px;
+  padding-right: 5px;
+  color: yellow;
+}
+
+#custom-editor {
+  padding-left: 5px;
+  padding-right: 5px;
+  color: cyan;
+}
+
+#custom-browser {
+  padding-left: 5px;
+  padding-right: 5px;
+  color: orange;
+}
+
+#custom-terminal {
+  padding-left: 5px;
+  padding-right: 5px;
+  color: white;
+}

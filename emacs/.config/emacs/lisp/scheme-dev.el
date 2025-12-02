@@ -1,10 +1,19 @@
-;;; scheme-dev.el --- Scheme Development Config (CHICKEN Scheme) -*- lexical-binding: t; -*-
+;;; scheme-dev.el --- Scheme Development Config (Guile) -*- lexical-binding: t; -*-
+
+;; ===================================================================
+;; Scheme Editing Essentials
+;; ===================================================================
 
 ;; -----------------------------
 ;; Smartparens
 ;; -----------------------------
 (use-package smartparens
-  :hook ((emacs-lisp-mode lisp-mode slime-repl-mode scheme-mode) . smartparens-mode)
+  :ensure t
+  :hook ((scheme-mode
+          emacs-lisp-mode
+          lisp-mode
+          slime-repl-mode)
+         . smartparens-mode)
   :config
   (require 'smartparens-config)
   (smartparens-global-mode 1)
@@ -14,38 +23,13 @@
         sp-highlight-pair-overlay nil))
 
 ;; -----------------------------
-;; Eldoc and Hover Docs
-;; -----------------------------
-(use-package eldoc-box
-  :hook (scheme-mode . eldoc-box-hover-mode))
-
-(add-hook 'scheme-mode-hook #'eldoc-mode)
-
-;; -----------------------------
-;; Macro Expansion
-;; -----------------------------
-(use-package macrostep
-  :after scheme
-  :bind (:map scheme-mode-map
-              ("C-c e" . macrostep-expand)))
-
-;; -----------------------------
-;; Rainbow Delimiters (robust)
+;; Rainbow Delimiters
 ;; -----------------------------
 (use-package rainbow-delimiters
   :ensure t
-  :hook ((prog-mode
-          lisp-mode
-          emacs-lisp-mode
-          scheme-mode
-          scheme-ts-mode
-          sly-mrepl-mode
-          slime-repl-mode)
-         . rainbow-delimiters-mode)
+  :hook (scheme-mode . rainbow-delimiters-mode)
   :config
-  (add-hook 'scheme-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'scheme-ts-mode-hook #'rainbow-delimiters-mode)
-  ;; Custom colors (Doom One inspired)
+  ;; Doom-inspired manual colors
   (add-hook 'emacs-startup-hook
             (lambda ()
               (with-eval-after-load 'rainbow-delimiters
@@ -57,34 +41,106 @@
                 (set-face-attribute 'rainbow-delimiters-depth-6-face nil :foreground "#9467BD")
                 (set-face-attribute 'rainbow-delimiters-depth-7-face nil :foreground "#D19A66")
                 (set-face-attribute 'rainbow-delimiters-unmatched-face nil
-                                    :foreground "white" :background "#FF0000" :weight 'bold)))))
+                                    :foreground "white"
+                                    :background "#FF0000"
+                                    :weight 'bold)))))
 
 ;; -----------------------------
-;; Corfu for completion
+;; Pretty symbols
+;; -----------------------------
+(add-hook 'scheme-mode-hook
+          (lambda ()
+            (setq prettify-symbols-alist
+                  '(("lambda" . ?λ)
+                    ("->"     . ?→)
+                    ("=>"     . ?⇒)
+                    ("<="     . ?≤)
+                    (">="     . ?≥)))
+            (prettify-symbols-mode 1)))
+
+;; -----------------------------
+;; Eldoc + Hover Docs
+;; -----------------------------
+(add-hook 'scheme-mode-hook #'eldoc-mode)
+
+(use-package eldoc-box
+  :ensure t
+  :hook (scheme-mode . eldoc-box-hover-mode))
+
+(use-package macrostep
+  :ensure t
+  :defer t)
+
+(with-eval-after-load 'scheme
+  (define-key scheme-mode-map (kbd "C-c e") #'macrostep-expand))
+
+
+;; ===================================================================
+;; Completion & Documentation
+;; ===================================================================
+
+;; -----------------------------
+;; Corfu Completion
 ;; -----------------------------
 (use-package corfu
   :ensure t
   :init
   (global-corfu-mode)
   :custom
-  (corfu-auto t)                 ;; Auto-popup completion
+  (corfu-auto t)
   (corfu-auto-prefix 1)
   (corfu-auto-delay 0.1)
   (corfu-quit-no-match t)
   (corfu-scroll-margin 4)
   :bind (:map corfu-map
-              ("TAB" . corfu-next)
-              ([tab] . corfu-next)
-              ("S-TAB" . corfu-previous)
+              ("TAB"     . corfu-next)
+              ([tab]     . corfu-next)
+              ("S-TAB"   . corfu-previous)
               ([backtab] . corfu-previous)))
 
-;; Optional: Cape for extra completion sources
+;; -----------------------------
+;; Cape Completion Sources
+;; -----------------------------
 (use-package cape
   :ensure t
   :init
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-symbol)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+
+;; ===================================================================
+;; Guile via Geiser (Active Backend)
+;; ===================================================================
+
+(use-package geiser
+  :ensure t
+  :init
+  (setq geiser-active-implementations '(guile)
+        geiser-default-implementation 'guile
+        geiser-repl-query-on-kill-p nil
+        geiser-repl-use-other-window t
+        geiser-repl-history-filename "~/.config/emacs/geiser-history"))
+
+(use-package geiser-guile
+  :ensure t)
+
+
+;; -----------------------------
+;; Inline Eval Results
+;; -----------------------------
+(use-package eros
+  :ensure t
+  :hook (scheme-mode . eros-mode))
+
+;; -----------------------------
+;; Diagnostics
+;; -----------------------------
+(add-hook 'scheme-mode-hook #'flymake-mode)
+
+
+;; ===================================================================
+;; OLD BACKEND — CHICKEN (Comint Fallback) [COMMENTED]
+;; ===================================================================
 
 ;; -----------------------------
 ;; Geiser + CHICKEN integration
@@ -101,16 +157,9 @@
 ;;   :config
 ;;   (setq geiser-chicken-binary "/usr/bin/chicken-csi"))
 
-;; Keybindings (Geiser already provides these):
-;; C-c C-c — Eval definition
-;; C-c C-r — Eval region
-;; C-c C-b — Eval buffer
-;; C-c C-z — Switch to REPL
-;; C-x C-e — Eval last expression
-
 ;; -----------------------------
-;; Fallback: CHICKEN Scheme (Comint Mode)
-;; ----------------------------
+;; CHICKEN Comint REPL
+;; -----------------------------
 
 ;; (defun run-chicken ()
 ;;   "Run CHICKEN Scheme REPL (csi) in a vertical split, keeping focus on the code buffer."
@@ -120,59 +169,40 @@
 ;;   (let ((repl-buffer (get-buffer "*chicken*"))
 ;;         (cur-window (selected-window)))
 ;;     (unless (get-buffer-window repl-buffer)
-;;       ;; Split current window vertically (code left, REPL right)
 ;;       (let ((new-window (split-window-right)))
 ;;         (set-window-buffer new-window repl-buffer)))
-;;     ;; Keep focus on the code buffer
 ;;     (select-window cur-window)))
 
 ;; (defun chicken--send-and-return (string)
-;;   "Send STRING to CHICKEN REPL without echoing input."
+;;   "Send STRING to CHICKEN REPL."
 ;;   (unless (comint-check-proc "*chicken*")
 ;;     (set-buffer (make-comint "chicken" "/usr/bin/chicken-csi")))
 ;;   (let ((proc (get-buffer-process "*chicken*")))
 ;;     (comint-send-string proc (concat string "\n"))))
 
 ;; (defun chicken-send-region (start end)
-;;   "Send the current region to the CHICKEN REPL."
+;;   "Send region to CHICKEN."
 ;;   (interactive "r")
 ;;   (chicken--send-and-return (buffer-substring-no-properties start end)))
 
 ;; (defun chicken-send-buffer ()
-;;   "Send the entire buffer to the CHICKEN REPL."
+;;   "Send buffer to CHICKEN."
 ;;   (interactive)
 ;;   (chicken-send-region (point-min) (point-max)))
 
-;; (defun chicken-send-definition ()
-;;   "Send the current definition to the CHICKEN REPL."
-;;   (interactive)
-;;   (save-excursion
-;;     (mark-defun)
-;;     (chicken-send-region (region-beginning) (region-end)))
-;;   (deactivate-mark))
-
 ;; (defun chicken-clear-repl ()
-;;   "Clear CHICKEN REPL buffer."
+;;   "Clear REPL buffer."
 ;;   (interactive)
 ;;   (with-current-buffer "*chicken*"
 ;;     (let ((comint-buffer-maximum-size 0))
 ;;       (comint-truncate-buffer))))
 
-;; ;; Keybindings for Scheme mode
 ;; (with-eval-after-load 'scheme
 ;;   (define-key scheme-mode-map (kbd "C-c C-c") #'chicken-send-definition)
 ;;   (define-key scheme-mode-map (kbd "C-c C-r") #'chicken-send-region)
 ;;   (define-key scheme-mode-map (kbd "C-c C-b") #'chicken-send-buffer)
 ;;   (define-key scheme-mode-map (kbd "C-c C-z") #'run-chicken)
 ;;   (define-key scheme-mode-map (kbd "C-c C-l") #'chicken-clear-repl))
-
-(use-package geiser
-  :ensure t
-  :config
-  (setq geiser-active-implementations '(guile)))
-
-(use-package geiser-guile
-  :ensure t)
 
 
 (provide 'scheme-dev)

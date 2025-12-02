@@ -48,15 +48,15 @@
 ;; -----------------------------
 ;; Pretty symbols
 ;; -----------------------------
-(add-hook 'scheme-mode-hook
-          (lambda ()
-            (setq prettify-symbols-alist
-                  '(("lambda" . ?λ)
-                    ("->"     . ?→)
-                    ("=>"     . ?⇒)
-                    ("<="     . ?≤)
-                    (">="     . ?≥)))
-            (prettify-symbols-mode 1)))
+;; (add-hook 'scheme-mode-hook
+;;           (lambda ()
+;;             (setq prettify-symbols-alist
+;;                   '(("lambda" . ?λ)
+;;                     ("->"     . ?→)
+;;                     ("=>"     . ?⇒)
+;;                     ("<="     . ?≤)
+;;                     (">="     . ?≥)))
+;;             (prettify-symbols-mode 1)))
 
 ;; -----------------------------
 ;; Eldoc + Hover Docs

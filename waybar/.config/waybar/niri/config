@@ -159,7 +159,7 @@
      },
     "custom/systeminfo": {
         "format": " ",
-        "on-click": "foot -e btop",
+        "on-click": "alacritty -e btop",
         "tooltip-format": "process"       
     },
     "custom/filemanager": {

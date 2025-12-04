@@ -5,13 +5,13 @@
     // "width": 1280, // Waybar width
     "spacing": 2, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["niri/workspaces",
-                    "custom/terminal",
+    "modules-left": ["custom/terminal",
                     "custom/browser",
                     "custom/editor",
                     "custom/player",
                     "custom/filemanager",
-                    "custom/systeminfo"],
+                    "custom/systeminfo",
+                    "niri/workspaces"],
     "modules-center": ["niri/window"],
     "modules-right": ["network",
                      "pulseaudio",
@@ -21,36 +21,16 @@
                      "idle_inhibitor",
                      "clock"],
     // Modules configuration
-    "hyprland/workspaces": {
+    "niri/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
         "warp-on-scroll": false,
         "format": "{icon}",
         "format-icons": {
-            "1": "",
-            "2": "",
-            "3": "",
-            "4": "",
-            "urgent": "  ",
-            "focused": "  ",
-            "default": "  "
-        },
-        "persistent-workspaces": {
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": []
         }
     },                              
-    "hyprland/window": {
-            "format":"{class}"    
-    },
-    "hyprland/scratchpad": {
-        "format": "{icon} {count}",
-        "show-empty": false,
-        "format-icons": ["", ""],
-        "tooltip": true,
-        "tooltip-format": "{app}: {title}"
+    "niri/window": {
+            "format":"{app_id}"    
     },
     "idle_inhibitor": {
         "start-activated": true,

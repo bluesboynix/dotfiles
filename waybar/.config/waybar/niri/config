@@ -1,20 +1,18 @@
 {
     // "layer": "top", // Waybar at top layer
-    // "position": "bottom", // Waybar position (top|bottom|left|right)
+    "position": "top", // Waybar position (top|bottom|left|right)
     "height": 35, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 2, // Gaps between modules (4px)
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces",
-                    "sway/scratchpad",
+    "modules-left": ["niri/workspaces",
                     "custom/terminal",
                     "custom/browser",
                     "custom/editor",
                     "custom/player",
                     "custom/filemanager",
-                    "custom/systeminfo",
-                    "sway/mode"],
-    "modules-center": ["sway/window"],
+                    "custom/systeminfo"],
+    "modules-center": ["niri/window"],
     "modules-right": ["network",
                      "pulseaudio",
                      "backlight",
@@ -23,7 +21,7 @@
                      "idle_inhibitor",
                      "clock"],
     // Modules configuration
-    "sway/workspaces": {
+    "hyprland/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
         "warp-on-scroll": false,
@@ -44,10 +42,10 @@
             "4": []
         }
     },                              
-    "sway/window": {
-            "format":"{app_id}"    
+    "hyprland/window": {
+            "format":"{class}"    
     },
-    "sway/scratchpad": {
+    "hyprland/scratchpad": {
         "format": "{icon} {count}",
         "show-empty": false,
         "format-icons": ["", ""],
@@ -111,8 +109,8 @@
         "format-source-muted": "",
         "format-icons": {
 //            "headphone": "",
-//            "hands-free": "",
-//            "headset": "",
+//            "hands-free": "",
+//            "headset": "󰋋",
 //            "phone": "",
 //            "portable": "",
 //            "car": "",
@@ -161,7 +159,7 @@
     },
     "custom/terminal": {
         "format": " ",
-        "on-click": "foot",
+        "on-click": "alacritty",
         "tooltip-format": "terminal"
     },
     "custom/browser": {
@@ -170,14 +168,14 @@
         "tooltip-format": "firefox"
     },
     "custom/player": {
-        "format": "󰕼 ",
-        "on-click": "vlc",
-        "tooltip-format": "vlc"
+        "format": " ",
+        "on-click": "smplayer",
+        "tooltip-format": "smplayer"
     },
     "custom/editor": {
-        "format": " ",
-        "on-click": "foot nvim",
-        "tooltip-format": "nvim"
+        "format": " ",
+        "on-click": "emacs",
+        "tooltip-format": "emacs"
      },
     "custom/systeminfo": {
         "format": " ",

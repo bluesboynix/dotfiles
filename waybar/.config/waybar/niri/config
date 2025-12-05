@@ -150,7 +150,7 @@
     "custom/player": {
         "format": " ",
         "on-click": "smplayer",
-        "tooltip-format": "smplayer"
+        "tooltip-format": "player"
     },
     "custom/editor": {
         "format": " ",

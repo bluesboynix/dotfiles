@@ -38,14 +38,18 @@
 ;; -------------------------------------------------------------------
 ;; Common Lisp
 ;; -------------------------------------------------------------------
-(require 'common-lisp-colors) ;; Custom syntax highlighting
-(require 'common-lisp-dev)    ;; SLIME, Smartparens, Eldoc, Rainbow delimiters
+(require 'common-lisp-colors)
+(require 'common-lisp-dev)
 ;; -------------------------------------------------------------------y
-;; Scheme -> current implementation : bigloo
+;; Scheme
 ;; -------------------------------------------------------------------
-(require 'scheme-colors) ;; Custom syntax highlighting
+(require 'scheme-colors)
 (require 'scheme-dev)
-
+;; -------------------------------------------------------------------y
+;; Racket
+;; -------------------------------------------------------------------
+(require 'racket-dev)
+(require 'racket-colors)
 ;; -------------------------------------------------------------------
 ;; Load custom-set-variables and custom-set-faces
 ;; -------------------------------------------------------------------

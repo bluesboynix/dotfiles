@@ -108,7 +108,7 @@
   "Send region to Racket REPL."
   (interactive "r")
   (racket-repl)
-  (racket--repl-send-region start end))
+  (racket-repl-send-region start end))
 
 (defun racket-send-definition ()
   "Send current definition to Racket REPL."

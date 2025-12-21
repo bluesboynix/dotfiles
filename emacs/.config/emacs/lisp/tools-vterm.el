@@ -1,4 +1,4 @@
-;;; core-terminal.el --- Terminal inside Emacs with vterm-toggle -*- lexical-binding: t; -*-
+;;; tools-vterm.el --- Terminal inside Emacs with vterm-toggle -*- lexical-binding: t; -*-
 
 (use-package vterm
   :ensure t
@@ -14,5 +14,5 @@
 (global-set-key [f9] 'vterm-toggle)
 (global-set-key [C-f9] 'vterm-toggle-cd)
 
-(provide 'core-terminal)
+(provide 'tools-vterm)
 ;;; core-terminal.el  ends here

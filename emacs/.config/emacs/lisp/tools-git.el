@@ -1,4 +1,4 @@
-;;; core-git.el --- Git integration -*- lexical-binding: t; -*-
+;;; tools-git.el --- Git integration -*- lexical-binding: t; -*-
 
 ;; Magit: interactive Git interface
 (use-package magit
@@ -13,4 +13,4 @@
          (magit-post-refresh . diff-hl-magit-post-refresh)))
 
 (message "Git integration loaded successfully.")
-(provide 'core-git)
+(provide 'tools-git)

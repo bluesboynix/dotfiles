@@ -1,4 +1,4 @@
-;;; emms-config.el --- Minimal EMMS config -*- lexical-binding: t; -*-
+;;; extra-emms.el --- Minimal EMMS config -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;; EMMS setup with MPV backend, local music, playlists, YouTube, and radio
 ;;; Code:
@@ -77,5 +77,5 @@
   (global-set-key (kbd "C-c e l") 'emms-playlist-mode-go)
   (global-set-key (kbd "C-c e y") 'emms-play-youtube))
 
-(provide 'emms-config)
-;;; emms-config.el ends here
+(provide 'extra-emms)
+;;; extra-emms.el ends here

@@ -1,4 +1,4 @@
-;;; scheme-colors.el --- Comprehensive Scheme syntax coloring for R5RS and R7RS
+;;; lang-scheme-colors.el --- Comprehensive Scheme syntax coloring for R5RS and R7RS
 ;;; Commentary:
 
 ;; This package provides comprehensive syntax highlighting for Scheme
@@ -158,7 +158,7 @@
     "#\\linefeed" "#\\rubout" "#\\x" "#\\u" "#\\U" "...")
   "Scheme constants and special values.")
 
-::q:q(defconst scheme-colors-types
+(defconst scheme-colors-types
   '("boolean" "char" "string" "symbol" "number" "pair" "list" "vector" "procedure"
     "port" "input-port" "output-port" "bytevector" "eof-object" "error-object"
     "record-type" "syntax" "environment" "promise" "parameter" "hashtable")
@@ -317,6 +317,6 @@
   (font-lock-flush))
 
 ;; Provide the package
-(provide 'scheme-colors)
+(provide 'lang-scheme-colors)
 
-;;; scheme-colors.el ends here
+;;; lang-scheme-colors.el ends here

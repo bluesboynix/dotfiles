@@ -1,4 +1,4 @@
-;;; common-lisp-colors.el --- Harmonized Common Lisp syntax highlighting -*- lexical-binding: t; -*-
+;;; lang-common-lisp-colors.el --- Harmonized Common Lisp syntax highlighting -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;; Elegant, high-contrast Lisp highlighting for Genesis Dark.
 ;; Harmonized with Rust and C/C++ schemes.
@@ -131,5 +131,5 @@
      (";.*$"                  . 'cl-comment-face)
      (,cl-generic-form-regexp 1 'cl-function-face))))
 
-(provide 'common-lisp-colors)
+(provide 'lang-common-lisp-colors)
 ;;; common-lisp-colors.el ends here

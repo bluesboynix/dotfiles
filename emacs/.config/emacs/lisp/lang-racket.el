@@ -1,4 +1,4 @@
-;;; racket-dev.el --- Racket Development Config -*- lexical-binding: t; -*-
+;;; lang-racket.el --- Racket Development Config -*- lexical-binding: t; -*-
 
 ;; -----------------------------
 ;; Smartparens
@@ -133,5 +133,5 @@
         (let ((comint-buffer-maximum-size 0))
           (comint-truncate-buffer))))))
 
-(provide 'racket-dev)
+(provide 'lang-racket)
 ;;; racket-dev.el ends here

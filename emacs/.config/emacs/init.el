@@ -1,15 +1,11 @@
 ;;; init.el --- Emacs configuration entry point -*- lexical-binding: t; -*-
 
-;; -------------------------------------------------------------------
 ;; Setup load-path for custom lisp modules
-;; -------------------------------------------------------------------
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
 (setenv "PATH" (concat (expand-file-name "~/.cargo/bin") ":" (getenv "PATH")))
 
-;; -------------------------------------------------------------------
 ;; Core modules
-;; -------------------------------------------------------------------
 (require 'core-ui)           ;; Basic UI
 (require 'core-editing)      ;; Editing preferences
 (require 'core-packages)     ;; Package management setup
@@ -17,46 +13,30 @@
 (require 'core-ui-polish)    ;; Fonts, themes, modeline
 (require 'core-dashboard)    ;; dashboard for emacs
 
-;; -------------------------------------------------------------------
-;; Extra
-;; -------------------------------------------------------------------
-(require 'emms-config)       ;; Emacs Music
-(require 'core-pdf)          ;; view pdf in emacs
-(require 'core-terminal)     ;; vterm integration
-(require 'core-git)          ;; Magit + diff-hl
-(require 'core-file-browser) ;; use treemacs
+;; Tools and Extra
+(require 'extra-emms)        ;; Emacs Music
+(require 'tools-pdf)         ;; view pdf in emacs
+(require 'tools-vterm)       ;; vterm integration
+(require 'tools-git)         ;; Magit + diff-hl
+(require 'tools-treemacs)    ;; use treemacs
 
-;; -------------------------------------------------------------------
 ;; Language modules
-;; -------------------------------------------------------------------
-(require 'lang-cpp)          ;; C/C++
-(require 'c-cpp-colors)
-(require 'lang-python)       ;; Python
+(require 'lang-cpp)      
+(require 'lang-cpp-colors)
+(require 'lang-python)
 (require 'lang-python-colors)
-(require 'lang-rust)         ;; Rust
+(require 'lang-rust)
 (require 'lang-rust-colors)
-;; -------------------------------------------------------------------
-;; Common Lisp
-;; -------------------------------------------------------------------
-(require 'common-lisp-colors)
-(require 'common-lisp-dev)
-;; -------------------------------------------------------------------y
-;; Scheme
-;; -------------------------------------------------------------------
-(require 'scheme-colors)
-(require 'scheme-dev)
-;; -------------------------------------------------------------------y
-;; Racket
-;; -------------------------------------------------------------------
-(require 'racket-colors)
-(require 'racket-dev)
-;; -------------------------------------------------------------------
+(require 'lang-common-lisp-colors)
+(require 'lang-common-lisp)
+(require 'lang-scheme-colors)
+(require 'lang-scheme)
+(require 'lang-racket-colors)
+(require 'lang-racket)
+
 ;; Load custom-set-variables and custom-set-faces
-;; -------------------------------------------------------------------
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror 'nomessage)
 
-;; -------------------------------------------------------------------
 ;; Final message
-;; -------------------------------------------------------------------
 (message "init.el loaded all modules successfully.")

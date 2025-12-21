@@ -1,4 +1,4 @@
-;;; racket-colors.el --- Custom Racket syntax highlighting for Genesis Dark -*- lexical-binding: t; -*-
+;;; lang-racket-colors.el --- Custom Racket syntax highlighting for Genesis Dark -*- lexical-binding: t; -*-
 
 ;; -----------------------------
 ;; Color palette (Genesis Dark)
@@ -96,6 +96,6 @@
 (add-hook 'racket-mode-hook #'racket-colors-apply)
 (add-hook 'racket-repl-mode-hook #'racket-colors-apply)
 
-(provide 'racket-colors)
+(provide 'lang-racket-colors)
 
 ;;; racket-colors.el ends here

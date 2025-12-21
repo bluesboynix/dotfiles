@@ -1,4 +1,4 @@
-;;; scheme-dev.el --- Scheme Development Config (Guile Scheme) -*- lexical-binding: t; -*-
+;;; lang-scheme.el --- Scheme Development Config (Guile Scheme) -*- lexical-binding: t; -*-
 
 ;; -----------------------------
 ;; Smartparens
@@ -197,5 +197,5 @@
 ;;   (define-key scheme-mode-map (kbd "C-c C-z") #'run-chicken)
 ;;   (define-key scheme-mode-map (kbd "C-c C-l") #'chicken-clear-repl))
 
-(provide 'scheme-dev)
+(provide 'lang-scheme)
 ;;; scheme-dev.el ends here

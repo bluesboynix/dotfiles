@@ -1,4 +1,4 @@
-;;; common-lisp-dev.el --- Common Lisp Development Config -*- lexical-binding: t; -*-
+;;; lang-common-lisp.el --- Common Lisp Development Config -*- lexical-binding: t; -*-
 
 ;; -----------------------------
 ;; Common Lisp (SLIME + SBCL)
@@ -89,5 +89,5 @@
         corfu-auto-prefix 2
         corfu-auto-delay 0.2))
 
-(provide 'common-lisp-dev)
-;;; common-lisp-dev.el ends here
+(provide 'lang-common-lisp)
+;;; common-lisp.el ends here

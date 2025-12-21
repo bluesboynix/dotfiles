@@ -1,4 +1,4 @@
-;;; core-file-browser.el --- File Browser / Treemacs -*- lexical-binding: t; -*-
+;;; tools-treemacs.el --- File Browser / Treemacs -*- lexical-binding: t; -*-
 
 (use-package treemacs
   :ensure t
@@ -52,5 +52,5 @@
         (treemacs)
       (my/treemacs-open-at-current-directory))))
 
-(provide 'core-file-browser)
-;;; core-file-browser.el ends here
+(provide 'tools-treemacs)
+;;; tools-treemacs.el ends here

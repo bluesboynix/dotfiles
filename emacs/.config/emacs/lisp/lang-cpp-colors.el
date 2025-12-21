@@ -1,4 +1,4 @@
-;;; c-cpp-colors.el --- Harmonized C/C++ syntax highlighting -*- lexical-binding: t; -*-
+;;; lang-cpp-colors.el --- Harmonized C/C++ syntax highlighting -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Elegant, dark-friendly, and harmonized with Lisp and Rust faces.
@@ -120,5 +120,5 @@
 (add-hook 'c-mode-hook #'c-cpp-apply-custom-highlighting)
 (add-hook 'c++-mode-hook #'c-cpp-apply-custom-highlighting)
 
-(provide 'c-cpp-colors)
-;;; c-cpp-colors.el ends here
+(provide 'lang-cpp-colors)
+;;; lang-cpp-colors.el ends here

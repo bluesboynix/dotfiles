@@ -1,12 +1,12 @@
-;;; core-pdf.el --- PDF configuration for Emacs
+;;; pdf-tools.el --- PDF configuration for Emacs
 
-(provide 'core-pdf)
+(provide 'tools-pdf)
 
 ;; Ensure pdf-tools is installed
 (unless (package-installed-p 'pdf-tools)
   (package-install 'pdf-tools))
 
-(require 'pdf-tools)
+(require 'tools-pdf)
 
 ;; Initialize
 (pdf-tools-install)

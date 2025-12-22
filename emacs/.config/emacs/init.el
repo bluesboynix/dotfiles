@@ -8,7 +8,7 @@
 ;; Core modules
 (require 'ui-base)           ;; Basic UI
 (require 'core-packages)     ;; Package management setup
-(require 'utils-collection) ;; Corfu, Which-Key, Projectile
+(require 'utils-collection)  ;; Corfu, Which-Key, Projectile
 (require 'ui-dashboard)      ;; dashboard for emacs
 
 ;; Tools and Extra

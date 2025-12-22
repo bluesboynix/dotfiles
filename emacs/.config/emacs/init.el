@@ -6,12 +6,10 @@
 (setenv "PATH" (concat (expand-file-name "~/.cargo/bin") ":" (getenv "PATH")))
 
 ;; Core modules
-(require 'core-ui)           ;; Basic UI
-(require 'core-editing)      ;; Editing preferences
+(require 'ui-base)           ;; Basic UI
 (require 'core-packages)     ;; Package management setup
-(require 'core-utilities)    ;; Corfu, Which-Key, Projectile
-(require 'core-ui-polish)    ;; Fonts, themes, modeline
-(require 'core-dashboard)    ;; dashboard for emacs
+(require 'utils-collection) ;; Corfu, Which-Key, Projectile
+(require 'ui-dashboard)      ;; dashboard for emacs
 
 ;; Tools and Extra
 (require 'extra-emms)        ;; Emacs Music

@@ -1,4 +1,4 @@
-;;; core-dashboard.el --- Polished Emacs Startup Dashboard -*- lexical-binding: t; -*-
+;;; ui-dashboard.el --- Polished Emacs Startup Dashboard -*- lexical-binding: t; -*-
 
 (use-package dashboard
   :ensure t
@@ -7,12 +7,12 @@
   (dashboard-setup-startup-hook)
 
   ;; Banner / welcome message
-  (setq dashboard-banner-logo-title "Welcome to Your Emacs IDE — Happy Hacking!")
+  (setq dashboard-banner-logo-title "Emacs")
   (setq dashboard-startup-banner 'official) ;; or a path to ASCII/banner file
   (setq dashboard-center-content t)
 
   ;; Sections: recent files, projects, bookmarks
-  (setq dashboard-items '((recents  . 5)
+  (setq dashboard-items '((recents  . 10)
                           (projects . 5)
                           (bookmarks . 5)))
   (setq dashboard-item-names '((recents  . "Recent Files:")
@@ -34,6 +34,8 @@
     (insert ";;  • C/C++\n")
     (insert ";;  • Python\n")
     (insert ";;  • Rust\n")
+    (insert ";;  • Scheme")
+    (insert ";;  • Racket")
     (insert ";;  • Common Lisp\n\n"))
 
   ;; Add custom languages widget before recents
@@ -45,5 +47,5 @@
 (use-package all-the-icons
   :ensure t)
 
-(provide 'core-dashboard)
-;;; core-dashboard.el ends here
+(provide 'ui-dashboard)
+;;; ui-dashboard.el ends here

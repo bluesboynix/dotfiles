@@ -1,4 +1,4 @@
-;;; core-utilities.el --- General IDE utilities -*- lexical-binding: t; -*-
+;;; utils-collection.el --- General IDE utilities -*- lexical-binding: t; -*-
 
 ;; --- Completion UI (Corfu) ---
 (use-package corfu
@@ -52,10 +52,6 @@
   :init
   (marginalia-mode))
 
-;; --- Git integration ---
-(use-package magit
-  :commands magit-status)
-
 ;; --- Snippet support ---
 (use-package yasnippet
   :config
@@ -70,21 +66,22 @@
           (project-dired "Dired")
           (magit-project-status "Magit"))))
 
-;; --- LSP support via built-in Eglot ---
-(use-package eglot
-  :hook ((python-mode . eglot-ensure)
-         (c-mode . eglot-ensure)
-         (c++-mode . eglot-ensure)
-         (go-mode . eglot-ensure)
-         (js-mode . eglot-ensure))
-  :config
-  (setq eglot-send-changes-idle-time 0.5))
+;; ;; --- LSP support via built-in Eglot ---
+;; (use-package eglot
+;;   :hook ((python-mode . eglot-ensure)
+;;          (c-mode . eglot-ensure)
+;;          (c++-mode . eglot-ensure)
+;;          (go-mode . eglot-ensure)
+;;          (js-mode . eglot-ensure))
+;;   :config
+;;   (setq eglot-send-changes-idle-time 0.5))
 
-;; --- Syntax checking (Flymake) ---
-(use-package flymake
-  :hook (prog-mode . flymake-mode)
-  :config
-  (setq flymake-no-changes-timeout 0.5))
+;; ;; --- Syntax checking (Flymake) ---
+;; (use-package flymake
+;;   :hook (prog-mode . flymake-mode)
+;;   :config
+;;   (setq flymake-no-changes-timeout 0.5))
 
 (message "Core utilities loaded successfully.")
-(provide 'core-utilities)
+(provide 'utils-collection)
+;;; utils-collection ends here

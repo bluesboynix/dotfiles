@@ -90,56 +90,56 @@
 ;; -----------------------------
 ;; Guile Scheme REPL (Comint)
 ;; -----------------------------
-(defun run-guile ()
-  "Run Guile REPL in a right-side split."
-  (interactive)
-  (unless (comint-check-proc "*guile*")
-    (set-buffer (make-comint "guile" "/usr/bin/guile")))
-  (let ((repl-buffer (get-buffer "*guile*"))
-        (cur-window (selected-window)))
-    (unless (get-buffer-window repl-buffer)
-      (let ((new-window (split-window-right)))
-        (set-window-buffer new-window repl-buffer)))
-    (select-window cur-window)))
+;; (defun run-guile ()
+;;   "Run Guile REPL in a right-side split."
+;;   (interactive)
+;;   (unless (comint-check-proc "*guile*")
+;;     (set-buffer (make-comint "guile" "/usr/bin/guile")))
+;;   (let ((repl-buffer (get-buffer "*guile*"))
+;;         (cur-window (selected-window)))
+;;     (unless (get-buffer-window repl-buffer)
+;;       (let ((new-window (split-window-right)))
+;;         (set-window-buffer new-window repl-buffer)))
+;;     (select-window cur-window)))
 
-(defun guile--send (string)
-  "Low-level sender for Guile REPL."
-  (unless (comint-check-proc "*guile*")
-    (set-buffer (make-comint "guile" "/usr/bin/guile")))
-  (let ((proc (get-buffer-process "*guile*")))
-    (comint-send-string proc (concat string "\n"))))
+;; (defun guile--send (string)
+;;   "Low-level sender for Guile REPL."
+;;   (unless (comint-check-proc "*guile*")
+;;     (set-buffer (make-comint "guile" "/usr/bin/guile")))
+;;   (let ((proc (get-buffer-process "*guile*")))
+;;     (comint-send-string proc (concat string "\n"))))
 
-(defun guile-send-region (start end)
-  "Send region to Guile REPL."
-  (interactive "r")
-  (guile--send (buffer-substring-no-properties start end)))
+;; (defun guile-send-region (start end)
+;;   "Send region to Guile REPL."
+;;   (interactive "r")
+;;   (guile--send (buffer-substring-no-properties start end)))
 
-(defun guile-send-buffer ()
-  "Send whole buffer to Guile."
-  (interactive)
-  (guile-send-region (point-min) (point-max)))
+;; (defun guile-send-buffer ()
+;;   "Send whole buffer to Guile."
+;;   (interactive)
+;;   (guile-send-region (point-min) (point-max)))
 
-(defun guile-send-definition ()
-  "Send current definition to Guile."
-  (interactive)
-  (save-excursion
-    (mark-defun)
-    (guile-send-region (region-beginning) (region-end)))
-  (deactivate-mark))
+;; (defun guile-send-definition ()
+;;   "Send current definition to Guile."
+;;   (interactive)
+;;   (save-excursion
+;;     (mark-defun)
+;;     (guile-send-region (region-beginning) (region-end)))
+;;   (deactivate-mark))
 
-(defun guile-clear-repl ()
-  "Clear Guile REPL buffer."
-  (interactive)
-  (with-current-buffer "*guile*"
-    (let ((comint-buffer-maximum-size 0))
-      (comint-truncate-buffer))))
+;; (defun guile-clear-repl ()
+;;   "Clear Guile REPL buffer."
+;;   (interactive)
+;;   (with-current-buffer "*guile*"
+;;     (let ((comint-buffer-maximum-size 0))
+;;       (comint-truncate-buffer))))
 
-(with-eval-after-load 'scheme
-  (define-key scheme-mode-map (kbd "C-c C-c") #'guile-send-definition)
-  (define-key scheme-mode-map (kbd "C-c C-r") #'guile-send-region)
-  (define-key scheme-mode-map (kbd "C-c C-b") #'guile-send-buffer)
-  (define-key scheme-mode-map (kbd "C-c C-z") #'run-guile)
-  (define-key scheme-mode-map (kbd "C-c C-l") #'guile-clear-repl))
+;; (with-eval-after-load 'scheme
+;;   (define-key scheme-mode-map (kbd "C-c C-c") #'guile-send-definition)
+;;   (define-key scheme-mode-map (kbd "C-c C-r") #'guile-send-region)
+;;   (define-key scheme-mode-map (kbd "C-c C-b") #'guile-send-buffer)
+;;   (define-key scheme-mode-map (kbd "C-c C-z") #'run-guile)
+;;   (define-key scheme-mode-map (kbd "C-c C-l") #'guile-clear-repl))
 
 
 ;; ----------------------------------------
@@ -196,6 +196,61 @@
 ;;   (define-key scheme-mode-map (kbd "C-c C-b") #'chicken-send-buffer)
 ;;   (define-key scheme-mode-map (kbd "C-c C-z") #'run-chicken)
 ;;   (define-key scheme-mode-map (kbd "C-c C-l") #'chicken-clear-repl))
+
+;; ----------------------------------------
+;; Gambit Scheme REPL (gsi via comint)
+;; ----------------------------------------
+
+(defun run-gambit ()
+  "Run Gambit Scheme REPL (gsi) in a right vertical split."
+  (interactive)
+  (unless (comint-check-proc "*gambit*")
+    (set-buffer (make-comint "gambit" "/usr/bin/gsi")))
+  (let ((repl-buffer (get-buffer "*gambit*"))
+        (cur-window (selected-window)))
+    (unless (get-buffer-window repl-buffer)
+      (let ((new-window (split-window-right)))
+        (set-window-buffer new-window repl-buffer)))
+    (select-window cur-window)))
+
+(defun gambit--send (string)
+  "Low-level sender for Gambit gsi REPL."
+  (unless (comint-check-proc "*gambit*")
+    (set-buffer (make-comint "gambit" "/usr/bin/gsi")))
+  (let ((proc (get-buffer-process "*gambit*")))
+    (comint-send-string proc (concat string "\n"))))
+
+(defun gambit-send-region (start end)
+  "Send region to Gambit REPL."
+  (interactive "r")
+  (gambit--send (buffer-substring-no-properties start end)))
+
+(defun gambit-send-buffer ()
+  "Send whole buffer to Gambit."
+  (interactive)
+  (gambit-send-region (point-min) (point-max)))
+
+(defun gambit-send-definition ()
+  "Send current definition to Gambit."
+  (interactive)
+  (save-excursion
+    (mark-defun)
+    (gambit-send-region (region-beginning) (region-end)))
+  (deactivate-mark))
+
+(defun gambit-clear-repl ()
+  "Clear Gambit REPL buffer."
+  (interactive)
+  (with-current-buffer "*gambit*"
+    (let ((comint-buffer-maximum-size 0))
+      (comint-truncate-buffer))))
+
+(with-eval-after-load 'scheme
+  (define-key scheme-mode-map (kbd "C-c C-c") #'gambit-send-definition)
+  (define-key scheme-mode-map (kbd "C-c C-r") #'gambit-send-region)
+  (define-key scheme-mode-map (kbd "C-c C-b") #'gambit-send-buffer)
+  (define-key scheme-mode-map (kbd "C-c C-z") #'run-gambit)
+  (define-key scheme-mode-map (kbd "C-c C-l") #'gambit-clear-repl))
 
 (provide 'lang-scheme)
 ;;; scheme-dev.el ends here

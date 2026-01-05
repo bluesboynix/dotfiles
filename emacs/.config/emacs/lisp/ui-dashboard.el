@@ -30,7 +30,7 @@
   ;; Custom widget: loaded language modules
   (defun dashboard-insert-languages-widget (list-size)
     "Insert a nice list of loaded language modules."
-    (insert ";;  • "))
+    (insert ""))
 
   ;; Add custom languages widget before recents
   (add-to-list 'dashboard-item-generators

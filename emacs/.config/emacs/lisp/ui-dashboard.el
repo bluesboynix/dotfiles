@@ -30,13 +30,7 @@
   ;; Custom widget: loaded language modules
   (defun dashboard-insert-languages-widget (list-size)
     "Insert a nice list of loaded language modules."
-    (insert "\n;; Loaded Languages:\n")
-    (insert ";;  • C/C++\n")
-    (insert ";;  • Python\n")
-    (insert ";;  • Rust\n")
-    (insert ";;  • Scheme")
-    (insert ";;  • Racket")
-    (insert ";;  • Common Lisp\n\n"))
+    (insert ";;  • "))
 
   ;; Add custom languages widget before recents
   (add-to-list 'dashboard-item-generators

@@ -94,7 +94,6 @@
   (font-lock-ensure))
 
 (add-hook 'racket-mode-hook #'racket-colors-apply)
-(add-hook 'racket-repl-mode-hook #'racket-colors-apply)
 
 (provide 'lang-racket-colors)
 

@@ -17,6 +17,7 @@
 (require 'tools-vterm)       ;; vterm integration
 (require 'tools-git)         ;; Magit + diff-hl
 (require 'tools-treemacs)    ;; use treemacs
+(require 'tools-dired)       ;; dired config
 
 ;; Language modules
 (require 'lang-cpp)      

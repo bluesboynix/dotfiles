@@ -100,8 +100,8 @@ input {
     keyboard {
         track-layout "window"
         numlock
-        repeat-delay 600
-        repeat-rate 25
+        repeat-delay 300
+        repeat-rate 50
     }
 }
 

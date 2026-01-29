@@ -1,71 +1,86 @@
-;;; lang-rust-colors.el --- Custom Rust syntax colors -*- lexical-binding: t; -*-
+;;; lang-rust-colors.el --- Extended Rust syntax colors -*- lexical-binding: t; -*-
+
 ;;; Commentary:
-;; Enhanced font-lock highlighting for Rust code.
-;; Works seamlessly with the Genesis Dark theme.
+;; Deep Rust-specific font-lock highlighting.
+;; Designed for Genesis Dark–style themes.
+;; Works with rust-mode and rust-ts-mode.
+
 ;;; Code:
 
-;; ------------------------------
+;; --------------------------------------------------
 ;; Face definitions
-;; ------------------------------
+;; --------------------------------------------------
 
 (defface rust-keyword-face
-  '((t (:foreground "#0fa0ff" :weight semi-bold))) ;; cyan-blue
-  "Face for Rust keywords.")
+  '((t (:foreground "#0fa0ff" :weight semi-bold)))
+  "Rust keywords.")
 
 (defface rust-type-face
-  '((t (:foreground "#b0c8ff"))) ;; light blue
-  "Face for Rust types and traits.")
+  '((t (:foreground "#b0c8ff")))
+  "Rust types, traits, structs.")
 
 (defface rust-primitive-face
-  '((t (:foreground "#89ddff"))) ;; cyan
-  "Face for Rust primitive types (u8, i32, etc.).")
+  '((t (:foreground "#89ddff")))
+  "Primitive Rust types.")
 
 (defface rust-bool-face
-  '((t (:foreground "#d19a66"))) ;; brownish-orange
-  "Face for booleans true/false.")
+  '((t (:foreground "#d19a66")))
+  "Boolean literals.")
 
 (defface rust-number-face
-  '((t (:foreground "#e5c07b"))) ;; amber
-  "Face for numeric literals.")
+  '((t (:foreground "#e5c07b")))
+  "Numeric literals.")
 
 (defface rust-string-face
-  '((t (:foreground "#98c379"))) ;; green
-  "Face for string literals.")
+  '((t (:foreground "#98c379")))
+  "String and byte string literals.")
+
+(defface rust-char-face
+  '((t (:foreground "#7ee787")))
+  "Character literals.")
 
 (defface rust-function-face
-  '((t (:foreground "#ffffaa"))) ;; pale yellow
-  "Face for function names and calls.")
-
-(defface rust-variable-face
-  '((t (:foreground "#aab2c0"))) ;; soft gray-blue
-  "Face for variable names after `let` or `mut`.")
-
-(defface rust-constant-face
-  '((t (:foreground "#ffcb6b"))) ;; yellow
-  "Face for constants and enums.")
+  '((t (:foreground "#ffffaa")))
+  "Functions and methods.")
 
 (defface rust-macro-face
-  '((t (:foreground "#ffaa0f"))) ;; orange
-  "Face for macros (println!, etc.).")
+  '((t (:foreground "#ffaa0f")))
+  "Macros and macro_rules.")
+
+(defface rust-variable-face
+  '((t (:foreground "#aab2c0")))
+  "Variables and bindings.")
+
+(defface rust-constant-face
+  '((t (:foreground "#ffcb6b")))
+  "Constants and enum variants.")
 
 (defface rust-lifetime-face
-  '((t (:foreground "#e06c75"))) ;; soft red
-  "Face for lifetimes ('a, etc.).")
+  '((t (:foreground "#e06c75")))
+  "Lifetimes.")
 
 (defface rust-attribute-face
-  '((t (:foreground "#7f848e"))) ;; gray
-  "Face for attributes #[derive(...)]")
+  '((t (:foreground "#7f848e")))
+  "Attributes and derives.")
+
+(defface rust-path-face
+  '((t (:foreground "#82aaff")))
+  "Module and type paths.")
+
+(defface rust-doc-face
+  '((t (:foreground "#5c6370" :slant italic)))
+  "Documentation comments.")
 
 (defface rust-comment-face
-  '((t (:foreground "#5c6370" :slant italic))) ;; muted gray italic
-  "Face for comments.")
+  '((t (:foreground "#5c6370" :slant italic)))
+  "Regular comments.")
 
-;; ------------------------------
-;; Font-lock keywords
-;; ------------------------------
+;; --------------------------------------------------
+;; Font-lock rules
+;; --------------------------------------------------
 
 (defun my-rust-font-lock ()
-  "Enhanced syntax highlighting for Rust, including function defs, calls, and vars."
+  "Extended Rust syntax highlighting."
   (font-lock-add-keywords
    nil
    `(
@@ -73,64 +88,82 @@
      (,(regexp-opt
         '("fn" "let" "mut" "if" "else" "match" "loop" "while" "for"
           "in" "impl" "trait" "struct" "enum" "use" "mod" "pub"
-          "crate" "super" "self" "return" "break" "continue"
+          "crate" "super" "self" "Self" "return" "break" "continue"
           "async" "await" "move" "ref" "dyn" "as" "const" "static"
-          "unsafe" "where" "extern" "type")
+          "unsafe" "where" "extern" "type" "macro_rules!")
         'symbols)
       0 'rust-keyword-face)
 
-     ;; Function definitions — highlight name after `fn`
-     ("\\bfn[ \t]+\\([a-zA-Z_][a-zA-Z0-9_]*\\)"
-      1 'rust-function-face)
+     ;; Visibility qualifiers
+     ("\\bpub(\\s-*\\((crate|super|self)\\))?" 0 'rust-keyword-face)
 
-     ;; Function calls — identifier followed by (
-     ("\\b\\([a-zA-Z_][a-zA-Z0-9_]*\\)[ \t]*("
-      1 'rust-function-face)
+     ;; Function definitions
+     ("\\bfn\\s-+\\([A-Za-z_][A-Za-z0-9_]*\\)" 1 'rust-function-face)
 
-     ;; Variable names after `let` or `mut`
-     ("\\b\\(?:let\\|mut\\)[ \t]+\\([a-zA-Z_][a-zA-Z0-9_]*\\)"
+     ;; Function calls / methods
+     ("\\b\\([A-Za-z_][A-Za-z0-9_]*\\)\\s-*(" 1 'rust-function-face)
+
+     ;; Variables after let / mut
+     ("\\b\\(?:let\\|mut\\)\\s-+\\([A-Za-z_][A-Za-z0-9_]*\\)"
       1 'rust-variable-face)
 
-     ;; Types and Traits (start with uppercase)
+     ;; Types / Traits / Structs
      ("\\b[A-Z][A-Za-z0-9_]*\\b" 0 'rust-type-face)
 
+     ;; Enum variants (Type::Variant)
+     ("\\b[A-Z][A-Za-z0-9_]*::\\([A-Z][A-Za-z0-9_]*\\)"
+      1 'rust-constant-face)
+
+     ;; Paths (module::item)
+     ("\\b\\([a-z][A-Za-z0-9_]*::\\)+" 0 'rust-path-face)
+
      ;; Primitive types
-     ("\\b\\(u8\\|u16\\|u32\\|u64\\|usize\\|i8\\|i16\\|i32\\|i64\\|isize\\|f32\\|f64\\)\\b"
+     ("\\b\\(u8\\|u16\\|u32\\|u64\\|usize\\|i8\\|i16\\|i32\\|i64\\|isize\\|f32\\|f64\\|bool\\|char\\|str\\)\\b"
       0 'rust-primitive-face)
 
      ;; Booleans
      ("\\b\\(true\\|false\\)\\b" 0 'rust-bool-face)
 
-     ;; Numbers (integer and float)
-     ("\\b[0-9]+\\(\\.[0-9]+\\)?\\b" 0 'rust-number-face)
+     ;; Numbers with suffixes
+     ("\\b[0-9]+\\(\\.[0-9]+\\)?\\([iu][0-9]+\\|f[0-9]+\\)?\\b"
+      0 'rust-number-face)
 
-     ;; Strings
-     ("\"[^\"]*\"" 0 'rust-string-face)
+     ;; Strings (normal, raw, byte)
+     ("b?\"\\([^\"\\\\]\\|\\\\.\\)*\"" 0 'rust-string-face)
+     ("r#*\".*?\"#*" 0 'rust-string-face)
 
-     ;; Macros (ending with !)
-     ("\\b[a-zA-Z_][a-zA-Z0-9_]*!" 0 'rust-macro-face)
+     ;; Character literals
+     ("'\\(\\\\.\\|[^']\\)'" 0 'rust-char-face)
 
-     ;; Lifetimes ('a, 'static)
-     ("'\\sw+" 0 'rust-lifetime-face)
+     ;; Macros
+     ("\\b[A-Za-z_][A-Za-z0-9_]*!" 0 'rust-macro-face)
 
-     ;; Attributes (#[derive(...)] etc.)
-     ("#\\[.*?\\]" 0 'rust-attribute-face)
+     ;; Lifetimes
+     ("'\\(static\\|[a-zA-Z_][A-Za-z0-9_]*\\)" 0 'rust-lifetime-face)
 
-     ;; Comments (// ... and /// ...)
+     ;; Attributes
+     ("#\\!?\\[.*?\\]" 0 'rust-attribute-face)
+
+     ;; Doc comments
+     ("///.*" 0 'rust-doc-face)
+     ("//!.*" 0 'rust-doc-face)
+
+     ;; Regular comments
      ("//.*" 0 'rust-comment-face)
      )))
 
-;; ------------------------------
-;; Hook integration
-;; ------------------------------
+;; --------------------------------------------------
+;; Activation
+;; --------------------------------------------------
 
 (defun my-rust-activate-custom-faces ()
-  "Activate custom Rust faces and refresh font-lock after theme load."
+  "Enable extended Rust font-lock."
   (my-rust-font-lock)
   (font-lock-flush)
   (font-lock-ensure))
 
 (add-hook 'rust-mode-hook #'my-rust-activate-custom-faces)
+(add-hook 'rust-ts-mode-hook #'my-rust-activate-custom-faces)
 
 (provide 'lang-rust-colors)
 ;;; lang-rust-colors.el ends here

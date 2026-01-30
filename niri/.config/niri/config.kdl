@@ -76,7 +76,7 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 // spawn-sh-at-startup "~/Scripts/start-waybar-niri.sh"
 // spawn-sh-at-startup "~/Scripts/start-swaync-niri.sh"
-spawn-sh-at-startup "swaybg -i ~/Pictures/Wallpapers/misc/red_ring.png"
+spawn-sh-at-startup "swaybg -i ~/Pictures/Collections/black_background.jpg"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"

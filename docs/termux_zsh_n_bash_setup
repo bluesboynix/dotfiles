@@ -1,204 +1,127 @@
-# ─── ZINIT PLUGIN MANAGER ──────────────────────────────────────────────────────
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
-[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-source "${ZINIT_HOME}/zinit.zsh"
+# ─── ZINIT (PLUGIN MANAGER) ─────────────────────────────────────────────────────
 
-# ─── PLUGINS ───────────────────────────────────────────────────────────────────
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d "$ZINIT_HOME" ] && mkdir -p "$(dirname "$ZINIT_HOME")"
+[ ! -d "$ZINIT_HOME/.git" ] && \
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "$ZINIT_HOME/zinit.zsh"
+
+# Load plugins (Termux-friendly order)
+zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
 
-# Better completion
+# ─── COMPLETION ────────────────────────────────────────────────────────────────
+
 autoload -Uz compinit
-compinit -u
+compinit
+
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
-# ─── PATH CONFIG ───────────────────────────────────────────────────────────────
+# ─── PATH CONFIG (TERMUX SAFE) ──────────────────────────────────────────────────
+
 typeset -U path
 path=(
   $HOME/.local/bin
   $PREFIX/bin
-  $HOME/bin
+  $PREFIX/sbin
 )
+
 export PATH="${(j/:/)path}"
-export PATH="$PATH:$HOME/.cargo/bin:$HOME/.roswell/bin:$HOME/.qlot/bin"
 
-# ─── TERMUX-FRIENDLY ENVIRONMENT ───────────────────────────────────────────────
-export EDITOR="nvim"
-export TERM="xterm-256color"
-export LANG="en_US.UTF-8"
-export LC_ALL="en_US.UTF-8"
+# Optional language toolchains
+[[ -d "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
+[[ -d "$HOME/.roswell/bin" ]] && export PATH="$HOME/.roswell/bin:$PATH"
 
-# (Termux doesn’t support X11 cursor themes)
-# X cursor variables disabled
+# ─── ENV VARS ──────────────────────────────────────────────────────────────────
 
-# ─── GIT PROMPT INFO (MINIMAL AGNOSTER STYLE) ───────────────────────────────────
-autoload -Uz vcs_info
+export EDITOR=emacs
+export TERM=xterm-256color
+export COLORTERM=truecolor
+
+# ─── GIT PROMPT INFO ────────────────────────────────────────────────────────────
+
 setopt prompt_subst
+autoload -Uz vcs_info
 
 git_prompt_info() {
   local branch dirty
-  branch=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)
-  [[ -z "$branch" ]] && return
 
-  if ! git diff --quiet --ignore-submodules --exit-code 2>/dev/null ||
-     ! git diff --cached --quiet --ignore-submodules --exit-code 2>/dev/null; then
-    dirty="%F{red}*%f"
+  branch=$(git symbolic-ref --quiet --short HEAD 2>/dev/null \
+         || git rev-parse --short HEAD 2>/dev/null) || return
+
+  if ! git diff --quiet 2>/dev/null ||
+     ! git diff --cached --quiet 2>/dev/null; then
+    dirty="%F{red} *%f"
   fi
+
   echo " $branch$dirty"
 }
 
+# ─── PROMPT ────────────────────────────────────────────────────────────────────
+
 PROMPT='%F{cyan}%B%1~%b%f %F{yellow}$(git_prompt_info)%f %F{yellow}%B$%b%f '
 
-# ─── ALIASES ────────────────────────────────────────────────────────────────────
-alias hx="helix"
-alias vi="nvim"
-alias vim="nvim"
-alias rsbcl='rlwrap sbcl'
-alias bigloo="rlwrap bigloo"
-alias slem="lem-sdl2"
-alias bat="bat --style=plain --theme=ansi"
-alias man="man -P 'bat -l man -p'"
-alias csi="chicken-csi"
-alias csc="chicken-csc"
-alias git-tree="git log --graph --oneline --decorate --all"
+# ─── ALIASES (TERMUX SAFE) ──────────────────────────────────────────────────────
 
-# Smart ls (lsd may not exist in Termux)
-if command -v lsd >/dev/null 2>&1; then
-  alias ls='lsd --group-dirs=first --icon=always'
-else
-  alias ls='ls --color=auto -h --group-directories-first'
-fi
-
-# Colorized tools
+alias ls='ls --color=auto -h'
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
 
-# ─── HISTORY ───────────────────────────────────────────────────────────────────
+# Editor
+alias e="emacs"
+alias vi="nvim"
+alias vim="nvim"
+alias hx="helix"
+
+# Git
+alias git-tree="git log --graph --oneline --decorate --all"
+
+# Bat / Man (if installed)
+command -v bat >/dev/null && alias bat="bat --style=plain"
+command -v bat >/dev/null && alias man="man -P 'bat -l man -p'"
+
+# ─── ZSH OPTIONS ───────────────────────────────────────────────────────────────
+
+setopt NO_BEEP
+setopt AUTO_CD
+setopt INTERACTIVE_COMMENTS
+
+# ─── HISTORY ──────────────────────────────────────────────────────────────────
+
 HISTFILE=$HOME/.zsh_history
-HISTSIZE=5000
-SAVEHIST=5000
+HISTSIZE=10000
+SAVEHIST=10000
 
-setopt appendhistory sharehistory hist_ignore_dups hist_ignore_all_dups \
-       hist_find_no_dups hist_save_no_dups hist_reduce_blanks
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
+setopt hist_find_no_dups
+setopt hist_save_no_dups
+setopt hist_reduce_blanks
 
-# ─── KEYBINDINGS ───────────────────────────────────────────────────────────────
+# ─── KEYBINDINGS (ANDROID FRIENDLY) ────────────────────────────────────────────
+
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 
-bindkey "^[[A" up-line-or-beginning-search
-bindkey "^[[B" down-line-or-beginning-search
-bindkey "^[[H" beginning-of-line
-bindkey "^[[F" end-of-line
-bindkey "^[[3~" delete-char
-bindkey "^[b" backward-word
-bindkey "^[f" forward-word
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+bindkey '^[[C' forward-char
+bindkey '^[[D' backward-char
 
-setopt NO_BEEP AUTO_CD
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
 
-# ─── ZOXIDE (OPTIONAL) ─────────────────────────────────────────────────────────
-if command -v zoxide >/dev/null 2>&1; then
-  eval "$(zoxide init zsh)"
-fi
+# Disable application mode (breaks soft keyboards)
+# smkx / rmkx intentionally NOT used
 
-# ─── TERMUX EXTRA ──────────────────────────────────────────────────────────────
-# Disable some desktop env variables for performance
-unset DISPLAY
-unset XDG_RUNTIME_DIR
+# ─── ZOXIDE ────────────────────────────────────────────────────────────────────
 
-# Optional welcome message
-echo -e "%F{green}Welcome to Termux Zsh, ${USER:-$(whoami)}!%f"
-echo -e "%F{blue}Using Zinit + autosuggestions + syntax highlighting%f"
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 
-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x
-
-# ─── TERMUX OPTIMIZED .bashrc ───────────────────────────────────────────────────
-
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
-# ─── PROMPT (Minimal Agnoster-like Git Info) ────────────────────────────────────
-# Colors
-cyan="\[\033[0;36m\]"
-yellow="\[\033[1;33m\]"
-red="\[\033[0;31m\]"
-reset="\[\033[0m\]"
-bold="\[\033[1m\]"
-
-# Git branch info
-parse_git_branch() {
-  git branch --show-current 2>/dev/null || git rev-parse --short HEAD 2>/dev/null
-}
-
-parse_git_dirty() {
-  git diff --quiet --ignore-submodules --exit-code 2>/dev/null || echo " ${red}*${reset}"
-}
-
-# Prompt
-PS1="${cyan}${bold}\w${reset} ${yellow}\$(parse_git_branch)\$(parse_git_dirty)${reset} ${yellow}${bold}$ ${reset}"
-
-# ─── PATH ───────────────────────────────────────────────────────────────────────
-PATH="$HOME/.local/bin:$PREFIX/bin:$HOME/bin:$HOME/.cargo/bin:$HOME/.roswell/bin:$HOME/.qlot/bin:$PATH"
-export PATH
-
-# ─── LOCALE & TERM SETTINGS ─────────────────────────────────────────────────────
-export TERM="xterm-256color"
-export LANG="en_US.UTF-8"
-export LC_ALL="en_US.UTF-8"
-export EDITOR="nvim"
-
-# ─── HISTORY ────────────────────────────────────────────────────────────────────
-HISTCONTROL=ignoredups:erasedups
-HISTSIZE=5000
-HISTFILESIZE=5000
-shopt -s histappend       # append history instead of overwriting
-PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
-
-# ─── ALIASES ────────────────────────────────────────────────────────────────────
-alias hx="helix"
-alias vi="nvim"
-alias vim="nvim"
-alias rsbcl='rlwrap sbcl'
-alias bigloo="rlwrap bigloo"
-alias slem="lem-sdl2"
-alias bat="bat --style=plain --theme=ansi"
-alias man="man -P 'bat -l man -p'"
-alias csi="chicken-csi"
-alias csc="chicken-csc"
-alias git-tree="git log --graph --oneline --decorate --all"
-
-# Smart ls
-if command -v lsd >/dev/null 2>&1; then
-  alias ls='lsd --group-dirs=first --icon=always'
-else
-  alias ls='ls --color=auto -h --group-directories-first'
-fi
-
-alias grep='grep --color=auto'
-alias diff='diff --color=auto'
-
-# ─── ENABLE BASH COMPLETION ─────────────────────────────────────────────────────
-if [ -f /data/data/com.termux/files/usr/share/bash-completion/bash_completion ]; then
-  . /data/data/com.termux/files/usr/share/bash-completion/bash_completion
-elif [ -f /etc/bash_completion ]; then
-  . /etc/bash_completion
-fi
-
-# ─── ZOXIDE (OPTIONAL) ─────────────────────────────────────────────────────────
-if command -v zoxide >/dev/null 2>&1; then
-  eval "$(zoxide init bash)"
-fi
-
-# ─── TERMUX EXTRAS ─────────────────────────────────────────────────────────────
-unset DISPLAY
-unset XDG_RUNTIME_DIR
-
-# ─── CUSTOM GREETING ────────────────────────────────────────────────────────────
-echo -e "\033[1;32mWelcome to Termux Bash, ${USER:-$(whoami)}!\033[0m"
-echo -e "\033[1;34mUsing Git-aware prompt + colorized tools.\033[0m"
+# Optional Termux Add-Ons (Recommended)
+# pkg install zsh git bat exa fd ripgrep zoxide neovim

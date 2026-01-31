@@ -1,18 +1,86 @@
 theme = "modus_vivendi_tritanopia"
 
 [editor]
-scroll-lines = 5
+scrolloff = 5
+mouse = true
+middle-click-paste = true
+scroll-lines = 3
+shell = ["sh", "-c"]
+line-number = "absolute"
+cursorline = true
+cursorcolumn = false
+continue-comments = true
+gutters = ["diagnostics", "spacer", "line-numbers", "spacer", "diff"]
+auto-completion = true
+path-completion = true
+auto-format = true
+idle-timeout = 250
+completion-timeout = 250
+preview-completion-insert = true
+completion-trigger-len = 2
+completion-replace = false
+auto-info = true
+true-color = true
+undercurl = false
+rulers = []
+bufferline = "multiple"
+color-modes = true
+text-width = 80
+workspace-lsp-roots = []
+default-line-ending = "native"
+insert-final-newline = true
+atomic-save = true
+trim-final-newlines = false
+trim-trailing-whitespace = false
+popup-border = "all"
+indent-heuristic = "hybrid"
+jump-label-alphabet = "abcdefghijklmnopqrstuvwxyz"
+end-of-line-diagnostics = "disable"
+# clipboard-provider = Platform and environment specific.
+editor-config = true
 
 [editor.statusline]
-left = ["mode", "spinner"]
+left = [
+         "mode",
+         "spacer",
+         "version-control",
+         "spacer",
+         "separator",
+         "file-modification-indicator"
+]
 center = ["file-name"]
-right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+right = [
+         "spinner",
+         "spacer",
+         "workspace-diagnostics",
+         "separator",
+         "spacer",
+         "diagnostics",
+         "position",
+         "file-encoding",
+         "file-line-ending",
+         "file-type"
+]
+
 separator = "│"
 mode.normal = "NORMAL"
 mode.insert = "INSERT"
 mode.select = "SELECT"
 diagnostics = ["warning", "error"]
 workspace-diagnostics = ["warning", "error"]
+
+[editor.lsp]
+enable = true
+display-messages = true
+display-progress-messages = false
+auto-signature-help = true
+display-inlay-hints = false
+# inlay-hints-length-limit = Unset by default 
+display-color-swatches = true
+display-signature-help-docs = true 
+snippets = true
+goto-reference-include-declaration = true
+
 
 [editor.cursor-shape]
 insert = "bar"
@@ -21,4 +89,37 @@ select = "underline"
 
 [editor.file-picker]
 hidden = false
+follow-symlinks = true
+deduplicate-links = true
+parents = true
+ignore = true
+git-ignore = true
+git-global = true
+git-exclude = true
+# max-depth = Unset by default
 
+[editor.auto-save]
+focus-lost = false
+after-delay.enable = false
+after-delay.timeout = 60000
+
+[editor.search]
+smart-case = true
+wrap-around = true
+
+[editor.indent-guides]
+render = true
+character = "╎" # Some characters that work well: "▏", "┆", "┊", "⸽"
+skip-levels = 1
+
+[editor.soft-wrap]
+enable = true
+max-wrap = 25 # increase value to reduce forced mid-word wrapping
+max-indent-retain = 0
+wrap-indicator = ""  # set wrap-indicator to "" to hide it
+
+[keys.insert]
+"A-h" = "move_char_left"
+"A-j" = "move_line_down"
+"A-k" = "move_line_up"
+"A-l" = "move_char_right"

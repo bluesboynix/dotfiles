@@ -2,7 +2,7 @@ theme = "modus_vivendi_tritanopia"
 
 [editor]
 scrolloff = 5
-mouse = true
+mouse = false # not good for laptop, my palm touch a lot hehe
 middle-click-paste = true
 scroll-lines = 3
 shell = ["sh", "-c"]

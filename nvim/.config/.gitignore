@@ -1,0 +1,7 @@
+# Ignore plugin lock file and cache
+lazy-lock.json
+undodir/
+swap/
+backup/
+session/
+.netrwhist

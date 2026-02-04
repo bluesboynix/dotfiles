@@ -87,6 +87,7 @@ PROMPT='%F{cyan}%B%1~%b%f %F{yellow}$(git_prompt_info)%f %F{yellow}%B$%b%f '
 
 # ─── ALIASES ────────────────────────────────────────────────────────────────────
 
+alias mm="NVIM_APPNAME=nvim-minimax nvim"
 alias pacman='sudo pacman'
 alias ssh='TERM=xterm-256color ssh'
 alias hx="helix"

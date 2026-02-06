@@ -62,7 +62,7 @@ right = [
          "file-type"
 ]
 
-separator = "│"
+separator = " "
 mode.normal = "NORMAL"
 mode.insert = "INSERT"
 mode.select = "SELECT"

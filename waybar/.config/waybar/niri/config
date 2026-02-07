@@ -139,7 +139,7 @@
     },
     "custom/terminal": {
         "format": "  ",
-        "on-click": "alacritty",
+        "on-click": "foot",
         "tooltip-format": "terminal"
     },
     "custom/browser": {
@@ -159,12 +159,12 @@
      },
     "custom/systeminfo": {
         "format": " ",
-        "on-click": "alacritty -e btop",
+        "on-click": "foot -e btop",
         "tooltip-format": "process"       
     },
     "custom/filemanager": {
         "format": " ",
-        "on-click": "thunar",
+        "on-click": "cosmic-files",
         "tooltip-format": "File Manager"       
     }
 }

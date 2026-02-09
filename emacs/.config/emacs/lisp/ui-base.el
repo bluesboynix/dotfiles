@@ -33,7 +33,7 @@
 (add-to-list 'custom-theme-load-path
              (expand-file-name "themes" user-emacs-directory))
 
-(load-theme 'genesis-dark t)
+(load-theme 'ef-dark t)
 
 ;; Modeline
 (use-package doom-modeline

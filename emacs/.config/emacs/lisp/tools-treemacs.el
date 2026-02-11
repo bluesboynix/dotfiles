@@ -27,7 +27,7 @@
   (setq treemacs-is-never-other-window t
         treemacs-silent-refresh t
         treemacs-sorting 'alphabetic-asc
-        treemacs-width 30
+        treemacs-width 25
         treemacs-follow-after-init t)
 
   ;; ---------------------------------------------------------------------------
@@ -50,7 +50,16 @@
     (interactive)
     (if (treemacs-current-visibility)
         (treemacs)
-      (my/treemacs-open-at-current-directory))))
+      (my/treemacs-open-at-current-directory)))
+
+  (defun my/disable-line-numbers-in-treemacs ()
+    "Disable line numbers in treemacs buffers."
+    (display-line-numbers-mode -1)
+    ;; If you are using an older Emacs version, you might need:
+    ;; (linum-mode -1)
+    ))
+
+(add-hook 'treemacs-mode-hook 'my/disable-line-numbers-in-treemacs)
 
 (provide 'tools-treemacs)
 ;;; tools-treemacs.el ends here

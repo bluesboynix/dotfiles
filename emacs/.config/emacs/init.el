@@ -9,6 +9,11 @@
 (add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
 (setenv "PATH" (concat (expand-file-name "~/.cargo/bin") ":" (getenv "PATH")))
 
+(add-to-list 'exec-path (expand-file-name "~/.nimble/bin"))
+(setenv "PATH"
+        (concat (expand-file-name "~/.nimble/bin") ":"
+                (getenv "PATH")))
+
 ;; Core modules
 (require 'ui-base)           ;; Basic UI
 (require 'core-packages)     ;; Package management setup

@@ -16,6 +16,9 @@
 (global-display-line-numbers-mode 1)
 (global-hl-line-mode 1)
 
+;; column line number
+(column-number-mode 1)
+
 ;; Use spaces instead of tabs
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)

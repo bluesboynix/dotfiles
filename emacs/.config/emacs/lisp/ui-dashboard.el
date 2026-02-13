@@ -1,45 +1,36 @@
-;;; ui-dashboard.el --- Polished Emacs Startup Dashboard -*- lexical-binding: t; -*-
+;;; ui-dashboard.el --- Minimal Emacs Startup Dashboard -*- lexical-binding: t; -*-
 
 (use-package dashboard
   :ensure t
   :config
-  ;; Enable dashboard at startup
   (dashboard-setup-startup-hook)
 
-  ;; Banner / welcome message
-  (setq dashboard-banner-logo-title "Emacs")
-  (setq dashboard-startup-banner 'official) ;; or a path to ASCII/banner file
+  ;; Keep a valid banner type internally
+  (setq dashboard-startup-banner 'official)
+
+  ;; Disable banner completely
+  (advice-add 'dashboard-insert-banner :override (lambda (&rest _) nil))
+
+  (setq dashboard-banner-logo-title "Welcome")
   (setq dashboard-center-content t)
 
-  ;; Sections: recent files, projects, bookmarks
+  ;; Sections
   (setq dashboard-items '((recents  . 10)
                           (projects . 5)
                           (bookmarks . 5)))
+
   (setq dashboard-item-names '((recents  . "Recent Files:")
                                (projects . "Projects:")
                                (bookmarks . "Bookmarks:")))
 
-  ;; Footer / shortcut hints
+  ;; Disable all icons
+  (setq dashboard-set-heading-icons nil)
+  (setq dashboard-set-file-icons nil)
+  (setq dashboard-set-navigator nil)
+
+  ;; Footer
   (setq dashboard-footer-messages
-        '("Shortcuts: C-x C-f Open file | C-x g Magit | F8 treemacs | F9 Terminal"))
-
-  ;; Enable icons (requires all-the-icons package)
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-
-  ;; Custom widget: loaded language modules
-  (defun dashboard-insert-languages-widget (list-size)
-    "Insert a nice list of loaded language modules."
-    (insert ""))
-
-  ;; Add custom languages widget before recents
-  (add-to-list 'dashboard-item-generators
-               '(languages . dashboard-insert-languages-widget))
-  (add-to-list 'dashboard-items '(languages) t))
-
-;; Optional: ensure all-the-icons is available for icons
-(use-package all-the-icons
-  :ensure t)
+        '("Shortcuts: C-x C-f Open file | C-x g Magit | F8 Treemacs | F9 Terminal")))
 
 (provide 'ui-dashboard)
 ;;; ui-dashboard.el ends here

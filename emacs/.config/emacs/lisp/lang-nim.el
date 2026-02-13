@@ -87,13 +87,12 @@
 ;; --------------------------------------------------
 ;; Inline signature popup
 ;; --------------------------------------------------
-(use-package eldoc-box
-  :ensure t
-  :after eglot
-  :hook (eglot-managed-mode . eldoc-box-hover-mode)
-  :custom
-  (eldoc-box-clear-with-C-g t)
-  (eldoc-box-only-multi-line t))
+;; Inline signature in minibuffer only
+(add-hook 'eglot-managed-mode-hook #'eldoc-mode)
+
+(with-eval-after-load 'nim-mode
+  (define-key nim-mode-map (kbd "C-c C-d") #'eldoc))
+
 
 ;; --------------------------------------------------
 ;; Common setup

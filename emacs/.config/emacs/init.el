@@ -19,6 +19,7 @@
 (require 'core-packages)     ;; Package management setup
 (require 'utils-collection)  ;; Corfu, Which-Key, Projectile
 (require 'ui-dashboard)      ;; dashboard for emacs
+(require 'ui-centaur-tabs)   ;; fancy tabbar
 
 ;; Tools and Extra
 (require 'extra-emms)        ;; Emacs Music

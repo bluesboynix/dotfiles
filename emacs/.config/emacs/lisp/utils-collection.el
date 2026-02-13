@@ -66,6 +66,12 @@
           (project-dired "Dired")
           (magit-project-status "Magit"))))
 
+
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
+
 ;; ;; --- LSP support via built-in Eglot ---
 ;; (use-package eglot
 ;;   :hook ((python-mode . eglot-ensure)

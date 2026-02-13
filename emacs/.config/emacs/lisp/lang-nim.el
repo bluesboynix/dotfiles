@@ -1,74 +1,56 @@
-;;; lang-nim.el --- Nim support (Emacs 30+) -*- lexical-binding: t; -*-
+;;; lang-nim.el --- Nim support for Emacs 30+ -*- lexical-binding: t; -*-
 ;;; Commentary:
-;; Modern Nim setup for Emacs 30+
-;; - tree-sitter (nim-ts-mode)
-;; - eglot (LSP client)
-;; - flymake (built-in diagnostics)
-;; - completion-at-point (capf)
+;; Modern Nim setup using:
+;; - nim-mode
+;; - eglot (built-in LSP)
+;; - flymake (built-in)
+;; - completion-at-point
 ;; - nimpretty format on save
-;; - nimble project helpers
 
 ;;; Code:
 
-(require 'treesit)
-
-(when (treesit-available-p)
-
-  ;; Tell Emacs where to get Nim grammar
-  (add-to-list 'treesit-language-source-alist
-               '(nim "https://github.com/alaviss/tree-sitter-nim"))
-
-  ;; Install grammar automatically if missing
-  (unless (treesit-language-available-p 'nim)
-    (treesit-install-language-grammar 'nim))
-
-  ;; Use nim-ts-mode instead of nim-mode
-  (add-to-list 'major-mode-remap-alist
-               '(nim-mode . nim-ts-mode))
-
-  ;; Associate file extension directly
-  (add-to-list 'auto-mode-alist '("\\.nim\\'" . nim-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.nims\\'" . nim-ts-mode)))
-
-
-
 ;; --------------------------------------------------
-;; Eglot (built-in LSP client)
+;; nim-mode
 ;; --------------------------------------------------
 
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs
-               '((nim-ts-mode) . ("nimlangserver"))))
-
-(defun lang-nim-eglot-setup ()
-  "Start Eglot for Nim."
-  (when (executable-find "nimlangserver")
-    (eglot-ensure)))
-
-(add-hook 'nim-ts-mode-hook #'lang-nim-eglot-setup)
+(use-package nim-mode
+  :ensure t
+  :mode ("\\.nim\\'" "\\.nims\\'" "\\.nimble\\'")
+  :interpreter "nim"
+  :hook
+  (nim-mode . lang-nim-setup)
+  :config
+  (setq nim-indent-offset 2))
 
 ;; --------------------------------------------------
-;; Basic editor settings
+;; Common setup
 ;; --------------------------------------------------
 
-(defun lang-nim-common-setup ()
+(defun lang-nim-setup ()
   "Common Nim configuration."
   (setq-local indent-tabs-mode nil
               tab-width 2)
 
-  ;; Enable Flymake (built-in)
+  ;; Flymake (built-in diagnostics)
   (flymake-mode 1)
 
-  ;; Enable Eldoc
+  ;; Eldoc
   (eldoc-mode 1)
 
-  ;; Imenu support
-  (imenu-add-menubar-index))
-
-(add-hook 'nim-ts-mode-hook #'lang-nim-common-setup)
+  ;; Start eglot if available
+  (when (executable-find "nimlangserver")
+    (eglot-ensure)))
 
 ;; --------------------------------------------------
-;; Format on save (nimpretty)
+;; Eglot LSP
+;; --------------------------------------------------
+
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(nim-mode . ("nimlangserver"))))
+
+;; --------------------------------------------------
+;; Format on save
 ;; --------------------------------------------------
 
 (defun lang-nim-format-buffer ()
@@ -80,61 +62,32 @@
     (revert-buffer t t t)
     (message "Formatted with nimpretty")))
 
-(defun lang-nim-format-on-save ()
-  "Auto-format Nim buffers before save."
-  (when (derived-mode-p 'nim-ts-mode)
-    (lang-nim-format-buffer)))
-
-(add-hook 'before-save-hook #'lang-nim-format-on-save)
+(add-hook 'before-save-hook
+          (lambda ()
+            (when (derived-mode-p 'nim-mode)
+              (lang-nim-format-buffer))))
 
 ;; --------------------------------------------------
-;; Nimble project helpers
+;; Project helpers
 ;; --------------------------------------------------
-
-(defun lang-nim--project-root ()
-  "Find Nimble project root."
-  (or (locate-dominating-file default-directory ".nimble")
-      default-directory))
 
 (defun lang-nim-build ()
-  "Build Nim project."
   (interactive)
-  (let ((default-directory (lang-nim--project-root)))
-    (compile "nimble build")))
+  (compile "nimble build"))
 
 (defun lang-nim-run ()
-  "Run Nim project."
   (interactive)
-  (let ((default-directory (lang-nim--project-root)))
-    (compile "nimble run")))
+  (compile "nimble run"))
 
 (defun lang-nim-test ()
-  "Run Nim tests."
   (interactive)
-  (let ((default-directory (lang-nim--project-root)))
-    (compile "nimble test")))
+  (compile "nimble test"))
 
-;; --------------------------------------------------
-;; REPL
-;; --------------------------------------------------
-
-(defun lang-nim-repl ()
-  "Start Nim REPL (inim)."
-  (interactive)
-  (if (executable-find "inim")
-      (make-comint "nim-repl" "inim")
-    (message "Install REPL: nimble install inim")))
-
-;; --------------------------------------------------
-;; Keybindings
-;; --------------------------------------------------
-
-(with-eval-after-load 'nim-ts-mode
-  (define-key nim-ts-mode-map (kbd "C-c C-b") #'lang-nim-build)
-  (define-key nim-ts-mode-map (kbd "C-c C-r") #'lang-nim-run)
-  (define-key nim-ts-mode-map (kbd "C-c C-t") #'lang-nim-test)
-  (define-key nim-ts-mode-map (kbd "C-c C-z") #'lang-nim-repl)
-  (define-key nim-ts-mode-map (kbd "C-c C-f") #'lang-nim-format-buffer))
+(with-eval-after-load 'nim-mode
+  (define-key nim-mode-map (kbd "C-c C-b") #'lang-nim-build)
+  (define-key nim-mode-map (kbd "C-c C-r") #'lang-nim-run)
+  (define-key nim-mode-map (kbd "C-c C-t") #'lang-nim-test)
+  (define-key nim-mode-map (kbd "C-c C-f") #'lang-nim-format-buffer))
 
 ;; --------------------------------------------------
 

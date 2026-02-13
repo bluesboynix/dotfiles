@@ -1,7 +1,11 @@
 ;;; init.el --- Emacs configuration entry point -*- lexical-binding: t; -*-
+;;; Commentary:
+
+;;; Code:
 
 ;; Setup load-path for custom lisp modules
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+;;(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(add-to-list 'load-path "~.config/emacs/lisp/")
 (add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
 (setenv "PATH" (concat (expand-file-name "~/.cargo/bin") ":" (getenv "PATH")))
 
@@ -20,8 +24,9 @@
 (require 'tools-dired)       ;; dired config
 
 ;; Language modules
-(require 'lang-cpp)      
+(require 'lang-cpp)
 (require 'lang-cpp-colors)
+(require 'lang-nim)
 (require 'lang-python)
 (require 'lang-python-colors)
 (require 'lang-rust)
@@ -40,3 +45,4 @@
 
 ;; Final message
 (message "init.el loaded all modules successfully.")
+;;; init.el ends here

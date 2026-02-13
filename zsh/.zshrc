@@ -28,6 +28,7 @@ export PATH="${(j/:/)path}"
 export PATH="$PATH:$HOME/.roswell/bin"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="/home/bluesboy/.qlot/bin:$PATH"
+export PATH="/home/bluesboy/.nimble/bin:$PATH"
 
 # ─── other varialbes ─────────────────────────────────────────────────────
 

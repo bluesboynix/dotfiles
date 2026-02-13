@@ -1,43 +1,50 @@
-;;; lang-nim.el --- Modern Nim IDE setup (Emacs 30+) -*- lexical-binding: t; -*-
+;;; lang-nim.el --- Nim Full IDE Mode -*- lexical-binding: t; -*-
+
 ;;; Commentary:
-;; Full-featured Nim development module
+;; Full-featured Nim IDE using:
 ;; - nim-mode
-;; - eglot (LSP)
-;; - corfu + orderless + cape (modern completion)
-;; - yasnippet (snippets)
-;; - inline signature popup
-;; - nimpretty formatting
-;; - project helpers
+;; - eglot (nimlangserver)
+;; - corfu + orderless + cape
+;; - yasnippet
+;; - Flymake diagnostics
+;; - Inlay hints
+;; - Code actions
+;; - Auto format + organize imports on save
+;; - Project build/run/test helpers
 
 ;;; Code:
 
 ;; --------------------------------------------------
-;; Core Nim mode
+;; Nim Major Mode (Robust Setup)
 ;; --------------------------------------------------
+
 (use-package nim-mode
   :ensure t
-  :mode ("\\.nim\\'" "\\.nims\\'" "\\.nimble\\'")
-  :interpreter "nim"
-  :hook (nim-mode . lang-nim-setup)
+  :defer t
+  :init
+  ;; Register file extensions early (important!)
+  (add-to-list 'auto-mode-alist '("\\.nim\\'" . nim-mode))
+  (add-to-list 'auto-mode-alist '("\\.nims\\'" . nim-mode))
+  (add-to-list 'auto-mode-alist '("\\.nimble\\'" . nim-mode))
+  (add-to-list 'interpreter-mode-alist '("nim" . nim-mode))
   :config
   (setq nim-indent-offset 2))
 
+
+
 ;; --------------------------------------------------
-;; Completion UI (Corfu)
+;; Completion Stack
 ;; --------------------------------------------------
+
 (use-package corfu
   :ensure t
-  :init
-  (global-corfu-mode)
+  :init (global-corfu-mode)
   :custom
   (corfu-auto t)
   (corfu-auto-delay 0.1)
   (corfu-auto-prefix 1)
-  (corfu-cycle t)
-  (corfu-preview-current t)
-  (corfu-quit-no-match 'separator))
+  (corfu-cycle t))
 
-;; Better matching
 (use-package orderless
   :ensure t
   :custom
@@ -46,99 +53,60 @@
   (completion-category-overrides
    '((file (styles partial-completion)))))
 
-;; Extra completion sources
 (use-package cape
-  :ensure t
-  :init
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-keyword))
+  :ensure t)
 
-;; Icons in completion (GUI only)
 (use-package kind-icon
   :ensure t
   :after corfu
   :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+  (add-to-list 'corfu-margin-formatters
+               #'kind-icon-margin-formatter))
 
 ;; --------------------------------------------------
 ;; Snippets
 ;; --------------------------------------------------
+
 (use-package yasnippet
   :ensure t
-  :init
-  (yas-global-mode 1))
+  :init (yas-global-mode 1))
 
-;; Optional snippet collection
 (use-package yasnippet-snippets
   :ensure t)
 
 ;; --------------------------------------------------
-;; LSP via Eglot
+;; Eglot + nimlangserver
 ;; --------------------------------------------------
-(with-eval-after-load 'eglot
+(use-package eglot
+  :ensure nil  ;; built-in in Emacs 29+
+  :hook (nim-mode . eglot-ensure)
+  :config
   (add-to-list 'eglot-server-programs
                '(nim-mode . ("nimlangserver"))))
 
-(defun lang-nim-eglot-setup ()
-  (when (executable-find "nimlangserver")
-    (eglot-ensure)))
-
 ;; --------------------------------------------------
-;; Inline signature popup
+;; IDE Features
 ;; --------------------------------------------------
-;; Inline signature in minibuffer only
-(add-hook 'eglot-managed-mode-hook #'eldoc-mode)
 
-(with-eval-after-load 'nim-mode
-  (define-key nim-mode-map (kbd "C-c C-d") #'eldoc))
+(defun lang-nim-organize-imports ()
+  "Apply LSP code action to organize imports."
+  (when (bound-and-true-p eglot-managed-mode)
+    (eglot-code-actions nil nil "source.organizeImports")))
 
-
-;; --------------------------------------------------
-;; Common setup
-;; --------------------------------------------------
-(defun lang-nim-setup ()
-  "Main Nim IDE configuration."
-  (setq-local indent-tabs-mode nil
-              tab-width 2)
-
-  ;; Enable LSP
-  (lang-nim-eglot-setup)
-
-  ;; Flymake diagnostics
-  (flymake-mode 1)
-
-  ;; Eldoc inline help
-  (eldoc-mode 1)
-
-  ;; Completion
-  (setq-local completion-at-point-functions
-              (append completion-at-point-functions
-                      (list #'cape-file
-                            #'cape-dabbrev
-                            #'cape-keyword))))
-
-(add-hook 'nim-mode-hook #'lang-nim-setup)
-
-;; --------------------------------------------------
-;; Formatting
-;; --------------------------------------------------
 (defun lang-nim-format-buffer ()
-  (interactive)
-  (when (and buffer-file-name
-             (executable-find "nimpretty"))
-    (call-process "nimpretty" nil nil nil buffer-file-name)
-    (revert-buffer t t t)
-    (message "Formatted with nimpretty")))
+  "Format via LSP."
+  (when (bound-and-true-p eglot-managed-mode)
+    (eglot-format-buffer)))
 
-(add-hook 'before-save-hook
-          (lambda ()
-            (when (derived-mode-p 'nim-mode)
-              (lang-nim-format-buffer))))
+(defun lang-nim-before-save ()
+  "Full IDE save actions."
+  (lang-nim-organize-imports)
+  (lang-nim-format-buffer))
 
 ;; --------------------------------------------------
-;; Project helpers
+;; Project Commands
 ;; --------------------------------------------------
+
 (defun lang-nim-build ()
   (interactive)
   (compile "nimble build"))
@@ -152,15 +120,60 @@
   (compile "nimble test"))
 
 ;; --------------------------------------------------
-;; Keybindings
+;; UI Enhancements
 ;; --------------------------------------------------
-(with-eval-after-load 'nim-mode
+
+(defun lang-nim-ui-setup ()
+  ;; Inlay hints (Emacs 30+)
+  (when (fboundp 'eglot-inlay-hints-mode)
+    (eglot-inlay-hints-mode 1))
+
+  ;; Eldoc in echo area
+  (eldoc-mode 1)
+
+  ;; Flymake
+  (flymake-mode 1)
+
+  ;; Pretty diagnostics
+  (setq-local flymake-no-changes-timeout 0.5))
+
+;; --------------------------------------------------
+;; Main Setup
+;; --------------------------------------------------
+
+(defun lang-nim-setup ()
+  "Enable full Nim IDE experience."
+
+  ;; Indentation
+  (setq-local indent-tabs-mode nil
+              tab-width 2)
+
+  ;; LSP
+  (lang-nim-eglot-ensure)
+
+  ;; Completion sources
+  (add-to-list 'completion-at-point-functions #'cape-file t)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev t)
+  (add-to-list 'completion-at-point-functions #'cape-keyword t)
+
+  ;; UI Enhancements
+  (lang-nim-ui-setup)
+
+  ;; Format + organize imports on save (buffer local)
+  (add-hook 'before-save-hook
+            #'lang-nim-before-save
+            nil t)
+
+  ;; IDE Keybindings
   (define-key nim-mode-map (kbd "C-c C-b") #'lang-nim-build)
   (define-key nim-mode-map (kbd "C-c C-r") #'lang-nim-run)
   (define-key nim-mode-map (kbd "C-c C-t") #'lang-nim-test)
   (define-key nim-mode-map (kbd "C-c C-f") #'lang-nim-format-buffer)
+  (define-key nim-mode-map (kbd "C-c C-a") #'eglot-code-actions)
+  (define-key nim-mode-map (kbd "C-c C-d") #'eldoc)
   (define-key nim-mode-map (kbd "C-c C-s") #'yas-insert-snippet))
 
 ;; --------------------------------------------------
+
 (provide 'lang-nim)
 ;;; lang-nim.el ends here

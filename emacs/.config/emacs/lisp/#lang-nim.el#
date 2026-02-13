@@ -10,27 +10,16 @@
 
 ;;; Code:
 
-(require 'treesit)
-
 (when (treesit-available-p)
-
-  ;; Tell Emacs where to get Nim grammar
   (add-to-list 'treesit-language-source-alist
                '(nim "https://github.com/alaviss/tree-sitter-nim"))
 
-  ;; Install grammar automatically if missing
   (unless (treesit-language-available-p 'nim)
     (treesit-install-language-grammar 'nim))
 
-  ;; Use nim-ts-mode instead of nim-mode
+  ;; Use tree-sitter Nim mode automatically
   (add-to-list 'major-mode-remap-alist
-               '(nim-mode . nim-ts-mode))
-
-  ;; Associate file extension directly
-  (add-to-list 'auto-mode-alist '("\\.nim\\'" . nim-ts-mode))
-  (add-to-list 'auto-mode-alist '("\\.nims\\'" . nim-ts-mode)))
-
-
+-mode . nim-ts-mode)))
 
 ;; --------------------------------------------------
 ;; Eglot (built-in LSP client)

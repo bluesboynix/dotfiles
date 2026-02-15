@@ -6,11 +6,18 @@
 ;; Initialize package.el manually
 (require 'package)
 
-;; Add the main ELPA repositories
 (setq package-archives
-      '(("gnu"   . "https://elpa.gnu.org/packages/")
-        ("melpa" . "https://melpa.org/packages/")
-        ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+	  '(("GNU ELPA"     . "https://elpa.gnu.org/packages/")
+		("MELPA"        . "https://melpa.org/packages/")
+		("ORG"          . "https://orgmode.org/elpa/")
+		("MELPA Stable" . "https://stable.melpa.org/packages/")
+		("nongnu"       . "https://elpa.nongnu.org/nongnu/"))
+	  package-archive-priorities
+	  '(("GNU ELPA"     . 20)
+		("MELPA"        . 15)
+		("ORG"          . 10)
+		("MELPA Stable" . 5)
+		("nongnu"       . 0)))
 
 ;; Ensure package archives are initialized
 (unless package--initialized

@@ -31,7 +31,10 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
+;; Ensure use-package is available
 (require 'use-package)
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
 
 ;; Always ensure packages get installed automatically
 (setq use-package-always-ensure t)

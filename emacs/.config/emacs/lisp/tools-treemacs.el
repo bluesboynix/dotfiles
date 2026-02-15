@@ -61,6 +61,21 @@
     :config
     (treemacs-load-theme "all-the-icons"))
 
+  ;; Optional packages for dired-subtree (removes warnings)
+  (use-package dired-filter
+    :ensure t 
+    :after dired)
+
+  (use-package dired-subtree
+    :ensure t
+    :after (dired dired-filter dired-details)
+    :bind (:map dired-mode-map
+                ("TAB" . dired-subtree-toggle))
+    :config
+    ;; Disable the specific features that cause warnings
+    (setq dired-subtree-use-filter-p nil)  ; Disable dired-filter integration
+    (setq dired-subtree-use-dired-details nil))  ; Disable dired-details integration
+  
   ;; ---------------------------------------------------------------------------
   ;; Faces customization
   ;; ---------------------------------------------------------------------------

@@ -44,10 +44,11 @@
 (require 'lang-racket-colors)
 (require 'lang-racket)
 (require 'lang-flutter-dart)
-;(require 'lang-dart-color)
+
 ;; Load custom-set-variables and custom-set-faces
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror 'nomessage)
+(setq bracketed-paste-enable nil)
 
 ;; Final message
 (message "init.el loaded all modules successfully.")

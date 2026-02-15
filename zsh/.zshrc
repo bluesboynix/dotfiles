@@ -15,6 +15,7 @@ zstyle ':completion:*' mathcer-list 'm:{a-z}={A-Za-z}'
 
 # ─── PATH CONFIG ────────────────────────────────────────────────────────────────
 
+
 typeset -U path
 path=(
   $HOME/.local/bin

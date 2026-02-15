@@ -14,6 +14,38 @@
         (concat (expand-file-name "~/.nimble/bin") ":"
                 (getenv "PATH")))
 
+;; Terminal-specific fixes
+(when (not (display-graphic-p))
+  ;; Fix for stray characters in terminal
+  (add-hook 'after-init-hook
+            (lambda ()
+              ;; Disable problematic modes in terminal
+              (when (bound-and-true-p cua-mode)
+                (cua-mode -1))
+              
+              ;; Better terminal handling
+              (setq-local read-process-output-max (* 1024 1024))
+              
+              ;; Handle terminal escape sequences properly
+              (define-key input-decode-map (kbd "O") [O])
+              (define-key input-decode-map (kbd "I") [I])
+              
+              ;; If using Corfu in terminal, ensure it's properly disabled
+              (when (fboundp 'corfu-terminal-mode)
+                (corfu-terminal-mode -1))
+              
+              ;; Disable mouse in terminal
+              (xterm-mouse-mode -1)
+              
+              ;; Ensure proper terminal encoding
+              (prefer-coding-system 'utf-8-unix)
+              (set-terminal-coding-system 'utf-8-unix)
+              (set-keyboard-coding-system 'utf-8-unix)
+              
+              (message "Terminal-specific fixes applied"))))
+
+
+
 ;; Core modules
 (require 'ui-base)           ;; Basic UI
 (require 'core-packages)     ;; Package management setup

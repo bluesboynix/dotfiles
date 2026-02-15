@@ -1,0 +1,153 @@
+======================================
+Emacs Custom Keybindings
+Generated on: Sun Feb 15 09:29:50 PM IST 2026
+======================================
+
+              (define-key input-decode-map (kbd "O") [O])
+              (define-key input-decode-map (kbd "I") [I])
+  :bind (("<f9>" . vterm-toggle)
+(global-set-key (kbd "C-c t h") #'my/vterm-here)
+  :bind
+    (define-key treemacs-mode-map (kbd "g") #'treemacs-refresh)
+    (define-key treemacs-mode-map (kbd "C") #'my/treemacs-create-file)
+    (define-key treemacs-mode-map (kbd "D") #'my/treemacs-create-dir)
+    (define-key treemacs-mode-map (kbd "R") #'treemacs-rename-file)
+    (define-key treemacs-mode-map (kbd "DEL") #'treemacs-delete-file)
+    (define-key treemacs-mode-map (kbd "<backspace>") #'my/treemacs-goto-parent)
+    (define-key treemacs-mode-map (kbd "?") #'treemacs-help)
+    (define-key treemacs-mode-map (kbd "c") #'treemacs-copy-file)
+    (define-key treemacs-mode-map (kbd "p") #'treemacs-toggle-show-dotfiles)
+    (define-key treemacs-mode-map (kbd "h") #'treemacs-toggle-fixed-width)
+    (define-key treemacs-mode-map (kbd "f") #'treemacs-find-file))
+  ;;   :bind ("C-c t h" . treemacs-hydra/body))
+        :bind (:map corfu-map
+  :bind (:map vertico-map
+  :bind (;; Search
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+  (global-set-key (kbd "C-c y") #'yas-insert-snippet)
+  (global-set-key (kbd "C-c n") #'yas-new-snippet))
+  :bind (:map hs-minor-mode-map
+  :bind ("C-=" . er/expand-region))
+;;   :bind (:map eglot-mode-map
+  :bind (:map vertico-map
+(global-set-key (kbd "C-c <left>")  'windmove-left)
+(global-set-key (kbd "C-c <right>") 'windmove-right)
+(global-set-key (kbd "C-c <up>")    'windmove-up)
+(global-set-key (kbd "C-c <down>")  'windmove-down)
+(global-set-key (kbd "C-c C-<left>")  'shrink-window-horizontally)
+(global-set-key (kbd "C-c C-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "C-c C-<up>")    'shrink-window)
+(global-set-key (kbd "C-c C-<down>")  'enlarge-window)
+(define-key rust-cargo-map (kbd "b") #'rust-cargo-build)
+(define-key rust-cargo-map (kbd "r") #'rust-cargo-run)
+(define-key rust-cargo-map (kbd "t") #'rust-cargo-test)
+(define-key rust-cargo-map (kbd "c") #'rust-cargo-check)
+(define-key rust-cargo-map (kbd "l") #'rust-cargo-clippy)
+  (define-key rust-mode-map (kbd "C-c c") #'rust-cargo-prefix))
+  (define-key rust-ts-mode-map (kbd "C-c c") #'rust-cargo-prefix))
+  (define-key rust-mode-map (kbd "<f5>")  #'dap-debug)
+  (define-key rust-mode-map (kbd "<f9>")  #'dap-breakpoint-toggle)
+  (define-key rust-mode-map (kbd "<f10>") #'dap-next)
+  (define-key rust-mode-map (kbd "<f11>") #'dap-step-in)
+  (define-key rust-mode-map (kbd "<f12>") #'dap-continue))
+    (define-key slime-repl-mode-map (kbd "DEL") #'sp-backward-delete-char)))
+  :bind (:map emacs-lisp-mode-map
+  (global-set-key (kbd "C-c e p") 'emms)
+  (global-set-key (kbd "C-c e P") 'emms-pause)
+  (global-set-key (kbd "C-c e n") 'emms-next)
+  (global-set-key (kbd "C-c e b") 'emms-previous)
+  (global-set-key (kbd "C-c e s") 'emms-stop)
+  (global-set-key (kbd "C-c e l") 'emms-playlist-mode-go)
+  (global-set-key (kbd "C-c e y") 'emms-play-youtube))
+  (define-key nim-mode-map (kbd "C-c C-b") #'lang-nim-build)
+  (define-key nim-mode-map (kbd "C-c C-r") #'lang-nim-run)
+  (define-key nim-mode-map (kbd "C-c C-t") #'lang-nim-test)
+  (define-key nim-mode-map (kbd "C-c C-f") #'lang-nim-format-buffer)
+  (define-key nim-mode-map (kbd "C-c C-a") #'eglot-code-actions)
+  (define-key nim-mode-map (kbd "C-c C-d") #'eldoc)
+  (define-key nim-mode-map (kbd "C-c C-s") #'yas-insert-snippet))
+  :bind (:map racket-mode-map
+  :bind (:map corfu-map
+  (define-key racket-mode-map (kbd "C-c C-z") #'racket-run)
+  (define-key racket-mode-map (kbd "C-c C-c") #'racket-send-definition)
+  (define-key racket-mode-map (kbd "C-c C-r") #'racket-send-region)
+  (define-key racket-mode-map (kbd "C-c C-b") #'racket-run-and-switch)
+  (define-key racket-mode-map (kbd "C-c M-o") #'racket-repl-clear-leaving-last-prompt))
+  (global-set-key (kbd "C-c d") #'my/dashboard))
+  (global-set-key (kbd "M-[") #'centaur-tabs-backward)
+  (global-set-key (kbd "M-]") #'centaur-tabs-forward)
+  (global-set-key (kbd "M-{") #'centaur-tabs-move-current-tab-to-left)
+  (global-set-key (kbd "M-}") #'centaur-tabs-move-current-tab-to-right)
+  (global-set-key [mode-line mouse-1] #'centaur-tabs-forward)
+  (global-set-key [mode-line mouse-3] #'centaur-tabs-backward)
+  (global-set-key [mode-line mouse-2] #'kill-this-buffer)
+  (global-set-key (kbd "C-c t n") #'my/centaur-tabs-new-tab)     ; New tab
+  (global-set-key (kbd "C-c t k") #'kill-this-buffer)            ; Kill current
+  (global-set-key (kbd "C-c t o") #'my/centaur-tabs-kill-other-tabs)  ; Kill others
+  (global-set-key (kbd "C-c t g") #'centaur-tabs-group-by-project)    ; Group by project
+  (global-set-key (kbd "C-c t r") #'centaur-tabs-reset-groups)        ; Reset groups
+  :bind (:map dired-mode-map
+  (define-key dired-mode-map (kbd "C-c o") #'dired-omit-mode))
+  :bind (:map dired-mode-map
+  :bind (:map dired-mode-map
+  :bind (:map dired-mode-map
+  :bind (:map dired-mode-map
+  :bind (:map dired-mode-map
+(define-key dired-mode-map (kbd "C-c y") #'my/dired-copy-filename)
+(define-key dired-mode-map (kbd "C-c Y") #'my/dired-copy-file-path)
+(define-key dired-mode-map (kbd "C-c R") #'my/dired-rename-regexp)
+  (define-key pdf-view-mode-map (kbd "n") #'pdf-view-next-line-or-next-page)
+  (define-key pdf-view-mode-map (kbd "p") #'pdf-view-previous-line-or-previous-page)
+  (define-key pdf-view-mode-map (kbd "N") #'pdf-view-next-page-command)
+  (define-key pdf-view-mode-map (kbd "P") #'pdf-view-previous-page-command)
+  (define-key pdf-view-mode-map (kbd "j") #'pdf-view-next-line-command)
+  (define-key pdf-view-mode-map (kbd "k") #'pdf-view-previous-line-command)
+  (define-key pdf-view-mode-map (kbd "+") #'pdf-view-enlarge)
+  (define-key pdf-view-mode-map (kbd "-") #'pdf-view-shrink)
+  (define-key pdf-view-mode-map (kbd "=") #'pdf-view-fit-width-to-window)
+  (define-key pdf-view-mode-map (kbd "0") #'pdf-view-scale-reset)
+  (define-key pdf-view-mode-map (kbd "C-s") #'pdf-occur)
+  (define-key pdf-view-mode-map (kbd "o") #'pdf-outline)
+  (define-key pdf-view-mode-map (kbd "b") #'pdf-outline-backward-page)
+  (define-key pdf-view-mode-map (kbd "'") #'pdf-view-mark-group-pages)
+  (define-key pdf-view-mode-map (kbd "C-c s") #'pdf-occur-isearch-match)
+  (define-key pdf-view-mode-map (kbd "w") #'pdf-view-kill-ring-save)
+  (define-key pdf-view-mode-map (kbd "M-w") #'pdf-view-kill-ring-save)
+  (define-key pdf-view-mode-map (kbd "a h") #'pdf-annot-add-highlight-markup-annotation)
+  (define-key pdf-view-mode-map (kbd "a u") #'pdf-annot-add-underline-markup-annotation)
+  (define-key pdf-view-mode-map (kbd "a n") #'pdf-annot-add-note-annotation)
+  (define-key pdf-view-mode-map (kbd "a d") #'pdf-annot-delete)
+  (define-key pdf-view-mode-map (kbd "a l") #'pdf-annot-list-annotations)
+  (define-key pdf-view-mode-map (kbd "f") #'my/pdf-fullscreen)
+  (define-key pdf-view-mode-map (kbd "s") #'my/pdf-slideshow-next)
+  (define-key pdf-view-mode-map (kbd "S") #'my/pdf-slideshow-previous)
+  :bind (:map scheme-mode-map
+  :bind (:map corfu-map
+  (define-key scheme-mode-map (kbd "C-c C-c") #'guile-send-definition)
+  (define-key scheme-mode-map (kbd "C-c C-r") #'guile-send-region)
+  (define-key scheme-mode-map (kbd "C-c C-b") #'guile-send-buffer)
+  (define-key scheme-mode-map (kbd "C-c C-z") #'run-guile)
+  (define-key scheme-mode-map (kbd "C-c C-l") #'guile-clear-repl))
+;;   (define-key scheme-mode-map (kbd "C-c C-c") #'chicken-send-definition)
+;;   (define-key scheme-mode-map (kbd "C-c C-r") #'chicken-send-region)
+;;   (define-key scheme-mode-map (kbd "C-c C-b") #'chicken-send-buffer)
+;;   (define-key scheme-mode-map (kbd "C-c C-z") #'run-chicken)
+;;   (define-key scheme-mode-map (kbd "C-c C-l") #'chicken-clear-repl))
+;;   (define-key scheme-mode-map (kbd "C-c C-c") #'gambit-send-definition)
+;;   (define-key scheme-mode-map (kbd "C-c C-r") #'gambit-send-region)
+;;   (define-key scheme-mode-map (kbd "C-c C-b") #'gambit-send-buffer)
+;;   (define-key scheme-mode-map (kbd "C-c C-z") #'run-gambit)
+;;   (define-key scheme-mode-map (kbd "C-c C-l") #'gambit-clear-repl))
+  (define-key company-active-map (kbd "TAB") 'company-complete-selection)
+  (define-key company-active-map (kbd "<return>") nil)
+  (define-key company-active-map (kbd "<tab>") 'company-complete-selection))
+  :bind (("C-x g" . magit-status)           ; Quick status
+  (global-set-key (kbd "C-x v n") 'diff-hl-next-hunk)
+  (global-set-key (kbd "C-x v p") 'diff-hl-previous-hunk)
+  (global-set-key (kbd "C-x v r") 'diff-hl-revert-hunk)
+  :bind ("C-c g l" . git-link)
+  :bind ("C-c g o" . browse-at-remote))
+  :bind ("C-c g t" . git-timemachine)
+;;   (global-set-key (kbd "C-x v n") 'git-gutter:next-hunk)
+;;   (global-set-key (kbd "C-x v p") 'git-gutter:previous-hunk)
+;;   (global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk))

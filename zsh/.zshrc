@@ -31,6 +31,10 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="/home/bluesboy/.qlot/bin:$PATH"
 export PATH="/home/bluesboy/.nimble/bin:$PATH"
 
+# Go configuration
+export GOPATH=$HOME/go
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+
 # ─── other varialbes ─────────────────────────────────────────────────────
 
 export EDITOR=emacs

@@ -76,6 +76,7 @@
 (require 'lang-racket-colors)
 (require 'lang-racket)
 (require 'lang-flutter-dart)
+(require 'lang-go)
 
 ;; Load custom-set-variables and custom-set-faces
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

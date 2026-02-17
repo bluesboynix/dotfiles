@@ -44,8 +44,6 @@
               
               (message "Terminal-specific fixes applied"))))
 
-
-
 ;; Core modules
 (require 'ui-base)           ;; Basic UI
 (require 'core-packages)     ;; Package management setup
@@ -77,6 +75,9 @@
 (require 'lang-racket)
 (require 'lang-flutter-dart)
 (require 'lang-go)
+(require 'lang-html)
+(require 'lang-css)
+(require 'lang-javascript)
 
 ;; Load custom-set-variables and custom-set-faces
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

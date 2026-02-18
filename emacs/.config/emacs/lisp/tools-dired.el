@@ -23,7 +23,7 @@
               ("j" . dired-next-line)
               ("k" . dired-previous-line)
               ("J" . dired-goto-file)  ; Jump to file
-              
+
               ;; Marking / Selection
               ("m" . dired-mark)
               ("u" . dired-unmark)
@@ -31,7 +31,7 @@
               ("t" . dired-toggle-marks)
               ("*" . dired-mark-files-regexp)
               ("%" . dired-mark-files-regexp)   ; Alternative for regex mark
-              
+
               ;; File operations
               ("C-c c" . dired-do-copy)
               ("C-c r" . dired-do-rename)
@@ -39,18 +39,18 @@
               ("C-c D" . dired-do-flagged-delete)
               ("C-c n" . dired-create-empty-file)
               ("C-c R" . dired-do-rename-regexp)  ; Regex rename
-              
+
               ;; Permissions
               ("C-c M" . dired-do-chmod)         ; Change mode
-              
+
               ;; View
               ("C-c h" . dired-hide-details-mode)
-              
+
               ;; Search
               ("C-c s" . dired-do-search)        ; Search files
               ("C-c Q" . dired-do-query-replace) ; Query replace in files
               )
-  
+
   :custom
   ;; Listing options
   (dired-listing-switches "-alh --group-directories-first -v")  ; Version sort
@@ -59,7 +59,7 @@
   (delete-by-moving-to-trash t)
   (dired-auto-revert-buffer #'dired-buffer-stale-p)  ; Auto-revert
   (dired-dwim-target t)  ; Suggest target directory for copy/rename
-  
+
   :config
   (put 'dired-find-alternate-file 'disabled nil))
 
@@ -73,11 +73,11 @@
   (dired-omit-files "^\\.\\|^#\\|~$")  ; Omit dotfiles, backups, temp
   (dired-omit-verbose nil)
   (dired-clean-confirm-killing-deleted-buffers t)
-  
+
   :config
   ;; Enable omitting by default
   (setq-default dired-omit-mode t)
-  
+
   ;; Add X features
   (define-key dired-mode-map (kbd "C-c o") #'dired-omit-mode))
 
@@ -102,12 +102,12 @@
   :config
   ;; Enable async compilation of packages
   (async-bytecomp-package-mode 1)
-  
+
   ;; dired-async is part of async - require it and enable
   (require 'dired-async nil t)  ; nil = no error if missing, t = noecho
   (when (fboundp 'dired-async-mode)
     (dired-async-mode 1))
-  
+
   ;; Message about async status
   (message "Async mode enabled for dired operations"))
 

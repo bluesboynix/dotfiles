@@ -20,8 +20,7 @@
 		("nongnu"       . 0)))
 
 ;; Ensure package archives are initialized
-(unless package--initialized
-  (package-initialize))
+(package-initialize)
 
 ;; Refresh archive contents if needed
 (unless package-archive-contents

@@ -10,6 +10,7 @@
 ;; ----------------------------------------------------------------------
 (use-package magit
   :ensure t
+  :defer t
   :commands (magit-status magit-blame magit-log-buffer-file)
   :bind (("C-x g" . magit-status)           ; Quick status
          ("C-x M-g" . magit-dispatch)        ; Magit command menu
@@ -58,25 +59,6 @@
   (setq magit-revert-buffers nil))
 
 ;; ----------------------------------------------------------------------
-;; Forge: Work with Git forges (GitHub, GitLab, etc.) - optional
-;; ----------------------------------------------------------------------
-;; (use-package forge
-;;   :ensure t
-;;   :after magit
-;;   :custom
-;;   (forge-database-file (expand-file-name "forge-database.sqlite" user-emacs-directory))
-;;   :config
-;;   ;; Add your tokens if needed (run `forge-add-token` interactively)
-;;   (message "Forge loaded. Run `forge-add-token` to add GitHub/GitLab tokens."))
-
-;; ----------------------------------------------------------------------
-;; Git Flow support (optional)
-;; ----------------------------------------------------------------------
-;; (use-package magit-gitflow
-;;   :ensure t
-;;   :hook (magit-mode . turn-on-magit-gitflow))
-
-;; ----------------------------------------------------------------------
 ;; Inline Git changes in fringe
 ;; ----------------------------------------------------------------------
 (use-package diff-hl
@@ -121,6 +103,7 @@
 ;; ----------------------------------------------------------------------
 (use-package browse-at-remote
   :ensure t
+  :defer t
   :bind ("C-c g o" . browse-at-remote))
 
 ;; ----------------------------------------------------------------------
@@ -128,6 +111,7 @@
 ;; ----------------------------------------------------------------------
 (use-package git-timemachine
   :ensure t
+  :defer t
   :bind ("C-c g t" . git-timemachine)
   :custom
   (git-timemachine-show-minibuffer-details t))
@@ -155,20 +139,8 @@
 ;; Git modes for various Git files
 ;; ----------------------------------------------------------------------
 (use-package git-modes
-  :ensure t)
-
-;; ----------------------------------------------------------------------
-;; Optional: Git Gutter (alternative to diff-hl)
-;; ----------------------------------------------------------------------
-;; (use-package git-gutter
-;;   :ensure t
-;;   :hook (prog-mode . git-gutter-mode)
-;;   :custom
-;;   (git-gutter:update-interval 0.5)
-;;   :config
-;;   (global-set-key (kbd "C-x v n") 'git-gutter:next-hunk)
-;;   (global-set-key (kbd "C-x v p") 'git-gutter:previous-hunk)
-;;   (global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk))
+  :ensure t
+  :defer t)
 
 (message "Git integration loaded successfully.")
 (provide 'tools-git)

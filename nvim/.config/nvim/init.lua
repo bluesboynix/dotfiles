@@ -16,9 +16,9 @@ if not ok then
   vim.cmd.colorscheme("default")
 end
 
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
-vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "none" })
+vim.api.nvim_set_hl(0, "Normal", { bg = "black" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "black" })
+vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "black" })
 
 -- ================================
 -- UI

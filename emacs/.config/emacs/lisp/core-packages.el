@@ -1,41 +1,32 @@
-;;; core-packages.el --- Package management setup -*- lexical-binding: t; -*-
+;;; core-packages.el --- Extended package setup -*- lexical-binding: t; -*-
 
-;; Disable package.el automatic loading at startup
 (setq package-enable-at-startup nil)
 
-;; Initialize package.el manually
 (require 'package)
 
 (setq package-archives
-	  '(("GNU ELPA"     . "https://elpa.gnu.org/packages/")
-		("MELPA"        . "https://melpa.org/packages/")
-		("ORG"          . "https://orgmode.org/elpa/")
-		("MELPA Stable" . "https://stable.melpa.org/packages/")
-		("nongnu"       . "https://elpa.nongnu.org/nongnu/"))
-	  package-archive-priorities
-	  '(("GNU ELPA"     . 20)
-		("MELPA"        . 15)
-		("ORG"          . 10)
-		("MELPA Stable" . 5)
-		("nongnu"       . 0)))
+      '(("gnu"          . "https://elpa.gnu.org/packages/")
+        ("nongnu"       . "https://elpa.nongnu.org/nongnu/")
+        ("melpa"        . "https://melpa.org/packages/")
+        ("melpa-stable" . "https://stable.melpa.org/packages/")
+        ("org"          . "https://orgmode.org/elpa/")
+        ("elpa-devel"   . "https://elpa.gnu.org/devel/")))
 
-;; Ensure package archives are initialized
+(setq package-archive-priorities
+      '(("gnu"          . 30)
+        ("nongnu"       . 25)
+        ("org"          . 20)
+        ("melpa-stable" . 15)
+        ("melpa"        . 10)
+        ("elpa-devel"   . 0)))  ;; lowest priority (bleeding edge)
+
 (package-initialize)
 
-;; Refresh archive contents if needed
-(unless package-archive-contents
-  (package-refresh-contents))
-
-;; Ensure use-package is installed
 (unless (package-installed-p 'use-package)
+  (package-refresh-contents)
   (package-install 'use-package))
 
-;; Ensure use-package is available
 (require 'use-package)
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-
-;; Always ensure packages get installed automatically
 (setq use-package-always-ensure t)
 
 (provide 'core-packages)

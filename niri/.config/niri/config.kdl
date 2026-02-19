@@ -81,6 +81,7 @@ spawn-sh-at-startup "swaybg -i ~/Pictures/Collections/emacs_cheat_sheet_black.pn
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 
+
 hotkey-overlay {
     skip-at-startup
 }

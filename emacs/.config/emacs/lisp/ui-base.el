@@ -48,7 +48,7 @@
 
 (my/load-theme-safely 'ef-dark)
 
-(add-to-list 'default-frame-alist '(background-color . "#010101"))
+(add-to-list 'default-frame-alist '(background-color . "#030303"))
 
 ;; ------------------------------------------------------------
 ;; Modeline

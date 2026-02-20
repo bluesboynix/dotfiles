@@ -22,7 +22,7 @@
 
   ;; Go uses tabs (official style)
   (setq-local indent-tabs-mode t)
-  (setq-local tab-width 4)
+  (setq-local tab-width 2)
 
   ;; Compilation default (overridden by dev-project if needed)
   (setq-local compile-command "go build ./...")
@@ -35,6 +35,9 @@
 
 (add-hook 'go-mode-hook #'lang-go-setup)
 (add-hook 'go-ts-mode-hook #'lang-go-setup)
+(add-hook 'go-ts-mode-hook
+          (lambda ()
+            (add-hook 'before-save-hook #'eglot-format-buffer nil t)))
 
 ;; ============================================================
 ;; File Associations

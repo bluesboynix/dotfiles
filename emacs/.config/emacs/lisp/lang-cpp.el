@@ -23,8 +23,8 @@
 (defun lang-cpp-setup ()
   "C/C++ local configuration."
 
-  ;; 4-space indentation
-  (setq-local c-basic-offset 4)
+  ;; 2-space indentation
+  (setq-local c-basic-offset 2)
 
   ;; Use Linux style as base
   (c-set-style "linux")

@@ -35,16 +35,19 @@
     :hook (dired-mode . treemacs-icons-dired-enable-once))
 
   (use-package treemacs-projectile
+    :defer t
     :after (treemacs projectile)
     :ensure nil)
 
   (use-package treemacs-evil
     :after treemacs
+    :defer t
     :ensure nil)
 
   ;; Optional: Magit integration
   (use-package treemacs-magit
     :after (treemacs magit)
+    :defer tg
     :ensure nil)
 
   ;; Optional: Persp-mode integration
@@ -58,16 +61,19 @@
   (use-package treemacs-all-the-icons
     :after treemacs
     :ensure nil
+    :defer t
     :config
     (treemacs-load-theme "all-the-icons"))
 
   ;; Optional packages for dired-subtree (removes warnings)
   (use-package dired-filter
     :ensure nil
+    :defer t
     :after dired)
 
   (use-package dired-subtree
     :ensure nil
+    :defer t
     :after (dired dired-filter dired-details)
     :bind (:map dired-mode-map
                 ("TAB" . dired-subtree-toggle))

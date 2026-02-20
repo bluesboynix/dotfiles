@@ -8,15 +8,8 @@
 ;; --------------------------------------------------
 
 ;; Very high during startup
-(setq gc-cons-threshold (* 200 1000 1000)) ;; 200MB
+(setq gc-cons-threshold (* 300 1024 1024))
 (setq gc-cons-percentage 0.6)
-
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            ;; Lower but still generous during normal usage
-            (setq gc-cons-threshold (* 50 1000 1000)) ;; 50MB
-            (setq gc-cons-percentage 0.1)))
-
 
 ;; Setup load-path for custom lisp modules
 ;;(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
@@ -67,4 +60,5 @@
 
 ;; Final message
 (message "init.el loaded all modules successfully.")
+
 ;;; init.el ends here

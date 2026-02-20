@@ -77,7 +77,7 @@
 
 (my/load-theme-safely 'ef-dark)
 
-(add-to-list 'default-frame-alist '(background-color . "#020202"))
+(add-to-list 'default-frame-alist '(background-color . "#010101"))
 
 ;; ----------------------------------------------------------------------
 ;; Icons

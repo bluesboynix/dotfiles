@@ -1,49 +1,50 @@
-;;; lang-go.el --- Minimal Go setup -*- lexical-binding: t; -*-
-
+;;; lang-go.el --- Go configuration -*- lexical-binding: t; -*-
 ;;; Commentary:
-;; Modern Go configuration using tree-sitter + eglot.
-;; Requires: gopls installed.
+;; Go language setup.
+;; Language-specific only. No LSP/diagnostics/project logic here.
 
 ;;; Code:
 
-;; --------------------------------------------------
-;; Tree-sitter Go
-;; --------------------------------------------------
+;; ============================================================
+;; Tree-sitter Mode (Emacs 29+)
+;; ============================================================
+
 (when (treesit-available-p)
+  (add-to-list 'major-mode-remap-alist
+               '(go-mode . go-ts-mode)))
 
-  (add-to-list 'major-mode-remap-alist '(go-mode . go-ts-mode))
+;; ============================================================
+;; Go Local Setup
+;; ============================================================
 
-  (use-package go-ts-mode
-    :ensure nil
-    :mode "\\.go\\'"
-    :hook (go-ts-mode . my/go-mode-setup)))
+(defun lang-go-setup ()
+  "Go local configuration."
 
-;; --------------------------------------------------
-;; Common Go Setup
-;; --------------------------------------------------
-(defun my/go-mode-setup ()
-  "Minimal Go defaults."
+  ;; Go uses tabs (official style)
+  (setq-local indent-tabs-mode t)
   (setq-local tab-width 4)
-  (setq-local indent-tabs-mode t) ;; Go uses tabs
-  (eglot-ensure))
 
-;; --------------------------------------------------
-;; Eglot
-;; --------------------------------------------------
-(use-package eglot
-  :ensure nil
-  :commands (eglot eglot-ensure)
-  :custom
-  (eglot-autoshutdown t)
-  (eglot-events-buffer-size 0))
+  ;; Compilation default (overridden by dev-project if needed)
+  (setq-local compile-command "go build ./...")
 
-;; --------------------------------------------------
-;; Format on save (gofmt via eglot)
-;; --------------------------------------------------
-(add-hook 'before-save-hook
-          (lambda ()
-            (when (derived-mode-p 'go-ts-mode)
-              (eglot-format-buffer))))
+  ;; Clean trailing whitespace on save
+  (add-hook 'before-save-hook
+            (lambda ()
+              (delete-trailing-whitespace))
+            nil t))
+
+(add-hook 'go-mode-hook #'lang-go-setup)
+(add-hook 'go-ts-mode-hook #'lang-go-setup)
+
+;; ============================================================
+;; File Associations
+;; ============================================================
+
+(add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+
+;; ============================================================
+;; Provide
+;; ============================================================
 
 (provide 'lang-go)
 ;;; lang-go.el ends here

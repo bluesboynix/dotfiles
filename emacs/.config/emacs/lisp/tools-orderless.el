@@ -1,21 +1,26 @@
-;;; tools-orderless.el --- Completion -*- lexical-binding: t; -*-
+;;; tools-orderless.el --- Completion style setup -*- lexical-binding: t; -*-
 
 ;;; Commentary:
-;; completion
+;; Orderless completion configuration.
+;; Optimized for Vertico + Consult + Project + Eglot.
 
 ;;; Code:
 
-;; ----------------------------------------------------------------------
-;; Completion Style
-;; ----------------------------------------------------------------------
-
 (use-package orderless
-  :ensure t
+  :ensure nil
+  :defer t
   :init
+
+  ;; ----------------------------------------------------------
+  ;; Completion Styles
+  ;; ----------------------------------------------------------
+
   (setq completion-styles '(orderless basic)
         completion-category-defaults nil
         completion-category-overrides
-        '((file (styles . (partial-completion))))))
+        '((file (styles . (partial-completion)))   ;; keep file paths intuitive
+          (symbol (styles . (orderless)))          ;; better M-x, xref, etc.
+          (project-file (styles . (orderless))))))
 
 (provide 'tools-orderless)
 ;;; tools-orderless.el ends here

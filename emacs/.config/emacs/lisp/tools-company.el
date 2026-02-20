@@ -1,16 +1,40 @@
-;;; tools-company.el --- comanpy mode -*- lexical-binding: t; -*-
+;;; tools-company.el --- Company completion setup -*- lexical-binding: t; -*-
 
 ;;; Commentary:
-;; compnay mode for emacs
+;; Completion framework for in-buffer completion.
+;; Uses CAPF (LSP, etc.) as the only backend.
+;; Clean integration with Eglot.
 
 ;;; Code:
 
 (use-package company
-  :ensure t
+  :ensure nil
+  :defer 1
   :hook (after-init . global-company-mode)
-  :custom
-  (company-minimum-prefix-length 1)
-  (company-idle-delay 0.0))
+  :config
+
+  ;; ----------------------------------------------------------
+  ;; Use only CAPF (Eglot feeds this)
+  ;; ----------------------------------------------------------
+
+  (setq company-backends '(company-capf))
+
+  ;; ----------------------------------------------------------
+  ;; Performance & Responsiveness
+  ;; ----------------------------------------------------------
+
+  (setq company-minimum-prefix-length 1
+        company-idle-delay 0.1      ;; 0.0 can be too aggressive
+        company-selection-wrap-around t
+        company-tooltip-align-annotations t)
+
+  ;; ----------------------------------------------------------
+  ;; Cleaner UX
+  ;; ----------------------------------------------------------
+
+  (setq company-show-numbers t
+        company-dabbrev-downcase nil
+        company-dabbrev-ignore-case t))
 
 (provide 'tools-company)
 ;;; tools-company.el ends here

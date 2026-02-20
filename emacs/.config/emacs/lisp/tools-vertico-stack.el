@@ -1,30 +1,59 @@
-;;; tools-vertico-stack.el --- vertico and minibuffer -*- lexical-binding: t; -*-
+;;; tools-vertico-stack.el --- Vertico minibuffer stack -*- lexical-binding: t; -*-
 
 ;;; Commentary:
-;; minibuffer enhencement
+;; Minibuffer completion stack:
+;; Vertico + Marginalia + Consult
+;; Clean, minimal, project-aware.
 
 ;;; Code:
 
-;; ----------------------------------------------------------------------
-;; Minibuffer (Vertico stack)
-;; ----------------------------------------------------------------------
+;; ------------------------------------------------------------
+;; Vertico
+;; ------------------------------------------------------------
 
 (use-package vertico
-  :ensure t
-  :init (vertico-mode))
+  :ensure nil
+  :init
+  (vertico-mode)
+  :custom
+  (vertico-cycle t)) ;; cycle through candidates
+
+;; ------------------------------------------------------------
+;; Marginalia (annotations)
+;; ------------------------------------------------------------
 
 (use-package marginalia
-  :ensure t
+  :ensure nil
   :after vertico
-  :init (marginalia-mode))
+  :init
+  (marginalia-mode))
+
+;; ------------------------------------------------------------
+;; Consult (search/navigation)
+;; ------------------------------------------------------------
 
 (use-package consult
-  :ensure t
+  :ensure nil
   :bind (("C-s"     . consult-line)
          ("C-x b"   . consult-buffer)
          ("M-g g"   . consult-goto-line)
-         ("M-y"     . consult-yank-pop)))
+         ("M-y"     . consult-yank-pop)
+         ("C-c p f" . consult-find)
+         ("C-c p g" . consult-ripgrep)))
 
+;; ------------------------------------------------------------
+;; Better register preview
+;; ------------------------------------------------------------
+
+(setq register-preview-delay 0
+      register-preview-function #'consult-register-format)
+
+;; ------------------------------------------------------------
+;; Use Consult for xref (clean integration)
+;; ------------------------------------------------------------
+
+(setq xref-show-xrefs-function #'consult-xref
+      xref-show-definitions-function #'consult-xref)
 
 (provide 'tools-vertico-stack)
 ;;; tools-vertico-stack.el ends here

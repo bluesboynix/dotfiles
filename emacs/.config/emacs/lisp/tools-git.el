@@ -9,7 +9,7 @@
 ;; Magit: The Git Porcelain
 ;; ----------------------------------------------------------------------
 (use-package magit
-  :ensure t
+  :ensure nil
   :defer t
   :commands (magit-status magit-blame magit-log-buffer-file)
   :bind (("C-x g" . magit-status)           ; Quick status
@@ -62,7 +62,7 @@
 ;; Inline Git changes in fringe
 ;; ----------------------------------------------------------------------
 (use-package diff-hl
-  :ensure t
+  :ensure nil
   :defer t
   :hook ((prog-mode . diff-hl-mode)
          (magit-post-refresh . diff-hl-magit-post-refresh))
@@ -94,7 +94,7 @@
 ;; Git Link: Get GitHub/GitLab links to current line
 ;; ----------------------------------------------------------------------
 (use-package git-link
-  :ensure t
+  :ensure nil
   :defer t
   :bind ("C-c g l" . git-link)
   :custom
@@ -104,7 +104,7 @@
 ;; Browse at remote
 ;; ----------------------------------------------------------------------
 (use-package browse-at-remote
-  :ensure t
+  :ensure nil
   :defer t
   :bind ("C-c g o" . browse-at-remote))
 
@@ -112,7 +112,7 @@
 ;; Git Timemachine: View file history
 ;; ----------------------------------------------------------------------
 (use-package git-timemachine
-  :ensure t
+  :ensure nil
   :defer t
   :bind ("C-c g t" . git-timemachine)
   :custom
@@ -141,7 +141,7 @@
 ;; Git modes for various Git files
 ;; ----------------------------------------------------------------------
 (use-package git-modes
-  :ensure t
+  :ensure nil
   :defer t)
 
 (message "Git integration loaded successfully.")

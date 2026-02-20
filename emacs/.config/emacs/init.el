@@ -31,10 +31,19 @@
 
 
 (require 'core-packages)
+
+;; UI Layer
 (require 'ui-base)
 (require 'ui-rainbow-delimiters)
 
-;; Tools and Extra
+;; Dev Layer
+(require 'dev-core)
+(require 'dev-lsp)
+(require 'dev-diagnostics)
+(require 'dev-format)
+(require 'dev-project)
+
+;; Tools Layer
 (require 'tools-company)
 (require 'tools-orderless)
 (require 'tools-vertico-stack)
@@ -45,12 +54,11 @@
 (require 'tools-dired)
 (require 'tools-snippets)
 
-;; Language modules
+;; Languages
 (require 'lang-cpp)
 (require 'lang-go)
-;; (require 'lang-html)
-;; (require 'lang-css)
-;; (require 'lang-javascript)
+
+
 
 ;; Load custom-set-variables and custom-set-faces
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

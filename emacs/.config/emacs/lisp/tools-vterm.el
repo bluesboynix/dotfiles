@@ -5,8 +5,8 @@
 ;;; Code:
 
 (use-package vterm
-  :ensure t
-  :defer t
+  :ensure nil
+  :defer 1
   :commands vterm
   :hook (vterm-mode . (lambda ()
     (display-line-numbers-mode -1)
@@ -18,9 +18,9 @@
   (setq vterm-toggle-cd-auto-create-buffer t))
 
 (use-package vterm-toggle
-  :ensure t
+  :ensure nil
   :after vterm
-  :defer t
+  :defer 1
   :bind (("<f9>" . vterm-toggle) ("C-<f9>" . vterm-toggle-cd))
   :custom ;; Open vterm in a side window (bottom)
   (vterm-toggle-fullscreen-p nil)

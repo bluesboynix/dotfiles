@@ -4,6 +4,7 @@
 ;;; Code
 
 (use-package smartparens
+  :ensure nil
   :defer t
   :hook ((prog-mode . smartparens-mode)
          (lisp-mode . smartparens-mode)

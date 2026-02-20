@@ -30,35 +30,23 @@
 ;;                (getenv "PATH")))
 
 
-(require 'core-packages)     ;; Package management setup
-(require 'ui-base)           ;; Basic UI
-;(require 'ui-centaur-tabs)   ;; fancy tabbar
-(require 'utils-collection)  ;; Corfu, Which-Key, Projectile
-; (require 'ui-dashboard)      ;; dashboard for emacs
+(require 'core-packages)
+(require 'ui-base)
+(require 'ui-rainbow-delimiters)
 
 ;; Tools and Extra
-;(require 'extra-emms)        ;; Emacs Music
-;(require 'tools-pdf)         ;; view pdf in emacs
-(require 'tools-vterm)       ;; vterm integration
-(require 'tools-git)         ;; Magit + diff-hl
-(require 'tools-treemacs)    ;; use treemacs
-(require 'tools-dired)       ;; dired config
+(require 'tools-company)
+(require 'tools-orderless)
+(require 'tools-vertico-stack)
+(require 'tools-smartparens)
+(require 'tools-vterm)
+(require 'tools-git)
+(require 'tools-treemacs)
+(require 'tools-dired)
+(require 'tools-snippets)
 
 ;; Language modules
 (require 'lang-cpp)
-;; (require 'lang-cpp-colors)
-;; (require 'lang-nim)
-;; (require 'lang-python)
-;; (require 'lang-python-colors)
-;; (require 'lang-rust)
-;; (require 'lang-rust-colors)
-;; (require 'lang-common-lisp-colors)
-;; (require 'lang-common-lisp)
-;; (require 'lang-scheme-colors)
-;; (require 'lang-scheme)
-;; (require 'lang-racket-colors)
-;; (require 'lang-racket)
-;; (require 'lang-flutter-dart)
 (require 'lang-go)
 ;; (require 'lang-html)
 ;; (require 'lang-css)

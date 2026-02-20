@@ -63,6 +63,7 @@
 ;; ----------------------------------------------------------------------
 (use-package diff-hl
   :ensure t
+  :defer t
   :hook ((prog-mode . diff-hl-mode)
          (magit-post-refresh . diff-hl-magit-post-refresh))
   :config
@@ -94,6 +95,7 @@
 ;; ----------------------------------------------------------------------
 (use-package git-link
   :ensure t
+  :defer t
   :bind ("C-c g l" . git-link)
   :custom
   (git-link-open-in-browser t))

@@ -32,8 +32,8 @@ export PATH="/home/bluesboy/.qlot/bin:$PATH"
 export PATH="/home/bluesboy/.nimble/bin:$PATH"
 
 # Go configuration
-export GOPATH=$HOME/go
-export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
+export PATH="$PATH:$HOME/go/bin"
 
 # ─── other varialbes ─────────────────────────────────────────────────────
 

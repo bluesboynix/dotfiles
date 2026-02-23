@@ -22,6 +22,12 @@
 ;;        (concat (expand-file-name "~/.nimble/bin") ":"
 ;;                (getenv "PATH")))
 
+;; Ensure Go binary is visible to Emacs
+(setenv "PATH" (concat "/usr/local/go/bin:" (getenv "PATH")))
+(add-to-list 'exec-path "/usr/local/go/bin")
+
+(add-to-list 'exec-path (expand-file-name "~/go/bin"))
+(setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name "~/go/bin")))
 
 (require 'core-packages)
 

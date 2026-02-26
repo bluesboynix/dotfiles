@@ -15,7 +15,6 @@
 ;; ----------------------------------------------------------------------
 (use-package dired
   :ensure nil
-  :defer t
   :commands (dired dired-jump)
   :bind (:map dired-mode-map
               ;; Navigation (vi-style)
@@ -70,7 +69,6 @@
 (use-package dired-x
   :ensure nil
   :after dired
-  :defer t
   :custom
   (dired-omit-files "^\\.\\|^#\\|~$")  ; Omit dotfiles, backups, temp
   (dired-omit-verbose nil)
@@ -89,7 +87,6 @@
 (use-package wdired
   :ensure nil
   :after dired
-  :defer t
   :bind (:map dired-mode-map
               ("C-c C-e" . wdired-change-to-wdired-mode)
               ("C-x C-q" . wdired-change-to-wdired-mode))  ; Traditional binding
@@ -102,7 +99,6 @@
 ;; ----------------------------------------------------------------------
 (use-package async
   :ensure nil
-  :defer t
   :config
   ;; Enable async compilation of packages
   (async-bytecomp-package-mode 1)
@@ -121,7 +117,6 @@
 (use-package dired-subtree
   :ensure nil
   :after dired
-  :defer t
   :bind (:map dired-mode-map
               ("TAB" . dired-subtree-toggle)
               ("<backtab>" . dired-subtree-cycle)  ; Cycle through subdirs
@@ -135,7 +130,6 @@
 ;; ----------------------------------------------------------------------
 (use-package all-the-icons-dired
   :ensure nil
-  :defer t
   :if (display-graphic-p)
   :after dired
   :hook (dired-mode . all-the-icons-dired-mode)
@@ -148,7 +142,6 @@
 (use-package diredfl
   :ensure nil
   :after dired
-  :defer t
   :hook (dired-mode . diredfl-mode)
   :custom
   (diredfl-global-mode nil))
@@ -159,14 +152,12 @@
 (use-package dired-git-info
   :ensure nil
   :after dired
-  defer t
   :bind (:map dired-mode-map
               (")" . dired-git-info-mode)))
 
 (use-package dired-narrow
   :ensure nil
   :after dired
-  :defer t
   :bind (:map dired-mode-map
               ("C-c /" . dired-narrow)
               ("C-c f" . dired-narrow-fuzzy)))
@@ -189,7 +180,6 @@
 (use-package dired-quick-sort
   :ensure nil
   :after dired
-  :defer t
   :bind (:map dired-mode-map
               ("C-c s" . dired-quick-sort)))
 

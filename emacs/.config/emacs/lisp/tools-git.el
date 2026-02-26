@@ -10,7 +10,6 @@
 ;; ----------------------------------------------------------------------
 (use-package magit
   :ensure nil
-  :defer t
   :commands (magit-status magit-blame magit-log-buffer-file)
   :bind (("C-x g" . magit-status)           ; Quick status
          ("C-x M-g" . magit-dispatch)        ; Magit command menu
@@ -22,20 +21,20 @@
   ;; Display behavior
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
   (magit-bury-buffer-function #'magit-mode-quit-window)
-  
+
   ;; Status buffer headers
   (magit-status-headers-hook '(magit-insert-error-header
                                magit-insert-diff-filter-header
                                magit-insert-head-branch-header
                                magit-insert-upstream-branch-header
                                magit-insert-tags-header))
-  
+
   ;; Log and diff settings
   (magit-refs-show-commit-count 'all)
   (magit-log-arguments '("--graph" "--decorate" "-n256"))
   (magit-diff-refine-hunk 'all)
   (magit-diff-paint-whitespace nil)  ; Don't highlight whitespace (optional)
-  
+
   ;; Section visibility
   (magit-section-initial-visibility-alist
    '((stashes . hide)
@@ -44,17 +43,17 @@
      (untracked . show)
      (unstaged . show)
      (staged . show)))
-  
+
   :config
   ;; Truncate long lines in diff buffers
   (add-hook 'magit-diff-mode-hook #'visual-line-mode)
-  
+
   ;; Use better completion
   (setq magit-completing-read-function 'magit-builtin-completing-read)
-  
+
   ;; Save repository state occasionally
   (setq magit-save-repository-buffers 'dontask)
-  
+
   ;; Don't auto-revert repositories
   (setq magit-revert-buffers nil))
 
@@ -69,23 +68,23 @@
   :config
   ;; Show changes as you edit
   (diff-hl-flydiff-mode 1)
-  
+
   ;; Terminal support (no fringe)
   (unless (display-graphic-p)
     (diff-hl-margin-mode 1))
-  
+
   ;; Navigation keybindings
   (global-set-key (kbd "C-x v n") 'diff-hl-next-hunk)
   (global-set-key (kbd "C-x v p") 'diff-hl-previous-hunk)
   (global-set-key (kbd "C-x v r") 'diff-hl-revert-hunk)
-  
+
   ;; FIXED: Use the correct hook name or condition
   (with-eval-after-load 'vc
     (when (boundp 'vc-find-file-hook)
       (add-to-list 'vc-find-file-hook 'diff-hl-mode))
     ;; Alternative for older Emacs versions
     (add-hook 'find-file-hook 'diff-hl-mode t))
-  
+
   ;; Optional: Show in dired
   ;; (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
   )
@@ -95,7 +94,6 @@
 ;; ----------------------------------------------------------------------
 (use-package git-link
   :ensure nil
-  :defer t
   :bind ("C-c g l" . git-link)
   :custom
   (git-link-open-in-browser t))
@@ -105,7 +103,6 @@
 ;; ----------------------------------------------------------------------
 (use-package browse-at-remote
   :ensure nil
-  :defer t
   :bind ("C-c g o" . browse-at-remote))
 
 ;; ----------------------------------------------------------------------
@@ -113,7 +110,6 @@
 ;; ----------------------------------------------------------------------
 (use-package git-timemachine
   :ensure nil
-  :defer t
   :bind ("C-c g t" . git-timemachine)
   :custom
   (git-timemachine-show-minibuffer-details t))
@@ -141,8 +137,7 @@
 ;; Git modes for various Git files
 ;; ----------------------------------------------------------------------
 (use-package git-modes
-  :ensure nil
-  :defer t)
+  :ensure nil)
 
 (message "Git integration loaded successfully.")
 (provide 'tools-git)

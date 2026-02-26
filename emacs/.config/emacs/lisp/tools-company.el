@@ -9,7 +9,6 @@
 
 (use-package company
   :ensure nil
-  :defer 1
   :hook (prog-mode . global-company-mode)
   :config
 

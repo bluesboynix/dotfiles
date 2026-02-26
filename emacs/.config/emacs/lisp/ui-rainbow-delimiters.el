@@ -1,7 +1,6 @@
 ;;; ui-rainbow-delimiters.el --- Rainbow delimiters -*- lexical-binding: t; -*-
 
 (use-package rainbow-delimiters
-  :defer t
   :hook ((prog-mode . rainbow-delimiters-mode)
          (lisp-mode . rainbow-delimiters-mode)
          (emacs-lisp-mode . rainbow-delimiters-mode))

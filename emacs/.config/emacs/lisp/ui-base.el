@@ -56,7 +56,6 @@
 
 (use-package doom-modeline
   :ensure nil
-  :defer t
   :init
   (setq doom-modeline-icon t
         doom-modeline-major-mode-icon nil

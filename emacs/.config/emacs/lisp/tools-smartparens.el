@@ -5,7 +5,6 @@
 
 (use-package smartparens
   :ensure nil
-  :defer t
   :hook ((prog-mode . smartparens-mode)
          (lisp-mode . smartparens-mode)
          (emacs-lisp-mode . smartparens-mode)

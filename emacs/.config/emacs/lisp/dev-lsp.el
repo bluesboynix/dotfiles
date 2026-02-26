@@ -13,7 +13,6 @@
 
 (use-package eglot
   :ensure nil
-  :defer t
   :commands (eglot eglot-ensure)
   :hook (prog-mode . eglot-ensure)
   :config

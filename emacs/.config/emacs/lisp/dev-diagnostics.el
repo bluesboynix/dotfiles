@@ -11,7 +11,6 @@
 
 (use-package flymake
   :ensure nil
-  :defer t
   :hook (prog-mode . flymake-mode)
   :config
 

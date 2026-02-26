@@ -12,7 +12,6 @@
 
 (use-package project
   :ensure nil
-  :defer t
   :config
 
   ;; Use ripgrep if available

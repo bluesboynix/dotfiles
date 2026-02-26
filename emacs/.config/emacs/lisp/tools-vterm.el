@@ -6,7 +6,6 @@
 
 (use-package vterm
   :ensure nil
-  :defer 1
   :commands vterm
   :hook (vterm-mode . (lambda ()
     (display-line-numbers-mode -1)
@@ -20,7 +19,6 @@
 (use-package vterm-toggle
   :ensure nil
   :after vterm
-  :defer 1
   :bind (("<f9>" . vterm-toggle) ("C-<f9>" . vterm-toggle-cd))
   :custom ;; Open vterm in a side window (bottom)
   (vterm-toggle-fullscreen-p nil)

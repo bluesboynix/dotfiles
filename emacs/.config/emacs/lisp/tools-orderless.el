@@ -8,7 +8,6 @@
 
 (use-package orderless
   :ensure nil
-  :defer t
   :init
 
   ;; ----------------------------------------------------------

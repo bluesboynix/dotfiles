@@ -13,6 +13,20 @@
   (add-to-list 'major-mode-remap-alist
                '(go-mode . go-ts-mode)))
 
+
+;; ============================================================
+;; Run Go
+;; ============================================================
+
+(defun lang-go-run ()
+  "Run current Go file or project."
+  (interactive)
+  (save-buffer)
+  (if (locate-dominating-file default-directory "go.mod")
+      (compile "go run .")
+    (compile (format "go run %s"
+                     (shell-quote-argument buffer-file-name)))))
+
 ;; ============================================================
 ;; Go Local Setup
 ;; ============================================================
@@ -28,13 +42,15 @@
   (setq-local go-ts-mode-indent-offset 4)
 
   ;; Compilation default (overridden by dev-project if needed)
-  (setq-local compile-command "go build ./...")
+  (setq-local compile-command "go run .")
 
   ;; Clean trailing whitespace on save
   (add-hook 'before-save-hook
             (lambda ()
               (delete-trailing-whitespace))
-            nil t))
+            nil t)
+  ;; Keybindings (buffer-local)
+  (local-set-key (kbd "C-c C-r") #'lang-go-run))
 
 (add-hook 'go-mode-hook #'lang-go-setup)
 (add-hook 'go-ts-mode-hook #'lang-go-setup)

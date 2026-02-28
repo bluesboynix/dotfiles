@@ -1,7 +1,7 @@
 include "input.kdl"
 include "output.kdl"
-include "layout.kdl"
 include "startup.kdl"
+include "layout.kdl"
 include "bind.kdl"
 include "animation.kdl"
 

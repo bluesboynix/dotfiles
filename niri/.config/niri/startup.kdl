@@ -1,0 +1,3 @@
+spawn-at-startup "~/Scripts/start-waybar-niri.sh"
+
+spawn-at-startup "swaybg -i ~/Pictures/Collections/crow.jpg"

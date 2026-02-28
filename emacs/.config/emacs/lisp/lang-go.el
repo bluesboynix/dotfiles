@@ -36,10 +36,10 @@
 
   ;; Go uses tabs (official style)
   (setq-local indent-tabs-mode t)
-  (setq-local tab-width 4)
-  (setq-local standard-indent 4)
+  (setq-local tab-width 2)
+  (setq-local standard-indent 2)
   (electric-indent-local-mode -1)
-  (setq-local go-ts-mode-indent-offset 4)
+  (setq-local go-ts-mode-indent-offset 2)
 
   ;; Compilation default (overridden by dev-project if needed)
   (setq-local compile-command "go run .")

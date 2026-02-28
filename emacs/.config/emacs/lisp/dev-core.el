@@ -20,17 +20,11 @@
 (defun dev-core-prog-mode-defaults ()
   "Sane defaults for programming modes."
 
-  ;; Line numbers (buffer-local)
-  (display-line-numbers-mode 1)
-
   ;; Code folding
   (hs-minor-mode 1)
 
-  ;; Auto bracket pairing
-  (electric-pair-mode 1)
-
   ;; Show trailing whitespace in code
-  (setq show-trailing-whitespace t)
+  ;; (setq show-trailing-whitespace t)
 
   ;; Sentence ends with single space
   (setq-local sentence-end-double-space nil))

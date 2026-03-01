@@ -47,6 +47,9 @@
      (message "Failed to load theme %s: %s" theme err)
      (load-theme 'ef-dark t))))
 
+(use-package ef-themes
+  :ensure t)
+
 (my/load-theme-safely 'ef-dark)
 
 (add-to-list 'default-frame-alist '(background-color . "#030303"))
@@ -56,7 +59,6 @@
 ;; ------------------------------------------------------------
 
 (use-package doom-modeline
-  :ensure nil
   :init
   (setq doom-modeline-icon t
         doom-modeline-major-mode-icon nil

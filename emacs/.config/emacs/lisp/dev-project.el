@@ -11,7 +11,6 @@
 ;; ============================================================
 
 (use-package project
-  :ensure nil
   :config
 
   ;; Use ripgrep if available

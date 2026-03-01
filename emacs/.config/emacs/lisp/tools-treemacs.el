@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package treemacs
-  :ensure nil
   :bind
   (("<f8>" . my/treemacs-toggle)
    ("C-c t t" . treemacs)
@@ -30,21 +29,20 @@
   ;; Integrations
   ;; ---------------------------------------------------------------------------
   (use-package treemacs-icons-dired
-    :ensure nil
     :hook (dired-mode . treemacs-icons-dired-enable-once))
 
   (use-package treemacs-projectile
     :after (treemacs projectile)
-    :ensure nil)
+    )
 
   (use-package treemacs-evil
     :after treemacs
-    :ensure nil)
+    )
 
   ;; Optional: Magit integration
   (use-package treemacs-magit
     :after (treemacs magit)
-    :ensure nil)
+    )
 
   ;; Optional: Persp-mode integration
   ;; (use-package treemacs-persp
@@ -56,17 +54,14 @@
   ;; Optional: All-the-icons integration
   (use-package treemacs-all-the-icons
     :after treemacs
-    :ensure nil
     :config
     (treemacs-load-theme "all-the-icons"))
 
   ;; Optional packages for dired-subtree (removes warnings)
   (use-package dired-filter
-    :ensure nil
     :after dired)
 
   (use-package dired-subtree
-    :ensure nil
     :after (dired dired-filter dired-details)
     :bind (:map dired-mode-map
                 ("TAB" . dired-subtree-toggle))

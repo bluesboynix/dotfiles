@@ -8,7 +8,6 @@
 ;;; Code:
 
 (use-package company
-  :ensure nil
   :hook (prog-mode . global-company-mode)
   :config
 

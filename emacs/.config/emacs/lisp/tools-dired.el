@@ -67,8 +67,8 @@
 ;; Dired-x (built-in extras)
 ;; ----------------------------------------------------------------------
 (use-package dired-x
-  :ensure nil
   :after dired
+  :ensure nil
   :custom
   (dired-omit-files "^\\.\\|^#\\|~$")  ; Omit dotfiles, backups, temp
   (dired-omit-verbose nil)
@@ -85,7 +85,6 @@
 ;; wdired (inline rename)
 ;; ----------------------------------------------------------------------
 (use-package wdired
-  :ensure nil
   :after dired
   :bind (:map dired-mode-map
               ("C-c C-e" . wdired-change-to-wdired-mode)
@@ -98,7 +97,6 @@
 ;; Async operations (dired-async is part of async package)
 ;; ----------------------------------------------------------------------
 (use-package async
-  :ensure nil
   :config
   ;; Enable async compilation of packages
   (async-bytecomp-package-mode 1)
@@ -115,7 +113,6 @@
 ;; dired-subtree (tree-style expansion)
 ;; ----------------------------------------------------------------------
 (use-package dired-subtree
-  :ensure nil
   :after dired
   :bind (:map dired-mode-map
               ("TAB" . dired-subtree-toggle)
@@ -129,7 +126,6 @@
 ;; Icons
 ;; ----------------------------------------------------------------------
 (use-package all-the-icons-dired
-  :ensure nil
   :if (display-graphic-p)
   :after dired
   :hook (dired-mode . all-the-icons-dired-mode)
@@ -140,7 +136,6 @@
 ;; Color highlighting
 ;; ----------------------------------------------------------------------
 (use-package diredfl
-  :ensure nil
   :after dired
   :hook (dired-mode . diredfl-mode)
   :custom
@@ -150,20 +145,17 @@
 ;; Additional dired enhancements (optional)
 ;; ----------------------------------------------------------------------
 (use-package dired-git-info
-  :ensure nil
   :after dired
   :bind (:map dired-mode-map
               (")" . dired-git-info-mode)))
 
 (use-package dired-narrow
-  :ensure nil
   :after dired
   :bind (:map dired-mode-map
               ("C-c /" . dired-narrow)
               ("C-c f" . dired-narrow-fuzzy)))
 
 (use-package dired-open
-  :ensure nil
   :after dired
   :config
   (setq dired-open-extensions
@@ -178,7 +170,6 @@
           ("xlsx" . "libreoffice"))))
 
 (use-package dired-quick-sort
-  :ensure nil
   :after dired
   :bind (:map dired-mode-map
               ("C-c s" . dired-quick-sort)))

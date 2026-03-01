@@ -7,7 +7,6 @@
 ;;; Code:
 
 (use-package orderless
-  :ensure nil
   :init
 
   ;; ----------------------------------------------------------

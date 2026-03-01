@@ -10,7 +10,6 @@
 ;; ============================================================
 
 (use-package flymake
-  :ensure nil
   :hook (prog-mode . flymake-mode)
   :config
 

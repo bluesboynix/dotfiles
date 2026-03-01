@@ -5,7 +5,6 @@
 ;;; Code:
 
 (use-package vterm
-  :ensure nil
   :commands vterm
   :hook (vterm-mode . (lambda ()
     (display-line-numbers-mode -1)
@@ -17,7 +16,6 @@
   (setq vterm-toggle-cd-auto-create-buffer t))
 
 (use-package vterm-toggle
-  :ensure nil
   :after vterm
   :bind (("<f9>" . vterm-toggle) ("C-<f9>" . vterm-toggle-cd))
   :custom ;; Open vterm in a side window (bottom)

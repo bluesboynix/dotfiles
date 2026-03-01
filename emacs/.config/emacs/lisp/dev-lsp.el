@@ -12,7 +12,6 @@
 ;; ============================================================
 
 (use-package eglot
-  :ensure nil
   :commands (eglot eglot-ensure)
   :hook (prog-mode . eglot-ensure)
   :config

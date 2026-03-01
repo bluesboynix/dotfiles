@@ -236,4 +236,10 @@ configuration {
 
 //@theme "/usr/share/rofi/themes/Monokai.rasi"
 
+//@theme "/home/bluesboy/.local/share/rofi/themes/squared-black.rasi"
+
+//@theme "/usr/share/rofi/themes/solarized.rasi"
+
+//@theme "/usr/share/rofi/themes/Monokai.rasi"
+
 @theme "/home/bluesboy/.local/share/rofi/themes/squared-black.rasi"

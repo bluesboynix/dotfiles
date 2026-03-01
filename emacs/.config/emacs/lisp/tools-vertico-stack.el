@@ -12,7 +12,6 @@
 ;; ------------------------------------------------------------
 
 (use-package vertico
-  :ensure nil
   :init
   (vertico-mode)
   :custom
@@ -23,7 +22,6 @@
 ;; ------------------------------------------------------------
 
 (use-package marginalia
-  :ensure nil
   :after vertico
   :init
   (marginalia-mode))
@@ -33,7 +31,6 @@
 ;; ------------------------------------------------------------
 
 (use-package consult
-  :ensure nil
   :bind (("C-s"     . consult-line)
          ("C-x b"   . consult-buffer)
          ("M-g g"   . consult-goto-line)

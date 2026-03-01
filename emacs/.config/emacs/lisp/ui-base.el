@@ -19,7 +19,7 @@
 
 (show-paren-mode 1)
 (column-number-mode 1)
-(display-line-numbers-mode 1)
+(global-display-line-numbers-mode 1)
 (global-hl-line-mode 1)
 
 ;; ------------------------------------------------------------

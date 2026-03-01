@@ -56,7 +56,7 @@
 ;; Languages
 (require 'lang-cpp)
 (require 'lang-go)
-
+(require 'lang-scheme)
 
 
 ;; Load custom-set-variables and custom-set-faces

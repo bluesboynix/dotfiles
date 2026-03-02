@@ -1,15 +1,26 @@
 * {
-color: #ffffff;
-background: transparent;
-font-size: 14px;
+  font-family: "JetBrains Mono", monospace;
+  color: white;
 }
 
+window#waybar {
+  background: transparent;
+}
 
+.modules-right {
+  background: rgba(0, 0, 0, 0.35);
+  padding: 25px;
+  border-radius: 20px;
+}
 
-#waybar {
-    background-color: rgba(0, 0, 0, 0); /* Transparent background for a widget feel */
-    border-radius: 0px; /* Rounded corners for the "widget" look */
-    margin-top: -150px; /* Move up by half of the 300px height to center it vertically */
-    margin-left: 10px; /* Small gap from the left edge */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+#custom-clock_block {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+#custom-cpu_block,
+#custom-mem_block {
+  font-size: 14px;
+  margin-top: 12px;
 }

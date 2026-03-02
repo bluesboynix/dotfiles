@@ -58,7 +58,6 @@
 (require 'lang-go)
 (require 'lang-scheme)
 
-
 ;; Load custom-set-variables and custom-set-faces
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror 'nomessage)

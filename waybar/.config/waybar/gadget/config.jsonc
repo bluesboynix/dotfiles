@@ -1,0 +1,35 @@
+{
+  "layer": "bottom",
+  "position": "top",
+  "exclusive": false,
+  "passthrough": true,
+  "gtk-layer-shell": true,
+
+  "width": 320,
+
+  "margin-top": 30,
+  "margin-right": 30,
+
+  "modules-right": [
+    "custom/clock_block",
+    "custom/cpu_block",
+    "custom/mem_block"
+  ],
+
+  "custom/clock_block": {
+    "exec": "date '+%H:%M'",
+    "interval": 1
+  },
+
+  "custom/cpu_block": {
+    "exec": "~/.config/waybar/gadget/scripts/cpu_block.sh",
+    "interval": 1,
+    "return-type": "json"
+  },
+
+  "custom/mem_block": {
+    "exec": "~/.config/waybar/gadget/scripts/mem_block.sh",
+    "interval": 2,
+    "return-type": "json"
+  }
+}

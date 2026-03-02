@@ -1,146 +1,108 @@
-;;; lang-scheme.el --- Generic Pretty Scheme REPL -*- lexical-binding: t; -*-
+;;; lang-scheme.el --- Minimal Scheme REPL integration -*- lexical-binding: t; -*-
 
 (require 'comint)
-(require 'scheme)
 
-(defgroup lang-scheme nil "" :group 'languages)
+(defgroup lang-scheme nil
+  "Minimal Scheme REPL integration."
+  :group 'languages)
 
-(defcustom lang-scheme-backend 'guile
-  ""
-  :type '(choice (const guile) (const gambit) (const chicken))
+(defcustom lang-scheme-program "guile"
+  "Program used to run Scheme REPL."
+  :type 'string
   :group 'lang-scheme)
 
-(defcustom lang-scheme-window-width 0.38
-  ""
-  :type 'float
+(defcustom lang-scheme-buffer-name "*scheme*"
+  "Name of Scheme REPL buffer."
+  :type 'string
   :group 'lang-scheme)
 
-(defcustom lang-scheme-backends
-  '((guile   :program "guile" :buffer "*scheme-guile*")
-    (gambit  :program "gsi"   :buffer "*scheme-gambit*")
-    (chicken :program "csi"   :buffer "*scheme-chicken*"))
-  ""
-  :type 'alist
-  :group 'lang-scheme)
+(defvar lang-scheme-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c C-z") #'lang-scheme-switch-to-repl)
+    (define-key map (kbd "C-c C-c") #'lang-scheme-send-definition)
+    (define-key map (kbd "C-c C-r") #'lang-scheme-send-region)
+    (define-key map (kbd "C-c C-b") #'lang-scheme-send-buffer)
+    map)
+  "Keymap for lang-scheme minor mode.")
 
-(defun lang-scheme--cfg ()
-  (alist-get lang-scheme-backend lang-scheme-backends))
+;;;###autoload
+(define-minor-mode lang-scheme-mode
+  "Minor mode for interacting with a Scheme REPL."
+  :lighter " Scheme"
+  :keymap lang-scheme-mode-map)
 
-(defun lang-scheme--program ()
-  (plist-get (lang-scheme--cfg) :program))
+(defun lang-scheme--get-process ()
+  "Return active Scheme process or nil."
+  (get-buffer-process lang-scheme-buffer-name))
 
-(defun lang-scheme--buffer ()
-  (plist-get (lang-scheme--cfg) :buffer))
+(defun lang-scheme--start-repl ()
+  "Start Scheme REPL if not running."
+  (unless (comint-check-proc lang-scheme-buffer-name)
+    (let ((buffer (apply #'make-comint
+                         "scheme"
+                         lang-scheme-program
+                         nil
+                         nil)))
+      (with-current-buffer buffer
+        (lang-scheme-repl-mode))))
+  (get-buffer-process lang-scheme-buffer-name))
 
-(defun lang-scheme--ensure-process ()
-  (let* ((buf-name (lang-scheme--buffer))
-         (buf (or (get-buffer buf-name)
-                  (make-comint-in-buffer
-                   "scheme" buf-name (lang-scheme--program)))))
-    (or (get-buffer-process buf)
-        (with-current-buffer buf
-          (make-comint-in-buffer
-           "scheme" buf-name (lang-scheme--program))
-          (get-buffer-process buf)))))
+(defun lang-scheme-run-repl ()
+  "Start or switch to Scheme REPL."
+  (interactive)
+  (lang-scheme--start-repl)
+  (pop-to-buffer lang-scheme-buffer-name))
 
-(defun lang-scheme--display ()
-  (display-buffer-in-side-window
-   (get-buffer-create (lang-scheme--buffer))
-   `((side . right)
-     (slot . 0)
-     (window-width . ,lang-scheme-window-width))))
+(defun lang-scheme-switch-to-repl ()
+  "Switch to Scheme REPL buffer."
+  (interactive)
+  (if (lang-scheme--get-process)
+      (pop-to-buffer lang-scheme-buffer-name)
+    (lang-scheme-run-repl)))
 
-(defun lang-scheme--send (string)
-  (let ((proc (lang-scheme--ensure-process)))
+(defun lang-scheme--send-string (string)
+  "Send STRING to Scheme REPL and evaluate it cleanly."
+  (let ((proc (or (lang-scheme--get-process)
+                  (lang-scheme--start-repl))))
+    (unless (string-suffix-p "\n" string)
+      (setq string (concat string "\n")))
+    (comint-send-string proc string)
     (with-current-buffer (process-buffer proc)
       (goto-char (point-max))
-      (unless (bolp)
-        (insert "\n")))
-    (comint-send-string proc string)
-    (comint-send-string proc "\n")
-    (when-let ((win (get-buffer-window (lang-scheme--buffer))))
-      (with-selected-window win
-        (goto-char (point-max))))))
+      (recenter -1))))
 
-(defun lang-scheme-run ()
-  (interactive)
-  (lang-scheme--ensure-process)
-  (lang-scheme--display))
-
-(defun lang-scheme-send-region (beg end)
+(defun lang-scheme-send-region (start end)
+  "Send region between START and END to Scheme REPL."
   (interactive "r")
-  (lang-scheme--send
-   (buffer-substring-no-properties beg end)))
+  (lang-scheme--send-string
+   (buffer-substring-no-properties start end)))
 
 (defun lang-scheme-send-buffer ()
+  "Send entire buffer to Scheme REPL."
   (interactive)
   (lang-scheme-send-region (point-min) (point-max)))
 
-(defun lang-scheme-send-defun ()
+(defun lang-scheme-send-definition ()
+  "Send current top-level definition to Scheme REPL."
   (interactive)
   (save-excursion
     (mark-defun)
     (lang-scheme-send-region
      (region-beginning)
-     (region-end)))
-  (deactivate-mark))
+     (region-end))))
 
-(defun lang-scheme-clear ()
-  (interactive)
-  (when-let ((buf (get-buffer (lang-scheme--buffer))))
-    (with-current-buffer buf
-      (let ((comint-buffer-maximum-size 0))
-        (comint-truncate-buffer)))))
+;;; REPL Mode
 
-(defun lang-scheme-restart ()
-  (interactive)
-  (when-let ((proc (get-buffer-process (lang-scheme--buffer))))
-    (delete-process proc))
-  (kill-buffer (lang-scheme--buffer))
-  (lang-scheme-run))
+(define-derived-mode lang-scheme-repl-mode comint-mode "Scheme-REPL"
+  "Major mode for Scheme REPL."
+  (setq comint-prompt-read-only t)
+  (setq comint-scroll-to-bottom-on-input t)
+  (setq comint-scroll-to-bottom-on-output t)
+  (setq comint-move-point-for-output t))
 
-(defun lang-scheme-switch-backend (backend)
-  (interactive
-   (list (intern
-          (completing-read
-           "Backend: "
-           (mapcar #'car lang-scheme-backends)))))
-  (setq lang-scheme-backend backend)
-  (message "Scheme backend → %s" backend))
 
-(defun lang-scheme--style ()
-  (setq-local comint-prompt-read-only t
-              comint-scroll-to-bottom-on-input t
-              comint-scroll-to-bottom-on-output t
-              comint-input-ignoredups t
-              comint-prompt-regexp "^> "
-              comint-use-prompt-regexp t)
+(add-hook 'scheme-mode-hook #'lang-scheme-mode)
 
-  ;; force clean simple prompt
-  (add-hook
-   'comint-output-filter-functions
-   (lambda (output)
-     (when (string-match "^[^>\n]*>" output)
-       (replace-match "> " nil nil output)))
-   nil t)
-
-  ;; faces
-  (set-face-attribute 'comint-highlight-prompt nil
-                      :weight 'bold
-                      :foreground "#ff79c6")
-
-  (set-face-attribute 'comint-input nil
-                      :foreground "#8be9fd"))
-
-(add-hook 'comint-mode-hook #'lang-scheme--style)
-
-(with-eval-after-load 'scheme
-  (define-key scheme-mode-map (kbd "C-c C-z") #'lang-scheme-run)
-  (define-key scheme-mode-map (kbd "C-c C-c") #'lang-scheme-send-defun)
-  (define-key scheme-mode-map (kbd "C-c C-r") #'lang-scheme-send-region)
-  (define-key scheme-mode-map (kbd "C-c C-b") #'lang-scheme-send-buffer)
-  (define-key scheme-mode-map (kbd "C-c C-l") #'lang-scheme-clear)
-  (define-key scheme-mode-map (kbd "C-c C-k") #'lang-scheme-restart)
-  (define-key scheme-mode-map (kbd "C-c C-s") #'lang-scheme-switch-backend))
 
 (provide 'lang-scheme)
+;;; lang-scheme.el ends here

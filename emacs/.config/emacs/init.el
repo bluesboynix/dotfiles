@@ -57,6 +57,7 @@
 (require 'lang-cpp)
 (require 'lang-go)
 (require 'lang-scheme)
+(require 'lang-rust)
 
 ;; Load custom-set-variables and custom-set-faces
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

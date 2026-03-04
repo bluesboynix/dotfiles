@@ -117,6 +117,15 @@
 (add-hook 'rust-mode-hook #'lang-rust-setup)
 (add-hook 'rust-ts-mode-hook #'lang-rust-setup)
 
+
+;; Force rust-ts-mode to NOT enable its own flymake backend
+(defun lang-rust-disable-native-flymake ()
+  (setq-local flymake-diagnostic-functions
+              (remove 'rust-ts-flymake
+                      flymake-diagnostic-functions)))
+
+(add-hook 'rust-ts-mode-hook #'lang-rust-disable-native-flymake)
+
 ;; ============================================================
 ;; File Association
 ;; ============================================================

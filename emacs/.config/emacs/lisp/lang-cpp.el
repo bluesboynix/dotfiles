@@ -5,21 +5,14 @@
 ;; Only language-specific behavior.
 
 ;;; Code:
-
-;; ============================================================
 ;; Tree-sitter Mode (Preferred for Emacs 29+)
-;; ============================================================
-
 (when (treesit-available-p)
   (add-to-list 'major-mode-remap-alist
                '(c-mode . c-ts-mode))
   (add-to-list 'major-mode-remap-alist
                '(c++-mode . c++-ts-mode)))
 
-;; ============================================================
 ;; C/C++ Style Configuration
-;; ============================================================
-
 (defun lang-cpp-setup ()
   "C/C++ local configuration."
 
@@ -47,17 +40,10 @@
 (add-hook 'c-mode-hook #'lang-cpp-setup)
 (add-hook 'c++-mode-hook #'lang-cpp-setup)
 
-;; ============================================================
 ;; File Associations
-;; ============================================================
-
 (add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cc\\'"  . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.hh\\'"  . c++-mode))
-
-;; ============================================================
-;; Provide
-;; ============================================================
 
 (provide 'lang-cpp)
 ;;; lang-cpp.el ends here

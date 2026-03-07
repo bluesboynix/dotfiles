@@ -5,11 +5,7 @@
 ;; No UI dependencies.
 
 ;;; Code:
-
-;; ============================================================
 ;; Built-in project.el
-;; ============================================================
-
 (use-package project
   :config
 
@@ -29,10 +25,7 @@
           "Cargo.toml"
           "package.json")))
 
-;; ============================================================
 ;; Smart Compilation
-;; ============================================================
-
 (defun dev-project-guess-compile-command ()
   "Guess a reasonable compile command based on project files."
   (cond
@@ -65,10 +58,7 @@
 
 (add-hook 'prog-mode-hook #'dev-project-set-compile-command)
 
-;; ============================================================
 ;; Convenience Keybindings
-;; ============================================================
-
 (global-set-key (kbd "C-c p f") #'project-find-file)
 (global-set-key (kbd "C-c p s") #'project-find-regexp)
 (global-set-key (kbd "C-c p p") #'project-switch-project)

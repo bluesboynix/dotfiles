@@ -1,6 +1,9 @@
 ;;; core-packages.el --- Extended package setup -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; Basic repo for Emacs
 
 
+;;; Code:
 (setq package-enable-at-startup nil)
 
 (require 'package)
@@ -24,3 +27,4 @@
 
 
 (provide 'core-packages)
+;;; core-packages.el ends here

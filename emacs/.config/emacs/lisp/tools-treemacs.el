@@ -25,9 +25,7 @@
   (treemacs-change-root-without-asking t)  ; Don't ask when changing root
 
   :config
-  ;; ---------------------------------------------------------------------------
   ;; Integrations
-  ;; ---------------------------------------------------------------------------
   (use-package treemacs-icons-dired
     :hook (dired-mode . treemacs-icons-dired-enable-once))
 
@@ -70,9 +68,7 @@
     (setq dired-subtree-use-filter-p nil)  ; Disable dired-filter integration
     (setq dired-subtree-use-dired-details nil))  ; Disable dired-details integration
 
-  ;; ---------------------------------------------------------------------------
   ;; Faces customization
-  ;; ---------------------------------------------------------------------------
   (defface my/treemacs-directory-face
     '((t (:inherit font-lock-function-name-face :weight bold)))
     "Face for treemacs directories.")
@@ -98,18 +94,14 @@
   (set-face-attribute 'treemacs-git-ignored-face nil
                       :foreground "#3e4452")
 
-  ;; ---------------------------------------------------------------------------
   ;; Line number disabling
-  ;; ---------------------------------------------------------------------------
   (defun my/disable-line-numbers-in-treemacs ()
     "Disable line numbers in treemacs buffers."
     (display-line-numbers-mode -1))
 
   (add-hook 'treemacs-mode-hook #'my/disable-line-numbers-in-treemacs)
 
-  ;; ---------------------------------------------------------------------------
   ;; Smart toggle functions
-  ;; ---------------------------------------------------------------------------
   (defun my/treemacs-open-at-current-directory ()
     "Open Treemacs and set its root to the current buffer's directory."
     (interactive)
@@ -158,9 +150,7 @@
     (when (eq major-mode 'treemacs-mode)
       (treemacs-create-dir dirname)))
 
-  ;; ---------------------------------------------------------------------------
   ;; Workspace management
-  ;; ---------------------------------------------------------------------------
   (defun my/treemacs-rename-workspace (new-name)
     "Rename current treemacs workspace to NEW-NAME."
     (interactive "sNew workspace name: ")
@@ -171,9 +161,7 @@
     (interactive "sWorkspace name: ")
     (treemacs-switch-workspace name))
 
-  ;; ---------------------------------------------------------------------------
   ;; Additional keybindings for treemacs mode
-  ;; ---------------------------------------------------------------------------
   (with-eval-after-load 'treemacs
     (define-key treemacs-mode-map (kbd "g") #'treemacs-refresh)
     (define-key treemacs-mode-map (kbd "C") #'my/treemacs-create-file)
@@ -187,9 +175,7 @@
     (define-key treemacs-mode-map (kbd "h") #'treemacs-toggle-fixed-width)
     (define-key treemacs-mode-map (kbd "f") #'treemacs-find-file))
 
-  ;; ---------------------------------------------------------------------------
   ;; Project root detection improvements
-  ;; ---------------------------------------------------------------------------
   (defun my/treemacs-find-project-root ()
     "Find project root for current buffer and focus treemacs there."
     (interactive)

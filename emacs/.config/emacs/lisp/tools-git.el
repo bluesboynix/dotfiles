@@ -5,11 +5,7 @@
 ;; Uses Magit + diff-hl only.
 
 ;;; Code:
-
-;; --------------------------------------------------
 ;; Magit (main Git interface)
-;; --------------------------------------------------
-
 (use-package magit
   :commands (magit-status)
   :bind (("C-x g" . magit-status))
@@ -17,10 +13,7 @@
   (magit-display-buffer-function
    #'magit-display-buffer-same-window-except-diff-v1))
 
-;; --------------------------------------------------
 ;; diff-hl (show git changes in fringe)
-;; --------------------------------------------------
-
 (use-package diff-hl
   :hook ((prog-mode . diff-hl-mode)
          (magit-post-refresh . diff-hl-magit-post-refresh))

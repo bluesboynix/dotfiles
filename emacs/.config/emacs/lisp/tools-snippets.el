@@ -1,5 +1,7 @@
 ;;; tools-snippets.el --- Lazy YASnippet -*- lexical-binding: t; -*-
+;;; Commentary:
 
+;;; Code:
 (use-package yasnippet
   )
 

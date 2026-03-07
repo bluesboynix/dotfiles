@@ -6,17 +6,11 @@
 
 ;;; Code:
 
-;; ============================================================
 ;; Indentation Defaults
-;; ============================================================
-
 (setq-default indent-tabs-mode nil
               tab-width 2)
 
-;; ============================================================
 ;; Basic Programming UX
-;; ============================================================
-
 (defun dev-core-prog-mode-defaults ()
   "Sane defaults for programming modes."
 
@@ -31,28 +25,15 @@
 
 (add-hook 'prog-mode-hook #'dev-core-prog-mode-defaults)
 
-;; ============================================================
 ;; Compilation Behavior
-;; ============================================================
-
 (setq compilation-scroll-output t)
 
-;; ============================================================
 ;; Large File Safety
-;; ============================================================
-
 (setq large-file-warning-threshold (* 100 1024 1024)) ;; 100MB
 
-;; ============================================================
 ;; Performance Tweaks (Dev Focused)
-;; ============================================================
-
-;; Faster process output (important for LSP later)
 (setq read-process-output-max (* 1024 1024)) ;; 1MB
 
-;; ============================================================
 ;; Provide
-;; ============================================================
-
 (provide 'dev-core)
 ;;; dev-core.el ends here

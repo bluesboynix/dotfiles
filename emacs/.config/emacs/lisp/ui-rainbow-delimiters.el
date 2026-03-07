@@ -1,4 +1,7 @@
 ;;; ui-rainbow-delimiters.el --- Rainbow delimiters -*- lexical-binding: t; -*-
+;;; Commentary:
+
+;;; Code:
 
 (use-package rainbow-delimiters
   :hook ((prog-mode . rainbow-delimiters-mode)

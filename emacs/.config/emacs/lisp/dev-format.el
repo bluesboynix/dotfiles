@@ -5,11 +5,7 @@
 ;; Safe, optional, and extensible.
 
 ;;; Code:
-
-;; ============================================================
 ;; Core Formatter
-;; ============================================================
-
 (defun dev-format-buffer ()
   "Format current buffer using the best available formatter."
   (interactive)
@@ -23,10 +19,7 @@
    (t
     (indent-region (point-min) (point-max)))))
 
-;; ============================================================
 ;; Optional: Format on Save (Disabled by Default)
-;; ============================================================
-
 (defvar dev-format-on-save nil
   "If non-nil, format buffer automatically before saving.")
 
@@ -37,10 +30,7 @@
 
 (add-hook 'before-save-hook #'dev-format-maybe)
 
-;; ============================================================
 ;; Manual Keybinding (Global, Safe)
-;; ============================================================
-
 (global-set-key (kbd "C-c f") #'dev-format-buffer)
 
 (provide 'dev-format)

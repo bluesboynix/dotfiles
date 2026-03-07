@@ -1,5 +1,9 @@
 ;;; lang-scheme.el --- Minimal SLIME-like Scheme REPL -*- lexical-binding: t; -*-
+;;; Commentary:
+;;; Basic scheme setup with comint repl
 
+
+;;; Code:
 (require 'comint)
 
 (defgroup lang-scheme nil
@@ -16,10 +20,7 @@
   :type 'string
   :group 'lang-scheme)
 
-;; ------------------------------------------------------------
 ;; Minor Mode
-;; ------------------------------------------------------------
-
 (defvar lang-scheme-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c C-z") #'lang-scheme-run-repl)
@@ -35,10 +36,7 @@
   :lighter " λ"
   :keymap lang-scheme-mode-map)
 
-;; ------------------------------------------------------------
 ;; Process Management
-;; ------------------------------------------------------------
-
 (defun lang-scheme--get-process ()
   (get-buffer-process lang-scheme-buffer-name))
 
@@ -65,10 +63,7 @@
   (lang-scheme--start-repl)
   (lang-scheme--ensure-visible))
 
-;; ------------------------------------------------------------
 ;; Evaluation (Process-level, stable)
-;; ------------------------------------------------------------
-
 (defun lang-scheme--send (string)
   (let ((proc (or (lang-scheme--get-process)
                   (lang-scheme--start-repl))))
@@ -103,21 +98,14 @@
     (save-excursion (backward-sexp) (point))
     (point))))
 
-;; ------------------------------------------------------------
 ;; Prompt Fix (Safe Preoutput Filter)
-;; ------------------------------------------------------------
-
 (defun lang-scheme--fix-prompts (output)
-  "Ensure each Guile prompt starts on a new line."
   (replace-regexp-in-string
    "\\(scheme@[^>]*> \\)"
    "\n\\1"
    output))
 
-;; ------------------------------------------------------------
 ;; REPL Mode
-;; ------------------------------------------------------------
-
 (define-derived-mode lang-scheme-repl-mode comint-mode "Scheme-REPL"
   "Minimal Scheme REPL mode."
 
@@ -134,8 +122,6 @@
   (add-hook 'comint-preoutput-filter-functions
             #'lang-scheme--fix-prompts
             nil t))
-
-;; ------------------------------------------------------------
 
 (add-hook 'scheme-mode-hook #'lang-scheme-mode)
 

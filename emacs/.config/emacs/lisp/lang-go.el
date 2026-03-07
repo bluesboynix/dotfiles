@@ -4,20 +4,12 @@
 ;; Language-specific only. No LSP/diagnostics/project logic here.
 
 ;;; Code:
-
-;; ============================================================
 ;; Tree-sitter Mode (Emacs 29+)
-;; ============================================================
-
 (when (treesit-available-p)
   (add-to-list 'major-mode-remap-alist
                '(go-mode . go-ts-mode)))
 
-
-;; ============================================================
 ;; Run Go
-;; ============================================================
-
 (defun lang-go-run ()
   "Run current Go file or project."
   (interactive)
@@ -27,10 +19,7 @@
     (compile (format "go run %s"
                      (shell-quote-argument buffer-file-name)))))
 
-;; ============================================================
 ;; Go Local Setup
-;; ============================================================
-
 (defun lang-go-setup ()
   "Go local configuration."
 
@@ -58,15 +47,8 @@
           (lambda ()
             (add-hook 'before-save-hook #'eglot-format-buffer nil t)))
 
-;; ============================================================
 ;; File Associations
-;; ============================================================
-
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
-
-;; ============================================================
-;; Provide
-;; ============================================================
 
 (provide 'lang-go)
 ;;; lang-go.el ends here

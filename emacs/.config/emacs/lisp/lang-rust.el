@@ -8,38 +8,25 @@
 ;; - No LSP, no project frameworks
 
 ;;; Code:
-
-;; ============================================================
 ;; Tree-sitter Remap (Emacs 29+)
-;; ============================================================
-
 (when (treesit-available-p)
   (add-to-list 'major-mode-remap-alist
                '(rust-mode . rust-ts-mode)))
 
-;; ============================================================
 ;; Customization
-;; ============================================================
-
 (defcustom rust-format-path "rustfmt"
   "Path to rustfmt executable."
   :type 'string
   :group 'rust)
 
-;; ============================================================
 ;; Formatting
-;; ============================================================
-
 (defun lang-rust-format ()
   "Format buffer using rustfmt."
   (when (and (executable-find rust-format-path)
              (fboundp 'rust-format-buffer))
     (rust-format-buffer)))
 
-;; ============================================================
 ;; Cargo Commands
-;; ============================================================
-
 (defun lang-rust-cargo-build ()
   "Run cargo build."
   (interactive)
@@ -60,10 +47,7 @@
   (interactive)
   (compile "cargo check"))
 
-;; ============================================================
 ;; rustc (Single File Compile)
-;; ============================================================
-
 (defun lang-rust-rustc ()
   "Compile current file using rustc."
   (interactive)
@@ -72,18 +56,13 @@
      (format "rustc %s"
              (shell-quote-argument buffer-file-name)))))
 
-; ============================================================
 ;; Clippy
-;; ============================================================
 (defun lang-rust-cargo-clippy ()
   "Run cargo clippy."
   (interactive)
   (compile "cargo clippy"))
 
-;; ============================================================
 ;; Smart Run
-;; ============================================================
-
 (defun lang-rust-smart-run ()
   "Use cargo run if Cargo.toml exists, otherwise rustc."
   (interactive)
@@ -91,10 +70,7 @@
       (lang-rust-cargo-run)
     (lang-rust-rustc)))
 
-;; ============================================================
 ;; Setup
-;; ============================================================
-
 (defun lang-rust-setup ()
   "Rust local configuration."
 
@@ -126,15 +102,8 @@
 
 (add-hook 'rust-ts-mode-hook #'lang-rust-disable-native-flymake)
 
-;; ============================================================
 ;; File Association
-;; ============================================================
-
 (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-
-;; ============================================================
-;; Provide
-;; ============================================================
 
 (provide 'lang-rust)
 ;;; lang-rust.el ends here

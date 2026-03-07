@@ -3,10 +3,7 @@
 
 ;;; Code:
 
-;; --------------------------------------------------
 ;; High-performance GC tuning (16GB RAM machine)
-;; --------------------------------------------------
-
 ;; Very high during startup
 (setq gc-cons-threshold (* 300 1024 1024))
 (setq gc-cons-percentage 0.6)

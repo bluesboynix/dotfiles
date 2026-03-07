@@ -5,11 +5,7 @@
 ;; No completion, no dev behavior.
 
 ;;; Code:
-
-;; ------------------------------------------------------------
 ;; Startup & Frame
-;; ------------------------------------------------------------
-
 (setq inhibit-startup-message t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -22,10 +18,7 @@
 (global-display-line-numbers-mode 1)
 (global-hl-line-mode 1)
 
-;; ------------------------------------------------------------
 ;; File Handling (UI safe)
-;; ------------------------------------------------------------
-
 (setq make-backup-files nil
       auto-revert-avoid-polling t
       auto-revert-interval 5)
@@ -33,10 +26,7 @@
 (save-place-mode 1)
 (global-auto-revert-mode 1)
 
-;; ------------------------------------------------------------
 ;; Theme
-;; ------------------------------------------------------------
-
 (add-to-list 'custom-theme-load-path
              (expand-file-name "themes" user-emacs-directory))
 
@@ -54,10 +44,7 @@
 
 (add-to-list 'default-frame-alist '(background-color . "#030303"))
 
-;; ------------------------------------------------------------
 ;; Modeline
-;; ------------------------------------------------------------
-
 (use-package doom-modeline
   :init
   (setq doom-modeline-icon t
@@ -73,10 +60,7 @@
         doom-modeline-bar-width 3)
   :hook (after-init . doom-modeline-mode))
 
-;; ------------------------------------------------------------
 ;; Window movement
-;; ------------------------------------------------------------
-
 (global-set-key (kbd "C-c <left>")  'windmove-left)
 (global-set-key (kbd "C-c <right>") 'windmove-right)
 (global-set-key (kbd "C-c <up>")    'windmove-up)

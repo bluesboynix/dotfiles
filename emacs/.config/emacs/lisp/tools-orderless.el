@@ -5,14 +5,9 @@
 ;; Optimized for Vertico + Consult + Project + Eglot.
 
 ;;; Code:
-
 (use-package orderless
   :init
-
-  ;; ----------------------------------------------------------
   ;; Completion Styles
-  ;; ----------------------------------------------------------
-
   (setq completion-styles '(orderless basic)
         completion-category-defaults nil
         completion-category-overrides

@@ -10,9 +10,7 @@
   (require 'dired-x)
   (require 'wdired))
 
-;; ----------------------------------------------------------------------
 ;; Core Dired Configuration
-;; ----------------------------------------------------------------------
 (use-package dired
   :ensure nil
   :commands (dired dired-jump)
@@ -63,9 +61,7 @@
   :config
   (put 'dired-find-alternate-file 'disabled nil))
 
-;; ----------------------------------------------------------------------
 ;; Dired-x (built-in extras)
-;; ----------------------------------------------------------------------
 (use-package dired-x
   :after dired
   :ensure nil
@@ -81,9 +77,7 @@
   ;; Add X features
   (define-key dired-mode-map (kbd "C-c o") #'dired-omit-mode))
 
-;; ----------------------------------------------------------------------
 ;; wdired (inline rename)
-;; ----------------------------------------------------------------------
 (use-package wdired
   :after dired
   :bind (:map dired-mode-map
@@ -93,9 +87,7 @@
   (wdired-allow-to-change-permissions t)
   (wdired-allow-to-redirect-links t))
 
-;; ----------------------------------------------------------------------
 ;; Async operations (dired-async is part of async package)
-;; ----------------------------------------------------------------------
 (use-package async
   :config
   ;; Enable async compilation of packages
@@ -109,9 +101,7 @@
   ;; Message about async status
   (message "Async mode enabled for dired operations"))
 
-;; ----------------------------------------------------------------------
 ;; dired-subtree (tree-style expansion)
-;; ----------------------------------------------------------------------
 (use-package dired-subtree
   :after dired
   :bind (:map dired-mode-map
@@ -122,9 +112,7 @@
   ;; Don't insert subtree when entering directory
   (setq dired-subtree-use-backgrounds t))
 
-;; ----------------------------------------------------------------------
 ;; Icons
-;; ----------------------------------------------------------------------
 (use-package all-the-icons-dired
   :if (display-graphic-p)
   :after dired
@@ -132,18 +120,14 @@
   :custom
   (all-the-icons-dired-monochrome nil))
 
-;; ----------------------------------------------------------------------
 ;; Color highlighting
-;; ----------------------------------------------------------------------
 (use-package diredfl
   :after dired
   :hook (dired-mode . diredfl-mode)
   :custom
   (diredfl-global-mode nil))
 
-;; ----------------------------------------------------------------------
 ;; Additional dired enhancements (optional)
-;; ----------------------------------------------------------------------
 (use-package dired-git-info
   :after dired
   :bind (:map dired-mode-map
@@ -174,14 +158,10 @@
   :bind (:map dired-mode-map
               ("C-c s" . dired-quick-sort)))
 
-;; ----------------------------------------------------------------------
 ;; Hide details by default
-;; ----------------------------------------------------------------------
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
 
-;; ----------------------------------------------------------------------
 ;; Custom functions
-;; ----------------------------------------------------------------------
 (defun my/dired-copy-filename ()
   "Copy filename of current file to kill ring."
   (interactive)
@@ -200,9 +180,7 @@
 (define-key dired-mode-map (kbd "C-c y") #'my/dired-copy-filename)
 (define-key dired-mode-map (kbd "C-c Y") #'my/dired-copy-file-path)
 
-;; ----------------------------------------------------------------------
 ;; File renaming with regex
-;; ----------------------------------------------------------------------
 (defun my/dired-rename-regexp (from to)
   "Rename files matching regex FROM to pattern TO."
   (interactive

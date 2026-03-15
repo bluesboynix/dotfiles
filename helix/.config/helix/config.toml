@@ -1,4 +1,4 @@
-theme = "ao"
+theme = "term16_dark"
 
 [editor]
 scrolloff = 5

@@ -40,9 +40,9 @@
 (use-package ef-themes
   :ensure t)
 
-(my/load-theme-safely 'ef-dark)
+(my/load-theme-safely 'ef-ark)
 
-(add-to-list 'default-frame-alist '(background-color . "#030303"))
+(add-to-list 'default-frame-alist '(background-color . "#010101"))
 
 ;; Modeline
 (use-package doom-modeline

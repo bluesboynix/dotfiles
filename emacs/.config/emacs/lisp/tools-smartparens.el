@@ -1,5 +1,5 @@
 ;;; tools-smartparens.el --- Structural editing (Smartparens) -*- lexical-binding: t; -*-
-;;; Comentary:
+;;; Commentary:
 
 ;;; Code
 

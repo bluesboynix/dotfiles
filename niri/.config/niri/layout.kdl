@@ -1,7 +1,8 @@
 layout {
-    gaps 2
+    gaps 4
     center-focused-column "never"
-
+    background-color "#050505"
+    
     preset-column-widths {
         proportion 0.33333
         proportion 0.5
@@ -14,15 +15,15 @@ layout {
 
     focus-ring {
         on
-        width 2
-        active-color "#ffffff"
+        width 3
+        active-color "#aaaaaa"
         inactive-color "#000000"
     }
 
     border {
         off
         width 2
-        active-color "#ffffff"
+        active-color "#101010"
         inactive-color "#000000"
 
         urgent-color "#ff0000"

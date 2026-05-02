@@ -41,6 +41,8 @@ export EDITOR=emacs
 export XCURSOR_THEME=Bibata-Modern-Ice
 export XCURSOR_SIZE=24
 
+export QML_XHR_ALLOW_FILE_READ=1
+
 # ─── SMART TERM DETECTION ───────────────────────────────────────────────────────
 
 set_term_if_supported() {

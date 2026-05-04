@@ -9,15 +9,7 @@ return {
     }
 
     require'nvim-treesitter'.install {
-      'lua',
-      'c',
-      'cpp',
-      'rust',
-      'javascript',
-      'python',
-      'scheme',
-      'racket',
-      'zsh'
+      'lua'
     }
   end,
 }

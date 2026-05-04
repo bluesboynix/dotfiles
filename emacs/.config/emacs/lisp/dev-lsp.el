@@ -33,6 +33,11 @@
              (not (derived-mode-p 'scheme-mode)))
     (eglot-ensure)))
 
+;; for zig
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(zig-mode . ("zls"))))
+
 ;; If prefer project-only LSP, comment the main hook above
 ;; and use this instead:
 ;; (add-hook 'prog-mode-hook #'dev-lsp-maybe-start)

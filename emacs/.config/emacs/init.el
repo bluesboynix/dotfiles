@@ -38,6 +38,7 @@
 (require 'dev-diagnostics)
 (require 'dev-format)
 (require 'dev-project)
+(require 'dev-completion)
 
 ;; Tools Layer
 (require 'tools-company)
@@ -55,6 +56,7 @@
 (require 'lang-go)
 (require 'lang-scheme)
 (require 'lang-rust)
+(require 'lang-zig)
 
 ;; Load custom-set-variables and custom-set-faces
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))

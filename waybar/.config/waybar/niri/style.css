@@ -9,7 +9,7 @@
 
 window#waybar {
   background-color: rgba(0, 0, 0, .7);
-  color: #00F000;
+  color: #2fffff;
   transition-property: background-color;
   transition-duration: .5s;
 }
@@ -37,7 +37,7 @@ button {
 
 #workspaces button {
   padding: 5px 5px;
-  color: #707070;
+  color: #2fffff;
 }
 
 #workspaces button.empty {
@@ -50,7 +50,8 @@ button {
 
 #workspaces button.active {
   background-color: rgba(0, 0, 0, 0.0);
-  color: lightgrey;
+  color: #aaffaa;
+  font-weight: bold;
 }
 
 #workspaces button.urgent {
@@ -58,7 +59,7 @@ button {
 }
 
 #window {
-  color: lightgrey;
+  color: #2fffff;
 }
 
 #network #pulseaudio #backlight #battery #custom-notification #idle_inhibitor #clock
@@ -76,78 +77,78 @@ button {
 #network {
   padding-left: 10px;
   padding-right: 13px;
-  color: lightgrey;
+  color: #2fffff;
 }
 
 #pulseaudio {
   padding-left: 5px;
   padding-right: 5px;
-  color: lightgrey;
+  color: #2fffff;
 }
 
 #backlight {
   padding-left: 10px;
   padding-right: 10px;
-  color: lightgrey;
+  color: #2fffff;
 }
 
 #battery {
   padding-left: 5px;
   padding-right: 5px;
-  color: lightgrey;
+  color: #2fffff;
 }
 
 #custom-notification {
   padding-left: 8px;
   padding-right: 8px;
-  color: lightgrey;
+  color: #b2ffff;
 }
 
 #idle_inhibitor {
   padding-left: 5px;
   padding-right: 5px;
-  color: lightgrey;
+  color: #2fffff;
 }
 
 #clock {
   font-weight: bold;
   padding-left: 10px;
   padding-right: 10px;
-  color: lightgrey;
+  color: #2fffff;
 }
 
 #custom-systeminfo {
   padding-left: 5px;
   padding-right: 5px;
-  color: lightgrey;
+  color: #2fffff
 }
 
 #custom-filemanager {
   padding-left: 5px;
   padding-right: 5px;
-  color: lightgrey;
+  color: #2fffff;
 }
 
 #custom-player {
   padding-left: 5px;
   padding-right: 5px;
-  color: lightgrey;
+  color: #2fffff;
 }
 
 #custom-editor {
   padding-left: 5px;
   padding-right: 5px;
-  color: lightgrey;
+  color: #2fffff;
 }
 
 #custom-browser {
   padding-left: 5px;
   padding-right: 5px;
-  color: lightgrey;
+  color: #2fffff;
 }
 
 #custom-terminal {
   padding-left: 5px;
   padding-right: 5px;
-  color: lightgrey;
+  color: #2fffff;
 }

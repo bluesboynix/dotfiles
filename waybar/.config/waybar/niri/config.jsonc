@@ -164,7 +164,7 @@
     },
     "custom/filemanager": {
         "format": " ",
-        "on-click": "cosmic-files",
+        "on-click": "thunar",
         "tooltip-format": "File Manager"       
     }
 }

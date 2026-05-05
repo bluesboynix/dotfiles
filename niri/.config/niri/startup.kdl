@@ -1,3 +1,5 @@
+spawn-at-startup "kanshi"
+
 spawn-sh-at-startup "~/Scripts/start-waybar-niri.sh"
 
 spawn-sh-at-startup "~/Scripts/start-swaybg-niri.sh"

@@ -1,13 +1,17 @@
-output "DP-1" {
-    mode "1920x1080@59.997"
-    scale 1
-    transform "normal"
-    position x=1280 y=0
-}
+// output "DP-1" {
+//     mode "1920x1080@59.997"
+//     scale 1
+//     transform "normal"
+//     position x=1280 y=0
+// }
 
-output "eDP-1" {
-    mode "1920x1080@59.997"
-    scale 1
-    transform "normal"
-    position x=3200 y=0
-}
+// output "eDP-1" {
+//     mode "1920x1080@59.997"
+//     scale 1
+//     transform "normal"
+//     position x=3200 y=0
+// }
+
+// when using kanshi
+output "eDP-1" {}
+output "DP-1" {}

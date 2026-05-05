@@ -35,7 +35,7 @@
       (load-theme theme t)
     (error
      (message "Failed to load theme %s: %s" theme err)
-     (load-theme 'ef-dark t))))
+     (load-theme 'ef-night t))))
 
 (use-package ef-themes
   :ensure t)

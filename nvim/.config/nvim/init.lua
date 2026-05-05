@@ -11,7 +11,7 @@ vim.g.maplocalleader = " "
 -- ================================
 vim.opt.termguicolors = true
 
-local ok, _ = pcall(vim.cmd.colorscheme, "koehler")
+local ok, _ = pcall(vim.cmd.colorscheme, "elflord")
 if not ok then
   vim.cmd.colorscheme("default")
 end

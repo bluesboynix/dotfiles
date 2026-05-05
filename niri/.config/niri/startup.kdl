@@ -1,5 +1,9 @@
 spawn-at-startup "kanshi"
 
-spawn-sh-at-startup "~/Scripts/start-waybar-niri.sh"
+spawn-sh-at-startup "~/.config/conky/start_modules.sh"
+
+spawn-sh-at-startup "waybar -c ~/.config/waybar/launcher/config.jsonc -s ~/.config/waybar/launcher/style.css"
+
+spawn-sh-at-startup "waybar -c ~/.config/waybar/top_bar_niri/config.jsonc -s ~/.config/waybar/top_bar_niri/style.css"
 
 spawn-sh-at-startup "~/Scripts/start-swaybg-niri.sh"

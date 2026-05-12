@@ -8,62 +8,6 @@
 (setq gc-cons-threshold (* 300 1024 1024))
 (setq gc-cons-percentage 0.6)
 
-;; Setup load-path for custom lisp modules
-;;(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-(add-to-list 'load-path "~/.config/emacs/lisp/")
-;; (add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
-;; (setenv "PATH" (concat (expand-file-name "~/.cargo/bin") ":" (getenv "PATH")))
-
-;; (add-to-list 'exec-path (expand-file-name "~/.nimble/bin"))
-;; (setenv "PATH"
-;;        (concat (expand-file-name "~/.nimble/bin") ":"
-;;                (getenv "PATH")))
-
-;; Ensure Go binary is visible to Emacs
-(setenv "PATH" (concat "/usr/local/go/bin:" (getenv "PATH")))
-(add-to-list 'exec-path "/usr/local/go/bin")
-
-(add-to-list 'exec-path (expand-file-name "~/go/bin"))
-(setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name "~/go/bin")))
-
-(require 'core-packages)
-
-;; UI Layer
-(require 'ui-base)
-(require 'ui-rainbow-delimiters)
-
-;; Dev Layer
-(require 'dev-core)
-(require 'dev-lsp)
-(require 'dev-diagnostics)
-(require 'dev-format)
-(require 'dev-project)
-(require 'dev-completion)
-
-;; Tools Layer
-(require 'tools-company)
-(require 'tools-orderless)
-(require 'tools-vertico-stack)
-(require 'tools-smartparens)
-(require 'tools-vterm)
-(require 'tools-git)
-(require 'tools-treemacs)
-(require 'tools-dired)
-(require 'tools-snippets)
-
-;; Languages
-(require 'lang-cpp)
-(require 'lang-go)
-(require 'lang-scheme)
-(require 'lang-rust)
-(require 'lang-zig)
-
-;; Load custom-set-variables and custom-set-faces
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file 'noerror 'nomessage)
-(setq bracketed-paste-enable nil)
-
-;; Final message
 (message "init.el loaded all modules successfully.")
 
 ;;; init.el ends here

@@ -12,7 +12,7 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 (require 'core-package)
-
+(require 'core-config)
 
 
 

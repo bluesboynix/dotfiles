@@ -5,7 +5,7 @@
     (progn
       (set-face-attribute 'default nil
                           :family "Fira Code"
-                          :height 140
+                          :height 120
                           :weight 'normal)
       ;; Enable ligatures if fira-code-mode is available
       (when (require 'fira-code-mode nil t)

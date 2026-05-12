@@ -26,13 +26,5 @@
 ;; all-the-icons
 (ensure-package 'all-the-icons)
 
-
-;; treemacs
-(ensure-package 'treemacs)
-(ensure-package 'treemacs-icons-dired)
-(ensure-package 'treemacs-magit)
-
-
-
 (provide 'core-package)
 ;;; core-package.el ends here

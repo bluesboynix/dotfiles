@@ -15,7 +15,7 @@
 
 ;; Indentation: spaces, no tabs
 (setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
+(setq-default tab-width 2)
 
 ;; Yes/no prompts -> y/n
 (setq use-short-answers t)

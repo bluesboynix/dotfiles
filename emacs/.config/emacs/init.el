@@ -8,6 +8,14 @@
 (setq gc-cons-threshold (* 300 1024 1024))
 (setq gc-cons-percentage 0.6)
 
+
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(require 'package)
+
+
+
+
+
 (message "init.el loaded all modules successfully.")
 
 ;;; init.el ends here

@@ -29,7 +29,6 @@
 
 ;; treemacs
 (ensure-package 'treemacs)
-(ensure-package 'treemacs-projectile)
 (ensure-package 'treemacs-icons-dired)
 (ensure-package 'treemacs-magit)
 

@@ -36,5 +36,17 @@
 ;; Show parentheses matching
 (show-paren-mode 1)
 
+;; Isearch: case-insensitive by default, but sensitive when uppercase used
+(setq search-upper-case t)
+(setq isearch-allow-scroll t)   ; allow scrolling during search
+
+;; File encoding (avoid Unicode issues)
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+
+
+
 (provide 'core-config)
 ;;; core-config.el ends here

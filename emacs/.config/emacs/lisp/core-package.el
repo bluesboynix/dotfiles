@@ -1,7 +1,5 @@
 ;;; core-package.el --- Custom package setup -*- lexical-binding: t; -*-
 
-;; Do NOT (require 'package) here – it's already built-in
-
 (setq package-archives '(("gnu"   . "https://elpa.gnu.org/packages/")
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")
                          ("melpa" . "https://melpa.org/packages/")))
@@ -18,13 +16,23 @@
     (package-refresh-contents)
     (package-install pkg)))
 
-;; Install required packages
+;; doome theme and modelines
 (ensure-package 'doom-themes)
 (ensure-package 'doom-modeline)
+
+;; fira-code font
 (ensure-package 'fira-code-mode)
 
-;; Optional: all-the-icons for richer modeline icons
+;; all-the-icons
 (ensure-package 'all-the-icons)
+
+
+;; treemacs
+(ensure-package 'treemacs)
+(ensure-package 'treemacs-projectile)
+(ensure-package 'treemacs-icons-dired)
+(ensure-package 'treemacs-magit)
+
 
 
 (provide 'core-package)

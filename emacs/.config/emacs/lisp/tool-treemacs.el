@@ -19,13 +19,6 @@
 (global-set-key (kbd "C-x t t") 'treemacs)          ; toggle treemacs
 (global-set-key (kbd "C-x t C-t") 'treemacs-find-file) ; jump to current file in treemacs
 
-;; ---------- Integration with Projectile ----------
-(use-package treemacs-projectile
-  :ensure t
-  :after projectile
-  :config
-  (treemacs-projectile-default-setup))
-
 ;; ---------- Icons in Dired (to match treemacs) ----------
 (use-package treemacs-icons-dired
   :ensure t

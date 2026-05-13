@@ -22,6 +22,10 @@
 ;; fira-code font
 (ensure-package 'fira-code-mode)
 
+;; nerd-icons
+(ensure-package 'treemacs-nerd-icons)
+(ensure-package 'nerd-icons-dired)
+
 ;; ONLY treemacs – no icon packages
 (ensure-package 'treemacs)
 

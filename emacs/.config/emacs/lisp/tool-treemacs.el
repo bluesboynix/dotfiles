@@ -1,7 +1,7 @@
-;;; tool-treemacs.el --- Treemacs with colorized directories & file types -*- lexical-binding: t; -*-
+;;; tool-treemacs.el --- Treemacs configuration with nerd-icons -*- lexical-binding: t; -*-
 
 (use-package treemacs
-  :ensure nil
+  :ensure nil                ; already installed via core-package
   :defer t
   :bind (([f8] . treemacs)
          ("C-x t t" . treemacs)
@@ -9,68 +9,39 @@
          ("C-x t f" . treemacs-find-file))
   :config
   ;; -----------------------------------------------------------------
-  ;; 1. Disable all icon-related features
+  ;; Use nerd-icons – much more reliable than all-the-icons
   ;; -----------------------------------------------------------------
-  (setq treemacs-use-all-the-icons nil    ; no icons
-        treemacs-use-nerd-icons nil       ; safety
-        treemacs-no-png-images nil        ; allow PNG fallback (not used anyway)
-        treemacs-icons-show-others nil
-        treemacs-icons-show-children nil)
+  (require 'treemacs-nerd-icons)
+  (treemacs-load-theme "Nerd Icons")
 
-  ;; -----------------------------------------------------------------
-  ;; 2. Define custom faces for directories and file types
-  ;; -----------------------------------------------------------------
-  (defface my/treemacs-dir-face
-    '((t (:inherit font-lock-keyword-face :weight bold :foreground "DodgerBlue")))
-    "Face for directories in treemacs."
-    :group 'treemacs-faces)
+  ;; Optional: if you also want the dired integration
+  (when (require 'treemacs-icons-dired nil t)
+    (treemacs-icons-dired-mode))
 
-  (defface my/treemacs-elisp-face
-    '((t (:inherit font-lock-function-name-face :foreground "DarkOrange")))
-    "Face for Emacs Lisp files."
-    :group 'treemacs-faces)
+  ;; Auto-refresh when files change on disk
+  (treemacs-filewatch-mode t)
 
-  (defface my/treemacs-python-face
-    '((t (:inherit font-lock-builtin-face :foreground "ForestGreen")))
-    "Face for Python files."
-    :group 'treemacs-faces)
+  ;; Auto-follow current file in tree
+  (treemacs-follow-mode t)
 
-  (defface my/treemacs-markdown-face
-    '((t (:inherit font-lock-doc-face :foreground "MediumPurple")))
-    "Face for Markdown files."
-    :group 'treemacs-faces)
+  ;; Show git status (simple is stable)
+  (treemacs-git-mode 'simple)
 
-  ;; Add more as you like
+  ;; Session persistence
+  (setq treemacs-persist-file
+        (expand-file-name ".cache/treemacs-persist" user-emacs-directory))
 
-  ;; -----------------------------------------------------------------
-  ;; 3. Apply colorization via treemacs-custom-colorization
-  ;; -----------------------------------------------------------------
-  (setq treemacs-custom-colorization
-        '(("\\/\\'"                     . my/treemacs-dir-face)      ; directories
-          ("\\.el\\'"                   . my/treemacs-elisp-face)
-          ("\\.py\\'"                   . my/treemacs-python-face)
-          ("\\.md\\'"                   . my/treemacs-markdown-face)
-          ("\\.org\\'"                  . my/treemacs-markdown-face) ; reuse
-          ;; Add more extensions: ("\\.js\\'"   . my/treemacs-js-face)
-          ))
-
-  ;; -----------------------------------------------------------------
-  ;; 4. Other reliable settings (no icons, just behavior)
-  ;; -----------------------------------------------------------------
-  (treemacs-filewatch-mode t)          ; auto-refresh on disk changes
-  (treemacs-follow-mode t)             ; auto-highlight current file
-  (treemacs-git-mode 'simple)          ; show git status with colors (no icons)
-  (setq treemacs-persist-file (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-        treemacs-indentation 2
+  ;; Visual tweaks
+  (setq treemacs-indentation 2
+        treemacs-no-png-images t          ; keep this – we use fonts
         treemacs-show-hidden-files nil
         treemacs-project-follow-mode t
         treemacs-is-never-other-window nil))
 
-;; Optional: dired integration (colorizes but no icons)
+;; Optional: dired integration (safe, no icon problems)
 (with-eval-after-load 'treemacs
   (when (require 'treemacs-icons-dired nil t)
-    ;; Disable icons in dired if the package loads it
-    (setq treemacs-icons-dired-mode nil)))
+    (treemacs-icons-dired-mode)))
 
 (provide 'tool-treemacs)
 ;;; tool-treemacs.el ends here

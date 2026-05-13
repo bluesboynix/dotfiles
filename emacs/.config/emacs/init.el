@@ -18,6 +18,8 @@
 ;; tools
 (require 'tool-treemacs)
 
+;; language
+(require 'lang-c-cpp)
 
 (message "init.el loaded all modules successfully.")
 

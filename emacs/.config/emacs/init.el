@@ -21,6 +21,7 @@
 ;; language
 (require 'lang-c-cpp)
 (require 'lang-go)
+(require 'lang-python)
 
 (message "init.el loaded all modules successfully.")
 

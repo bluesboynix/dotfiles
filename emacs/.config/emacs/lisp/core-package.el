@@ -10,7 +10,6 @@
 (unless (package-installed-p 'use-package)
   (message "use-package not found. Run M-x package-refresh-contents, then M-x package-install use-package"))
 
-;; Helper: install a package if missing
 (defun ensure-package (pkg)
   (unless (package-installed-p pkg)
     (package-refresh-contents)
@@ -23,10 +22,7 @@
 ;; fira-code font
 (ensure-package 'fira-code-mode)
 
-;; all-the-icons
-(ensure-package 'all-the-icons)
-
-;; treemacs
+;; ONLY treemacs – no icon packages
 (ensure-package 'treemacs)
 
 (provide 'core-package)

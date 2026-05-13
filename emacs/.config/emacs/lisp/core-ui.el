@@ -4,7 +4,7 @@
 (if (display-graphic-p)
     (progn
       (set-face-attribute 'default nil
-                          :family "Fira Code"
+                          :font "FiraCode Nerd Font-12"
                           :height 120
                           :weight 'normal)
       ;; Enable ligatures if fira-code-mode is available

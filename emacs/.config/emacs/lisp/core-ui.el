@@ -13,10 +13,7 @@
       (set-face-attribute 'default nil
                           :font "FiraCode Nerd Font-12"
                           :height 120
-                          :weight 'normal)
-      ;; Enable ligatures if fira-code-mode is available
-      (when (require 'fira-code-mode nil t)
-        (global-fira-code-mode 1)))
+                          :weight 'normal))
   ;; Terminal fallback
   (set-face-attribute 'default nil
                       :family "Monospace"

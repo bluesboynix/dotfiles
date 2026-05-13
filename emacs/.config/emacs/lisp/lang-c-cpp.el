@@ -12,8 +12,9 @@
 
 (defun my-c-cpp-common-setup ()
   "Common setup for C and C++ buffers."
-  ;; Enable LSP (Eglot) – but only if clangd is available
-  (unless (eglot--managed-p)
+  ;; Enable LSP (Eglot) – if eglot is available.
+  ;; eglot-ensure already checks if the buffer is managed.
+  (when (fboundp 'eglot-ensure)
     (eglot-ensure))
   ;; Optional: better indentation
   (setq-local c-basic-offset 4)
@@ -77,8 +78,10 @@
   "Local keymap for C/C++ modes."
   (local-set-key (kbd "C-c C-s") #'my-c-cpp-switch-header-source)
   (local-set-key (kbd "C-c C-c") #'my-c-cpp-compile)
-  (local-set-key (kbd "C-c C-r") #'eglot-rename)
-  (local-set-key (kbd "C-c C-f") #'eglot-format)
+  (when (fboundp 'eglot-rename)
+    (local-set-key (kbd "C-c C-r") #'eglot-rename))
+  (when (fboundp 'eglot-format)
+    (local-set-key (kbd "C-c C-f") #'eglot-format))
   (local-set-key (kbd "M-.")     #'xref-find-definitions)
   (local-set-key (kbd "M-,")     #'xref-pop-marker-stack))
 

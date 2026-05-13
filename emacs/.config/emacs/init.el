@@ -15,6 +15,9 @@
 (require 'core-config)
 (require 'core-ui)
 
+;; tools
+(require 'tool-treemacs)
+
 (message "init.el loaded all modules successfully.")
 
 (custom-set-variables

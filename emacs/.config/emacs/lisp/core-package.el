@@ -15,19 +15,5 @@
     (package-refresh-contents)
     (package-install pkg)))
 
-;; doome theme and modelines
-(ensure-package 'doom-themes)
-(ensure-package 'doom-modeline)
-
-;; fira-code font
-(ensure-package 'fira-code-mode)
-
-;; nerd-icons
-(ensure-package 'treemacs-nerd-icons)
-(ensure-package 'nerd-icons-dired)
-
-;; ONLY treemacs – no icon packages
-(ensure-package 'treemacs)
-
 (provide 'core-package)
 ;;; core-package.el ends here

@@ -1,5 +1,12 @@
 ;;; tool-treemacs.el --- Treemacs configuration with nerd-icons -*- lexical-binding: t; -*-
 
+;; nerd-icons
+(ensure-package 'treemacs-nerd-icons)
+(ensure-package 'nerd-icons-dired)
+
+;; ONLY treemacs – no icon packages
+(ensure-package 'treemacs)
+
 (use-package treemacs
   :ensure nil                ; already installed via core-package
   :defer t

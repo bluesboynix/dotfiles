@@ -1,5 +1,12 @@
 ;;; core-ui.el --- Theme, font, modeline, and UI polish (GUI & terminal) -*- lexical-binding: t; -*-
 
+;; doome theme and modelines
+(ensure-package 'doom-themes)
+(ensure-package 'doom-modeline)
+
+;; fira-code font
+(ensure-package 'fira-code-mode)
+
 ;; ---------- Fonts ----------
 (if (display-graphic-p)
     (progn

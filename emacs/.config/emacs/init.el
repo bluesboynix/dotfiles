@@ -18,6 +18,8 @@
 ;; tools
 (require 'tool-completions)
 (require 'tool-treemacs)
+(require 'tool-ide)
+
 
 (message "init.el loaded all modules successfully.")
 

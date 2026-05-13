@@ -11,7 +11,6 @@
 (ensure-package 'embark-consult)
 (ensure-package 'corfu)
 (ensure-package 'cape)
-(ensure-package 'corfu-marginalia)
 
 ;; ===================================================================
 ;; 1. MINIBUFFER COMPLETION (Vertico stack)
@@ -104,13 +103,6 @@
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-keyword))
-
-;; Corfu-Marginalia: show annotations inside popup
-(use-package corfu-marginalia
-  :ensure nil
-  :after marginalia
-  :config
-  (corfu-marginalia-mode))
 
 ;; Ensure Orderless style is also used for in-buffer completion
 ;; (already set globally by orderless configuration)

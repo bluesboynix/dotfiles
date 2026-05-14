@@ -22,6 +22,7 @@
 (require 'lang-c-cpp)
 (require 'lang-go)
 (require 'lang-python)
+(require 'lang-rust)
 
 (message "init.el loaded all modules successfully.")
 

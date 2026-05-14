@@ -1,30 +1,23 @@
-;;; lang-python.el --- Minimal Python setup (python-ts-mode + eglot) -*- lexical-binding: t; -*-
+;;; lang-python.el --- Python setup with correct LSP server -*- lexical-binding: t; -*-
 
-;; Step-by-step: just enable python-ts-mode and Eglot.
-;; Requires Emacs 29+ with tree-sitter support.
-;; Install LSP server: pip install basedpyright (or pyright)
-
-;; -------------------------------------------------------------------
-;; 1. Use python-ts-mode for .py files
-;; -------------------------------------------------------------------
 (add-to-list 'auto-mode-alist '("\\.py\\'" . python-ts-mode))
 
-;; -------------------------------------------------------------------
-;; 2. Basic hook: just start eglot
-;; -------------------------------------------------------------------
-(add-hook 'python-ts-mode-hook #'eglot-ensure)
+(defun my-eglot-safe-ensure ()
+  "Start Eglot if a Python LSP server is available."
+  (when (buffer-file-name)
+    (eglot-ensure)))
 
-;; -------------------------------------------------------------------
-;; 3. Eglot configuration: point to python LSP server
-;; -------------------------------------------------------------------
+(add-hook 'python-ts-mode-hook #'my-eglot-safe-ensure)
+
 (with-eval-after-load 'eglot
-  ;; Prefer basedpyright, fallback to pyright
-  (let ((server (cond
-                 ((executable-find "basedpyright") '("basedpyright" "--stdio"))
-                 ((executable-find "pyright") '("pyright" "--stdio"))
-                 (t (warn "No Python LSP server found. Install: pip install basedpyright")))))
-    (when server
-      (add-to-list 'eglot-server-programs `(python-ts-mode . ,server)))))
+  (add-to-list 'eglot-server-programs
+               `(python-ts-mode .
+                 ,(lambda (_interactive _project)
+                    (cond
+                     ((executable-find "basedpyright-langserver")
+                      '("basedpyright-langserver" "--stdio"))
+                     ((executable-find "pyright-langserver")
+                      '("pyright-langserver" "--stdio"))
+                     (t (user-error "No Python LSP server found. Install: pip install basedpyright or pyright")))))))
 
 (provide 'lang-python)
-;;; lang-python.el ends here

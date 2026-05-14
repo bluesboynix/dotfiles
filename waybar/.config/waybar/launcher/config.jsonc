@@ -141,7 +141,7 @@
     },
     "custom/player": {
         "format": " ",
-        "on-click": "smplayer",
+        "on-click": "vlc",
         "tooltip-format": "player"
     },
     "custom/editor": {

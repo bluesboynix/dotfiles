@@ -17,6 +17,7 @@
 
 ;; tools
 (require 'tool-treemacs)
+(require 'tool-completions)
 
 ;; language
 (require 'lang-c-cpp)

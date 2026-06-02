@@ -1,12 +1,15 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
-  event = { "BufReadPost", "BufNewFile" },
+  event = "VeryLazy",               -- load after Neovim startup
   config = function()
     require("nvim-treesitter.configs").setup({
       highlight = { enable = true },
       indent = { enable = true },
-      ensure_installed = { "lua", "vim", "vimdoc", "markdown", "javascript", "typescript" }, -- add your languages
+      ensure_installed = {
+        "lua", "vim", "vimdoc", "markdown",
+        "javascript", "typescript",
+      },
     })
   end,
 }

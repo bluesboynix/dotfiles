@@ -35,6 +35,9 @@ export PATH="/home/bluesboy/.nimble/bin:$PATH"
 export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
 export PATH="$PATH:$HOME/go/bin"
 
+# codon path
+export PATH="$PATH:$HOME/.codon/bin"
+
 # ─── other varialbes ─────────────────────────────────────────────────────
 
 export EDITOR=emacs

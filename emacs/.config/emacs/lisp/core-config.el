@@ -17,6 +17,9 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 
+;; electric pair mode
+(electric-pair-mode 1)
+
 ;; Yes/no prompts -> y/n
 (setq use-short-answers t)
 

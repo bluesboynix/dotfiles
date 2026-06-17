@@ -18,6 +18,7 @@
 ;; tools
 (require 'tool-treemacs)
 (require 'tool-completions)
+(require 'tool-rainbow-paren)
 
 ;; language
 (require 'lang-c-cpp)

@@ -1,6 +1,6 @@
 spawn-at-startup "kanshi"
 
-spawn-sh-at-startup "~/.config/conky/start_modules.sh"
+#spawn-sh-at-startup "~/.config/conky/start_modules.sh"
 
 spawn-sh-at-startup "waybar -c ~/.config/waybar/launcher/config.jsonc -s ~/.config/waybar/launcher/style.css"
 

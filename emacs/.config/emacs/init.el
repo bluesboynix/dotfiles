@@ -19,6 +19,7 @@
 (require 'tool-treemacs)
 (require 'tool-completions)
 (require 'tool-rainbow-paren)
+(require 'tool-vterm)
 
 ;; language
 (require 'lang-c-cpp)

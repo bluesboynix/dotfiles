@@ -6,4 +6,4 @@ spawn-sh-at-startup "waybar -c ~/.config/waybar/launcher/config.jsonc -s ~/.conf
 
 spawn-sh-at-startup "waybar -c ~/.config/waybar/top_bar_niri/config.jsonc -s ~/.config/waybar/top_bar_niri/style.css"
 
-spawn-sh-at-startup "~/Scripts/start-swaybg-niri.sh"
+//spawn-sh-at-startup "~/Scripts/start-swaybg-niri.sh"

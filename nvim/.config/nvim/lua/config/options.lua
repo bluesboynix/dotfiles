@@ -1,6 +1,6 @@
 -- Theme & Transparency
 vim.opt.termguicolors = true
-local ok, _ = pcall(vim.cmd.colorscheme, "elflord")
+local ok, _ = pcall(vim.cmd.colorscheme, "wildcharm")
 if not ok then
   vim.cmd.colorscheme("default")
 end
@@ -73,3 +73,16 @@ vim.opt.guicursor =
 -- Splits
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+
+-- treesitter
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "lua", "c", "vim", "rust" }, -- Add any other installed languages here
+  callback = function(args)
+    -- Enable native Tree-sitter syntax highlighting
+    vim.treesitter.start(args.buf)
+    
+    -- Enable native Tree-sitter code folding
+    vim.wo.foldmethod = "expr"
+    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+  end,
+})

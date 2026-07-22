@@ -1,54 +1,37 @@
-;;; tool-treemacs.el --- Treemacs configuration with nerd-icons -*- lexical-binding: t; -*-
+;;; tool-treemacs.el --- Treemacs configuration -*- lexical-binding: t; -*-
 
-;; nerd-icons
-(ensure-package 'treemacs-nerd-icons)
-(ensure-package 'nerd-icons-dired)
-
-;; ONLY treemacs – no icon packages
+;; Dependencies
 (ensure-package 'treemacs)
+(ensure-package 'treemacs-nerd-icons)
+(ensure-package 'treemacs-icons-dired)
+(ensure-package 'nerd-icons)
 
 (use-package treemacs
-  :ensure nil                ; already installed via core-package
   :defer t
-  :bind (([f8] . treemacs)
-         ("C-x t t" . treemacs)
-         ("C-x t b" . treemacs-bookmark)
-         ("C-x t f" . treemacs-find-file))
+  :bind ([f8] . treemacs)
+  :custom
+  (treemacs-persist-file
+   (expand-file-name ".cache/treemacs-persist"
+                     user-emacs-directory))
+  (treemacs-indentation 2)
+  (treemacs-no-png-images t)
+  (treemacs-show-hidden-files nil)
+  (treemacs-project-follow-mode t)
+  (treemacs-is-never-other-window nil)
   :config
-  ;; -----------------------------------------------------------------
-  ;; Use nerd-icons – much more reliable than all-the-icons
-  ;; -----------------------------------------------------------------
-  (require 'treemacs-nerd-icons)
-  (treemacs-load-theme "Nerd Icons")
+  (treemacs-filewatch-mode 1)
+  (treemacs-follow-mode 1)
+  (treemacs-git-mode 'simple))
 
-  ;; Optional: if you also want the dired integration
-  (when (require 'treemacs-icons-dired nil t)
-    (treemacs-icons-dired-mode))
+(use-package treemacs-nerd-icons
+  :after treemacs
+  :config
+  (treemacs-load-theme "Nerd Icons"))
 
-  ;; Auto-refresh when files change on disk
-  (treemacs-filewatch-mode t)
-
-  ;; Auto-follow current file in tree
-  (treemacs-follow-mode t)
-
-  ;; Show git status (simple is stable)
-  (treemacs-git-mode 'simple)
-
-  ;; Session persistence
-  (setq treemacs-persist-file
-        (expand-file-name ".cache/treemacs-persist" user-emacs-directory))
-
-  ;; Visual tweaks
-  (setq treemacs-indentation 2
-        treemacs-no-png-images t          ; keep this – we use fonts
-        treemacs-show-hidden-files nil
-        treemacs-project-follow-mode t
-        treemacs-is-never-other-window nil))
-
-;; Optional: dired integration (safe, no icon problems)
-(with-eval-after-load 'treemacs
-  (when (require 'treemacs-icons-dired nil t)
-    (treemacs-icons-dired-mode)))
+(use-package treemacs-icons-dired
+  :after (treemacs dired)
+  :config
+  (treemacs-icons-dired-mode 1))
 
 (provide 'tool-treemacs)
 ;;; tool-treemacs.el ends here

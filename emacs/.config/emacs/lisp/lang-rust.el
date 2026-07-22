@@ -1,5 +1,14 @@
 ;;; lang-rust.el --- Simple Rust setup for Emacs 30 -*- lexical-binding: t; -*-
 
+
+;; Hook
+(add-hook 'eglot-managed-mode-hook
+          (lambda ()
+            (setq-local completion-at-point-functions
+                        (cons #'eglot-completion-at-point
+                              (remove #'eglot-completion-at-point
+                                      completion-at-point-functions)))))
+
 ;; --------------------------------------------------
 ;; Rust mode (Tree-sitter)
 ;; --------------------------------------------------

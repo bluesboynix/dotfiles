@@ -5,7 +5,8 @@
 ;; - `tool-vterm-toggle-vertical':   bottom window, height 0.25 (quarter screen)
 ;; Bindings: C-c t h and C-c t v.
 
-(require 'vterm)
+(use-package vterm
+  :ensure t)
 
 (defun tool-vterm--toggle (buffer-name side size)
   "Toggle display of BUFFER-NAME in a SIDE window of SIZE fraction.

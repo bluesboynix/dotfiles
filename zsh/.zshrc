@@ -112,6 +112,7 @@ alias man="man -P 'bat -l man -p'"
 alias csi="chicken-csi"
 alias csc="chicken-csc"
 alias cp="cp -rf"
+alias le='"emacs -nw --init-directory="$HOME/.config/lite-emacs"'
 
 # Smart ls alias
 if command -v lsd >/dev/null 2>&1; then

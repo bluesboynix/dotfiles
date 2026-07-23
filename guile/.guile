@@ -1,0 +1,5 @@
+;; ~/.guile
+
+(use-modules (system repl common))
+(repl-default-option-set!
+ 'prompt "> ")

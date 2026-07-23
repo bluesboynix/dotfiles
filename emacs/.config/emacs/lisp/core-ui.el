@@ -23,6 +23,10 @@
 (require 'doom-themes)
 ;; Choose your favourite: doom-vibrant, doom-one, doom-peacock, doom-city-lights, etc.
 (load-theme 'doom-vibrant t)
+(custom-set-faces
+ '(default ((t (:background "#020202"))))
+ '(fringe ((t (:background "#020202"))))
+ '(hl-line ((t (:background "#111111")))))
 
 ;; (Optional) Doom theme extras: flash outline, bold/italic tweaks
 (doom-themes-visual-bell-config)      ; flash when you hit a wrong key
@@ -48,8 +52,9 @@
 (when (display-graphic-p)
   (fringe-mode 10))
 
-;; Disable blinking cursor
-(blink-cursor-mode -1)
+(blink-cursor-mode 1)
+(setq blink-cursor-interval 0.6)
+(setq blink-cursor-blinks 5)
 
 ;; Better scrolling
 (when (display-graphic-p)

@@ -14,6 +14,11 @@
 
 ;; Built-in theme
 (load-theme 'modus-vivendi t)
+(custom-set-faces
+ '(default ((t (:background "#020202"))))
+ '(fringe ((t (:background "#020202"))))
+ '(hl-line ((t (:background "#111111")))))
+
 
 ;; ---------- Cursor ----------
 (if (display-graphic-p)

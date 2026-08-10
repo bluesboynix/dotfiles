@@ -50,6 +50,12 @@
 (set-keyboard-coding-system 'utf-8)
 
 
+;; Set the default column position (e.g., column 80)
+(setq-default fill-column 80)
+
+;; Enable the vertical line indicator globally
+;;(global-display-fill-column-indicator-mode 1)
+
 
 (provide 'core-config)
 ;;; core-config.el ends here

@@ -114,6 +114,7 @@ alias csc="chicken-csc"
 alias cp="cp -rf"
 alias leg="emacs --init-directory=$HOME/.config/lite-emacs"
 alias le="emacs -nw --init-directory=$HOME/.config/lite-emacs"
+alias guile="rlwrap guile --no-auto-compile"
 
 # Smart ls alias
 if command -v lsd >/dev/null 2>&1; then

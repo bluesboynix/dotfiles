@@ -149,7 +149,7 @@
     },
     "custom/player": {
         "format": " ",
-        "on-click": "vlc",
+        "on-click": "mpv",
         "tooltip-format": "player"
     },
     "custom/editor": {

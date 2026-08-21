@@ -52,10 +52,24 @@
 
 ;; Set the default column position (e.g., column 80)
 (setq-default fill-column 80)
-
 ;; Enable the vertical line indicator globally
 ;;(global-display-fill-column-indicator-mode 1)
 
+;; custom emacs focus on new split buffer
+(defun my/split-window-right-and-follow ()
+  "Split the window vertically and focus the new window."
+  (interactive)
+  (split-window-right)
+  (other-window 1))
+
+(defun my/split-window-below-and-follow ()
+  "Split the window horizontally and focus the new window."
+  (interactive)
+  (split-window-below)
+  (other-window 1))
+
+(global-set-key (kbd "C-x 3") #'my/split-window-right-and-follow)
+(global-set-key (kbd "C-x 2") #'my/split-window-below-and-follow)
 
 (provide 'core-config)
 ;;; core-config.el ends here

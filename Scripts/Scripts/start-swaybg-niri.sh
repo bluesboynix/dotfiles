@@ -1,3 +1,3 @@
 #!/bin/sh
 
-swaybg -i ~/Pictures/Collections/sam-morse-brown-gasgiant7b-2k.jpg
+swaybg -i ~/Pictures/Collections/red_tree.jpg

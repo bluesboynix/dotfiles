@@ -1,0 +1,49 @@
+/* Main Control Center Panel Window */
+.control-center {
+    background: rgba(36, 40, 59, 0.95);
+    border: 1px solid #414868;
+    border-radius: 12px;
+    color: #c0caf5;
+    padding: 10px;
+}
+
+/* Individual Notification Popups */
+.notification {
+    background: #1a1b26;
+    border: 1px solid #414868;
+    border-radius: 8px;
+    margin: 6px;
+    padding: 10px;
+}
+
+/* Notification Title Text */
+.notification-content {
+    margin: 5px;
+}
+
+/* Action Buttons Inside Notifications */
+.notification-action {
+    background: #24283b;
+    border: 1px solid #414868;
+    border-radius: 4px;
+    color: #c0caf5;
+}
+
+.notification-action:hover {
+    background: #414868;
+}
+
+/* Do Not Disturb Toggle Button */
+.widget-dnd {
+    margin: 8px;
+    font-size: 14px;
+}
+
+.widget-dnd > switch {
+    background: #24283b;
+    border-radius: 12px;
+}
+
+.widget-dnd > switch:checked {
+    background: #f7768e;
+}

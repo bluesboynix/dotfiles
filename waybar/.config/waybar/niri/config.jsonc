@@ -46,16 +46,16 @@
         "max-length": 25,
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
-                    "mode"          : "year",
+                    "mode"          : "month",
                     "mode-mon-col"  : 3,
                     "weeks-pos"     : "right",
                     "on-scroll"     : 1,
                     "format": {
-                              "months":     "<span color='#ffead3'><b>{}</b></span>",
-                              "days":       "<span color='#ecc6d9'><b>{}</b></span>",
-                              "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
-                              "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
-                              "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+                              "months":     "<span color='#ff0000'><b>{}</b></span>",
+                              "days":       "<span color='#505050'><b>{}</b></span>",
+                              "weeks":      "<span color='#2bbbbb'><b>W{}</b></span>",
+                              "weekdays":   "<span color='#2bbbbb'><b>{}</b></span>",
+                              "today":      "<span color='#ff0000'><b><u>{}</u></b></span>"
                               }
                     },
         "actions":  {
@@ -70,23 +70,23 @@
     "network": {
         "format-wifi": "{icon}",
         "format-icons": {
-          "wifi": ["󰤯 ","󰤟 ","󰤢 ","󰤥 ","󰤨 "]
+          "wifi": ["󰤯","󰤟","󰤢","󰤥","󰤨"]
         },
         "format-ethernet": "󰛳",
-        "tooltip-format": " {ifname} via {gwaddr}",
-        "format-linked": " {ifname} (No IP)",
+        "tooltip-format": "󰛳 {ifname} via {gwaddr}",
+        "format-linked": "󰛳 {ifname} (No IP)",
         "format-disconnected": "⚠ ",
-        "format-alt": " {ifname}: {ipaddr}/{cidr}"
+        "format-alt": "󰛳 {ifname}: {ipaddr}/{cidr}"
     },
     "pulseaudio": {
         "scroll-step": 5, // %, can be a float
-        "format": "{icon} ",
+        "format": "{icon}",
         "tooltip-format": "Volume {volume}%",
-        "format-bluetooth": "  {volume}% ",
+        "format-bluetooth": " {volume}% ",
         "format-bluetooth-muted": " {icon} {format_source}",
         "format-muted": "{format_source}",
         "format-source": "",
-        "format-source-muted": "",
+        "format-source-muted": "󰝟",
         "format-icons": {
 //            "headphone": "",
 //            "hands-free": "",

@@ -7,9 +7,15 @@
   min-height: 0;
 }
 
+tooltip {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 1px solid #900000;
+    border-radius: 4px;
+}
+
 window#waybar {
   background-color: rgba(0, 0, 0, .7);
-  color: #2fffff;
+  color: #b22222;
   transition-property: background-color;
   transition-duration: .5s;
 }
@@ -37,7 +43,7 @@ button {
 
 #workspaces button {
   padding: 5px 5px;
-  color: #2fffff;
+  color: #b22222;
 }
 
 #workspaces button.empty {
@@ -49,7 +55,7 @@ button {
 }
 
 #workspaces button.active {
-  color: #aaffaa;
+  color: #ff478f;
   font-weight: bold;
 }
 
@@ -58,7 +64,7 @@ button {
 }
 
 #window {
-  color: #2fffff;
+  color: #b22222;
 }
 
 #network #pulseaudio #backlight #battery #custom-notification #idle_inhibitor #clock
@@ -76,78 +82,80 @@ button {
 #network {
   padding-left: 10px;
   padding-right: 13px;
-  color: #2fffff;
+  color: #b22222;
 }
 
 #pulseaudio {
   padding-left: 5px;
   padding-right: 5px;
-  color: #2fffff;
+  color: #b22222;
 }
 
 #backlight {
   padding-left: 10px;
   padding-right: 10px;
-  color: #2fffff;
+  color: #b22222;
 }
 
 #battery {
   padding-left: 5px;
   padding-right: 5px;
-  color: #2fffff;
+  color: #b22222;
 }
 
 #custom-notification {
+  background-color: rgba(0,0,0, 0.7);
+  color: #b22222;  
   padding-left: 8px;
   padding-right: 8px;
-  color: #b2ffff;
+  color: #b22222;
 }
 
 #idle_inhibitor {
   padding-left: 5px;
   padding-right: 5px;
-  color: #2fffff;
+  color: #b22222;
 }
 
 #clock {
   font-weight: bold;
   padding-left: 10px;
   padding-right: 10px;
-  color: #2fffff;
+  color: #b22222;
 }
 
 #custom-systeminfo {
   padding-left: 5px;
   padding-right: 5px;
-  color: #2fffff
+  color: #b22222;
 }
 
 #custom-filemanager {
   padding-left: 5px;
   padding-right: 5px;
-  color: #2fffff;
+  color: #b22222;
 }
 
 #custom-player {
   padding-left: 5px;
   padding-right: 5px;
-  color: #2fffff;
+  color: #b22222;
 }
 
 #custom-editor {
   padding-left: 5px;
   padding-right: 5px;
-  color: #2fffff;
+  color: #b22222;
 }
 
 #custom-browser {
   padding-left: 5px;
   padding-right: 5px;
-  color: #2fffff;
+  color: #b22222;
 }
 
 #custom-terminal {
   padding-left: 5px;
   padding-right: 5px;
-  color: #2fffff;
+  color: #b22222;
 }

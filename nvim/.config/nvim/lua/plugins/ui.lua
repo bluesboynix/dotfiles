@@ -2,11 +2,13 @@ require("tokyonight").setup({
   style = "night",
 })
 
-vim.cmd.colorscheme("tokyonight")
+require("onedarkpro").setup()
+
+vim.cmd.colorscheme("onedark_dark")
 
 require("lualine").setup({
   options = {
-    theme = "tokyonight",
+    theme = "onedark",
     globalstatus = true,
     component_separators = "",
     section_separators = "",

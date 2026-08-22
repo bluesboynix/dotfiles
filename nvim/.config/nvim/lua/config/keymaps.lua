@@ -53,10 +53,14 @@ map("n", "<C-u>", "<C-u>zz")
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
 
--- Terminal
-map("n", "<leader>tt", "<cmd>split | terminal<CR>", {
-  desc = "Terminal",
-})
+-- Open a horizontal terminal split at the bottom
+vim.keymap.set('n', '<leader>th', ':botright split | term<CR>',
+                { desc = 'Term Horizontal' })
+
+-- Open a vertical terminal split on the right
+vim.keymap.set('n', '<leader>tv', ':botright vsplit | term<CR>',
+                { desc = 'Term Vertical' })
+
 
 map("t", "<Esc>", "<C-\\><C-n>", {
   desc = "Exit terminal",

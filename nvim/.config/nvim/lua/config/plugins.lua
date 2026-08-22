@@ -12,6 +12,9 @@ vim.pack.add({
   "https://github.com/lewis6991/gitsigns.nvim",
 
   "https://github.com/folke/tokyonight.nvim",
+
+  "https://github.com/olimorris/onedarkpro.nvim.git",
+  
 })
 
 require("plugins.telescope")

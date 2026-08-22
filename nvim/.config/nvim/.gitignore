@@ -1,5 +1,6 @@
 # Ignore plugin lock file and cache
 lazy-lock.json
+nvim-pack-lock.json
 
 !init.lua
 !lua/**

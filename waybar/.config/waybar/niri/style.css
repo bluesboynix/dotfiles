@@ -49,7 +49,6 @@ button {
 }
 
 #workspaces button.active {
-  background-color: #afffff;
   color: #aaffaa;
   font-weight: bold;
 }

@@ -244,4 +244,6 @@ configuration {
 
 //@theme "/home/bluesboy/.local/share/rofi/themes/squared-black.rasi"
 
-@theme "/home/bluesboy/.local/share/rofi/themes/squared-neon.rasi"
+//@theme "/home/bluesboy/.local/share/rofi/themes/squared-neon.rasi"
+
+@theme "/home/bluesboy/.local/share/rofi/themes/squared-red.rasi"

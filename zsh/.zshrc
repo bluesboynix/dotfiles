@@ -94,7 +94,7 @@ git_prompt_info() {
 }
 
 # ─── PROMPT SETUP ───────────────────────────────────────────────────────────────
-PROMPT='%F{cyan}%B%1~%b%f %F{yellow}$(git_prompt_info)%f %F{yellow}%B$%b%f '
+PROMPT='%F{#ff1000}%B%1~%b%f %F{blue}$(git_prompt_info)%f %F{#ffff00}%B$%b%f '
 
 # ─── ALIASES ────────────────────────────────────────────────────────────────────
 
@@ -120,9 +120,11 @@ alias guile="rlwrap guile --no-auto-compile"
 if command -v lsd >/dev/null 2>&1; then
   alias ls='lsd --group-dirs=first --icon=always'
   export LS_MODE="lsd"
+  export LS_COLORS="di=1;31:ln=35:ex=32:*.zip=38;5;135:*.tar=38;5;135:fi=0;71"
 else
   alias ls='ls --color=auto -h'
   export LS_MODE="gnu-ls"
+  export LS_COLORS="di=1;31:ln=35:ex=32:*.zip=31:*.tar=31:fi=38;5;244"  
 fi
 
 # Colorized tools

@@ -27,6 +27,7 @@
 (require 'lang-python)
 (require 'lang-rust)
 (require 'lang-scheme)
+(require 'lang-sweet-scheme)
 
 (message "init.el loaded all modules successfully.")
 

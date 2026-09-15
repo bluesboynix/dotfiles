@@ -71,5 +71,24 @@
 (global-set-key (kbd "C-x 3") #'my/split-window-right-and-follow)
 (global-set-key (kbd "C-x 2") #'my/split-window-below-and-follow)
 
+;; Window resizing - C-c w h/l = horizontal and C-c w j/k = vertical
+(defvar my-window-resize-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "h") #'shrink-window-horizontally)
+    (define-key map (kbd "l") #'enlarge-window-horizontally)
+    (define-key map (kbd "j") #'shrink-window)
+    (define-key map (kbd "k") #'enlarge-window)
+    map))
+
+(global-set-key (kbd "C-c w") my-window-resize-map)
+
+;; Keep the resize keys active so h/j/k/l can be pressed repeatedly.
+(repeat-mode 1)
+
+(put 'shrink-window-horizontally 'repeat-map 'my-window-resize-map)
+(put 'enlarge-window-horizontally 'repeat-map 'my-window-resize-map)
+(put 'shrink-window 'repeat-map 'my-window-resize-map)
+(put 'enlarge-window 'repeat-map 'my-window-resize-map)
+
 (provide 'core-config)
 ;;; core-config.el ends here

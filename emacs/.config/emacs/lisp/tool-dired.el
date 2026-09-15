@@ -10,10 +10,6 @@
 (require 'dired-x)
 (require 'wdired)
 
-;; Appearance
-;; Show files/directories without the noisy permission/owner information.
-(add-hook 'dired-mode-hook #'dired-hide-details-mode)
-
 ;; Human-readable sizes, directories first, case-insensitive sorting.
 (setq dired-listing-switches "-alh --group-directories-first")
 
@@ -98,9 +94,6 @@
   ;; Refresh
   (define-key dired-mode-map (kbd "g") #'revert-buffer)
 
-  ;; Toggle details
-  (define-key dired-mode-map (kbd "(") #'dired-hide-details-mode)
-
   ;; Edit filenames directly
   (define-key dired-mode-map (kbd "C-c C-r") #'wdired-change-to-wdired-mode)
 
@@ -116,13 +109,6 @@
       (concat dired-omit-files
               "\\|^\\.git$"
               "\\|^\\.gitignore$"))
-
-;;;###autoload
-(defun my/dired-setup ()
-  "Apply personal Dired settings."
-  (dired-hide-details-mode 1))
-
-(add-hook 'dired-mode-hook #'my/dired-setup)
 
 (provide 'tool-dired)
 

@@ -20,6 +20,7 @@
 (require 'tool-completions)
 (require 'tool-rainbow-paren)
 (require 'tool-vterm)
+(require 'tool-dired)
 
 ;; language
 (require 'lang-c-cpp)

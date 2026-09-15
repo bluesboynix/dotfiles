@@ -1,0 +1,53 @@
+===============================================================================
+SYSTEMD-NETWORKD CONFIGURATION GUIDE
+===============================================================================
+
+STEP 1: IDENTIFY THE NETWORK INTERFACE
+-------------------------------------------------------------------------------
+Run this command to find your network card interface name (e.g., enp3s0):
+$ networkctl list
+
+STEP 2: DISABLE CONFLICTING NETWORK MANAGERS
+-------------------------------------------------------------------------------
+Prevent other software (like NetworkManager) from hijacking the interface:
+$ sudo systemctl stop NetworkManager
+$ sudo systemctl disable NetworkManager
+
+STEP 3: CREATE THE CONFIGURATION FILE
+-------------------------------------------------------------------------------
+Create or edit the network file:
+$ sudo nano /etc/systemd/network/20-wired.network
+
+Paste the following configuration (replace "enp3s0" with your interface name):
+
+[Match]
+Name=enp3s0
+
+[Network]
+DHCP=yes
+LinkLocalAddressing=yes
+ConfigureWithoutCarrier=yes
+
+STEP 4: FIX AN "ADMINISTRATIVELY DOWN" INTERFACE
+-------------------------------------------------------------------------------
+If "ip link" or "networkctl" shows the interface status is DOWN, manually 
+force it up:
+$ sudo ip link set enp3s0 up
+
+STEP 5: ENABLE AND START THE DAEMONS
+-------------------------------------------------------------------------------
+Enable systemd-networkd and systemd-resolved (for DNS handling):
+
+$ sudo systemctl enable --now systemd-networkd
+$ sudo systemctl enable --now systemd-resolved
+
+Link the system's DNS resolver to systemd-resolved:
+$ sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+
+STEP 6: MANAGEMENT & TROUBLESHOOTING COMMANDS
+-------------------------------------------------------------------------------
+* Check network status:      $ networkctl status
+* Reload configurations:     $ sudo networkctl reload
+* Force reconfigure a link:  $ sudo networkctl reconfigure enp3s0
+* Check physical carrier:    $ networkctl status enp3s0 (Look for Carrier: yes)
+===============================================================================

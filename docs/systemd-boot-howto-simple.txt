@@ -1,0 +1,109 @@
+# Arch Linux — systemd-boot
+
+## Assumptions
+
+```text
+UEFI system
+/dev/nvme0n1p1 → EFI System Partition → /boot
+/dev/nvme0n1p2 → Arch Linux root
+AMD CPU
+0-second boot menu
+```
+
+## 1. Enter chroot
+
+```bash
+arch-chroot /mnt
+```
+
+Make sure EFI partition is mounted:
+
+```bash
+mount /dev/nvme0n1p1 /boot
+```
+
+## 2. Install required packages
+
+```bash
+pacman -S --needed linux linux-firmware amd-ucode efibootmgr dosfstools
+```
+
+## 3. Install systemd-boot
+
+```bash
+bootctl install
+```
+
+## 4. Create bootloader directories
+
+```bash
+mkdir -p /boot/loader/entries
+```
+
+## 5. Configure loader
+
+```bash
+cat > /boot/loader/loader.conf <<'EOF'
+default arch.conf
+timeout 0
+editor no
+EOF
+```
+
+## 6. Get root UUID
+
+```bash
+ROOT_UUID=$(blkid -s UUID -o value /dev/nvme0n1p2)
+```
+
+Check:
+
+```bash
+echo "$ROOT_UUID"
+```
+
+## 7. Create Arch boot entry
+
+```bash
+cat > /boot/loader/entries/arch.conf <<EOF
+title Arch Linux
+linux /vmlinuz-linux
+initrd /amd-ucode.img
+initrd /initramfs-linux.img
+options root=UUID=$ROOT_UUID rw
+EOF
+```
+
+## 8. Verify
+
+```bash
+cat /boot/loader/entries/arch.conf
+```
+
+```bash
+bootctl status
+```
+
+## 9. Reboot
+
+```bash
+exit
+umount -R /mnt
+reboot
+```
+
+## Result
+
+```text
+UEFI
+ ↓
+systemd-boot
+ ↓
+AMD microcode
+ ↓
+Linux kernel
+ ↓
+Arch Linux
+```
+
+No GRUB and **0-second bootloader timeout**.

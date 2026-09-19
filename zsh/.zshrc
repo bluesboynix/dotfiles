@@ -46,6 +46,8 @@ path=(
   "$HOME/go/bin"
 
   "$HOME/.codon/bin"
+
+  "$HOME/develop/flutter/bin"
 )
 
 export PATH="${(j/:/)path}"

@@ -34,6 +34,7 @@
 (require 'lang-rust)
 (require 'lang-scheme)
 (require 'lang-sweet-scheme)
+(require 'lang-dart)
 
 (message "init.el loaded all modules successfully.")
 

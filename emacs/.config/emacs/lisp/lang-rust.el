@@ -1,6 +1,11 @@
 ;;; lang-rust.el --- Simple Rust setup for Emacs 30 -*- lexical-binding: t; -*-
 
 
+;; Disable Eglot's inlay hints (inferred types, parameter names, etc.)
+(with-eval-after-load 'eglot
+  (add-hook 'eglot-managed-mode-hook
+            (lambda () (eglot-inlay-hints-mode -1))))
+
 ;; Hook
 (add-hook 'eglot-managed-mode-hook
           (lambda ()
@@ -22,15 +27,17 @@
 (with-eval-after-load 'eglot
   ;; rust-analyzer
   (add-to-list 'eglot-server-programs
-               '(rust-ts-mode . ("rust-analyzer")))
+               '(rust-ts-mode . ("rust-analyzer"))))
 
-  ;; Optional rust-analyzer settings
-  (setq-default eglot-workspace-configuration
-                '(:rust-analyzer
-                  (:cargo
-                   (:allFeatures t))
-                  :check
-                  (:command "clippy"))))
+;; rust-analyzer settings -- buffer-local, so they only apply to
+;; Rust buffers and do NOT leak into dart-mode, etc.
+(defun my-rust--setup-eglot-config ()
+  (setq-local eglot-workspace-configuration
+              '(:rust-analyzer
+                (:cargo
+                 (:allFeatures t))
+                :check
+                (:command "clippy"))))
 
 ;; --------------------------------------------------
 ;; start eglot
@@ -40,9 +47,11 @@
   "Start Eglot only inside Cargo projects."
   (when (and (executable-find "rust-analyzer")
              (locate-dominating-file default-directory "Cargo.toml"))
+    (my-rust--setup-eglot-config)
     (eglot-ensure)))
 
 (add-hook 'rust-ts-mode-hook #'my-rust-start-eglot)
+
 
 ;; --------------------------------------------------
 ;; Simple Cargo commands
@@ -88,11 +97,8 @@
 (with-eval-after-load 'rust-ts-mode
   (define-key rust-ts-mode-map (kbd "C-c C-r") #'my-rust-cargo-run)
   (define-key rust-ts-mode-map (kbd "C-c C-b") #'my-rust-cargo-build)
-  (define-key rust-ts-mode-map (kbd "C-c C-t") #'my-rust-cargo-test))
-
-(with-eval-after-load 'rust-ts-mode
-  (define-key rust-ts-mode-map (kbd "C-c C-c")
-              #'my-rust-run-file))
+  (define-key rust-ts-mode-map (kbd "C-c C-t") #'my-rust-cargo-test)
+  (define-key rust-ts-mode-map (kbd "C-c C-c") #'my-rust-run-file))
 
 
 (provide 'lang-rust)

@@ -129,30 +129,33 @@
                '((dart-mode)
                  . ("dart" "language-server"
                     "--client-id" "emacs.eglot-dart"
-                    "--client-version" "1.0"))))
+                    "--client-version" "1.0")))
 
-;; ---------------------------------------------------------------------------
-;; 5. Flutter + keybindings
-;; ---------------------------------------------------------------------------
+  (add-hook 'eglot-managed-mode-hook
+            (lambda () (eglot-inlay-hints-mode -1))))
 
-(use-package flutter
-  :ensure t
-  :after dart-mode
-  :custom
-  (flutter-sdk-path my/flutter-root))
+  ;; ---------------------------------------------------------------------------
+  ;; 5. Flutter + keybindings
+  ;; ---------------------------------------------------------------------------
 
-(with-eval-after-load 'dart-mode
-  (define-key dart-mode-map (kbd "C-c C-f") #'flutter-run-or-hot-reload)
-  (define-key dart-mode-map (kbd "C-c C-r") #'flutter-hot-reload)
-  (define-key dart-mode-map (kbd "C-c C-R") #'flutter-hot-restart)
+  (use-package flutter
+    :ensure t
+    :after dart-mode
+    :custom
+    (flutter-sdk-path my/flutter-root))
 
-  ;; Standalone Dart under a C-c d prefix
-  (define-key dart-mode-map (kbd "C-c d r") #'my/dart-run)
-  (define-key dart-mode-map (kbd "C-c d f") #'my/dart-run-file)
-  (define-key dart-mode-map (kbd "C-c d t") #'my/dart-test)
-  (define-key dart-mode-map (kbd "C-c d p") #'my/dart-pub-get)
-  (define-key dart-mode-map (kbd "C-c d a") #'my/dart-analyze)
-  (define-key dart-mode-map (kbd "C-c d F") #'my/dart-format-buffer))
+  (with-eval-after-load 'dart-mode
+    (define-key dart-mode-map (kbd "C-c C-f") #'flutter-run-or-hot-reload)
+    (define-key dart-mode-map (kbd "C-c C-r") #'flutter-hot-reload)
+    (define-key dart-mode-map (kbd "C-c C-R") #'flutter-hot-restart)
 
-(provide 'lang-dart)
+    ;; Standalone Dart under a C-c d prefix
+    (define-key dart-mode-map (kbd "C-c d r") #'my/dart-run)
+    (define-key dart-mode-map (kbd "C-c d f") #'my/dart-run-file)
+    (define-key dart-mode-map (kbd "C-c d t") #'my/dart-test)
+    (define-key dart-mode-map (kbd "C-c d p") #'my/dart-pub-get)
+    (define-key dart-mode-map (kbd "C-c d a") #'my/dart-analyze)
+    (define-key dart-mode-map (kbd "C-c d F") #'my/dart-format-buffer))
+
+  (provide 'lang-dart)
 ;;; lang-dart.el ends here

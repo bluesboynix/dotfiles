@@ -149,7 +149,7 @@
     },
     "custom/player": {
         "format": " ",
-        "on-click": "mpv",
+        "on-click": "smplayer",
         "tooltip-format": "player"
     },
     "custom/editor": {

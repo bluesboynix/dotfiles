@@ -1,3 +1,3 @@
 #!/bin/sh
 
-swaybg -i ~/Pictures/Collections/red_tree.jpg
+swaybg -i ~/Pictures/Collections/black_background.jpg

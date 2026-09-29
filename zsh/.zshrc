@@ -189,19 +189,21 @@ alias cp='cp -rf'
 # Git
 alias git-tree='git log --graph --oneline --decorate --all'
 
+
 # LS
 if command -v lsd >/dev/null 2>&1; then
   alias ls='lsd --group-dirs=first --icon=always'
 
   export LS_MODE="lsd"
-  export LS_COLORS='di=1;31:ln=35:ex=32:*.zip=38;5;135:*.tar=38;5;135:fi=0;71'
+  export LS_COLORS='di=1;37:ln=35:ex=32:*.zip=38;5;135:*.tar=38;5;135:fi=0;71'
 
 else
   alias ls='ls --color=auto -h'
 
   export LS_MODE="gnu-ls"
-  export LS_COLORS='di=1;31:ln=35:ex=32:*.zip=31:*.tar=31:fi=38;5;244'
+  export LS_COLORS='di=1;37:ln=35:ex=32:*.zip=31:*.tar=31:fi=38;5;244'
 fi
+
 
 # SSH
 alias ssh='TERM=xterm-256color ssh'

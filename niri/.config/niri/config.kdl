@@ -2,7 +2,7 @@ include "input.kdl"
 include "output.kdl"
 include "startup.kdl"
 include "layout.kdl"
-include "bind.kdl"
+include "binds.kdl"
 include "animation.kdl"
 
 hotkey-overlay {
@@ -31,7 +31,25 @@ window-rule {
     block-out-from "screen-capture"
 }
 
-/-window-rule {
-    geometry-corner-radius 12
+window-rule {
+    geometry-corner-radius 6
     clip-to-geometry true
+}
+
+// Floating Noctalia settings window.
+window-rule {
+  match app-id="dev.noctalia.Noctalia"
+  open-floating true
+  default-column-width { fixed 1080; }
+  default-window-height { fixed 920; }
+}
+
+debug {
+  // Allows notification actions and window activation from Noctalia.
+  honor-xdg-activation-with-invalid-serial
+}
+
+overview {
+  // Choose your favorite color.
+  backdrop-color "#000000"
 }

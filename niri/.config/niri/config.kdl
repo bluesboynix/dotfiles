@@ -53,3 +53,5 @@ overview {
   // Choose your favorite color.
   backdrop-color "#000000"
 }
+
+include "noctalia.kdl"

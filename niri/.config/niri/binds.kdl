@@ -7,9 +7,9 @@ binds {
     //Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn-sh "fuzzel"; }
     
     // Noctalia bindings
-    Mod+D { spawn-sh "noctalia msg panel-toggle launcher"; }
+    Mod+Space { spawn-sh "noctalia msg panel-toggle launcher"; }
     Mod+S { spawn-sh "noctalia msg panel-toggle control-center"; }
-    Mod+P { spawn-sh "noctalia msg settings-toggle"; }
+    Mod+Shift+S { spawn-sh "noctalia msg settings-toggle"; }
     Alt+Tab { spawn-sh "noctalia msg window-switcher hold"; }
 
     // Noctalia Audio & Brightness
@@ -18,6 +18,9 @@ binds {
     XF86AudioMute { spawn-sh "noctalia msg volume-mute"; }
     XF86MonBrightnessUp { spawn-sh "noctalia msg brightness-up"; }
     XF86MonBrightnessDown { spawn-sh "noctalia msg brightness-down"; }
+
+    // Noctalia popup session
+    Mod+Shift+E { spawn-sh "noctalia msg panel-toggle session"; }
 
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
@@ -216,7 +219,7 @@ binds {
 
     // The quit action will show a confirmation dialog to avoid accidental exits.
     // Mod+Shift+E { quit; }
-    Ctrl+Alt+Delete { quit; }
+    //Ctrl+Alt+Delete { quit; }
 
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.

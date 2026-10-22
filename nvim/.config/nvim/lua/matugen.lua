@@ -1,50 +1,70 @@
-local M = {}
+ local M = {}
 
-function M.setup(palette)
-  -- Fallback default palette if none is passed
-  local colors = palette or {
-    base00 = "#1e1e2e", base01 = "#181825", base02 = "#313244", base03 = "#45475a",
-    base04 = "#585b70", base05 = "#cdd6f4", base06 = "#f5e0dc", base07 = "#b4befe",
-    base08 = "#f38ba8", base09 = "#fab387", base0A = "#f9e2af", base0B = "#a6e3a1",
-    base0C = "#94e2d5", base0D = "#89b4fa", base0E = "#cba6f7", base0F = "#f2cdcd"
-  }
+function M.setup()
+  require('base16-colorscheme').setup({
+    base00 = '#0e1214',
+    base01 = '#192024',
+    base02 = '#212b30',
+    base03 = '#576267',
+    base04 = '#dbe2e6',
+    base05 = '#abbcc4',
+    base06 = '#abbcc4',
+    base07 = '#abbcc4',
+    base08 = '#a7cce1',
+    base09 = '#e8b8a8',
+    base0A = '#faddd2',
+    base0B = '#9dd2c0',
+    base0C = '#e9ab96',
+    base0D = '#96e9cd',
+    base0E = '#f2a88c',
+    base0F = '#f7cbba',
+  })
 
-  -- Set truecolor support
-  vim.opt.termguicolors = true
-
-  -- Clear previous styling
-  vim.cmd("highlight clear")
-  if vim.fn.exists("syntax_on") then vim.cmd("syntax reset") end
-  vim.g.colors_name = "matugen_base16"
-
-  -- Helper function to set highlights easily
-  local function hi(group, settings)
-    vim.api.nvim_set_hl(0, group, settings)
+  local hi = function(group, opts)
+    vim.api.nvim_set_hl(0, group, opts)
   end
 
-  -- Map base16 colors to basic vim elements
-  hi("Normal",       { fg = colors.base05, bg = colors.base00 })
-  hi("CursorLine",   { bg = colors.base01 })
-  hi("Visual",       { bg = colors.base02 })
-  hi("Comment",      { fg = colors.base03, italic = true })
-  hi("Constant",     { fg = colors.base09 })
-  hi("String",       { fg = colors.base0B })
-  hi("Identifier",   { fg = colors.base08 })
-  hi("Function",     { fg = colors.base0D })
-  hi("Statement",    { fg = colors.base0E })
-  hi("PreProc",      { fg = colors.base0A })
-  hi("Type",         { fg = colors.base0A })
-  hi("Special",      { fg = colors.base0C })
-  hi("Error",        { fg = colors.base05, bg = colors.base08 })
-  hi("Todo",         { fg = colors.base0A, bg = colors.base01 })
-  hi("LineNr",       { fg = colors.base03, bg = colors.base00 })
-  hi("CursorLineNr", { fg = colors.base04 })
-  
-  -- Treesitter elements
-  hi("@variable",    { fg = colors.base05 })
-  hi("@keyword",     { fg = colors.base0E })
-  hi("@function",    { fg = colors.base0D })
+  -- telescope.nvim
+  hi('TelescopeNormal',         { fg = '#abbcc4',          bg = '#0e1214' })
+  hi('TelescopeBorder',         { fg = '#576267',             bg = '#0e1214' })
+  hi('TelescopePromptNormal',   { fg = '#abbcc4',          bg = '#0e1214' })
+  hi('TelescopePromptBorder',   { fg = '#576267',             bg = '#0e1214' })
+  hi('TelescopePromptPrefix',   { fg = '#9dd2c0',             bg = '#0e1214' })
+  hi('TelescopePromptCounter',  { fg = '#dbe2e6',  bg = '#0e1214' })
+  hi('TelescopePromptTitle',    { fg = '#0e1214',             bg = '#9dd2c0' })
+  hi('TelescopePreviewTitle',   { fg = '#0e1214',             bg = '#faddd2' })
+  hi('TelescopeResultsTitle',   { fg = '#0e1214',             bg = '#e8b8a8' })
+  hi('TelescopeSelection',      { fg = '#abbcc4',          bg = '#212b30' })
+  hi('TelescopeSelectionCaret', { fg = '#9dd2c0',             bg = '#212b30' })
+  hi('TelescopeMatching',       { fg = '#9dd2c0',             bold = true })
+
+  -- mini.pick
+  hi('MiniPickNormal',         { fg = '#abbcc4',          bg = '#0e1214' })
+  hi('MiniPickBorder',         { fg = '#576267',             bg = '#0e1214' })
+  hi('MiniPickPrompt',   { fg = '#abbcc4',          bg = '#0e1214' })
+  hi('MiniPickPromptPrefix',   { fg = '#9dd2c0',             bg = '#0e1214' })
+  hi('MiniPickBorderText',    { fg = '#0e1214',             bg = '#9dd2c0' })
+  hi('MiniPickMatchCurrent',      { fg = '#abbcc4',          bg = '#212b30' })
+  hi('MiniPickPromptCaret', { fg = '#9dd2c0',             bg = '#212b30' })
+  hi('MiniPickMatchRanges',       { fg = '#9dd2c0',             bold = true })
 end
 
-return M
+-- Register a signal handler for SIGUSR1 (matugen updates).
+-- The handler re-requires this module, which re-runs the code below, so the
+-- previous handle is stopped first; otherwise handlers double on every signal.
+if _G.__matugen_signal then
+  _G.__matugen_signal:stop()
+  _G.__matugen_signal:close()
+end
 
+local signal = vim.uv.new_signal()
+_G.__matugen_signal = signal
+signal:start(
+  'sigusr1',
+  vim.schedule_wrap(function()
+    package.loaded['matugen'] = nil
+    require('matugen').setup()
+  end)
+)
+
+return M
